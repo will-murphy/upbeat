@@ -39,6 +39,23 @@ class Activity(Model):
     read = BooleanField(default = False)
     text = TextField()
     date_sent = DateTimeField(auto_now_add = True)
+    
+    def __vote__(self, value):
+        votes = Vote.objects.filter(username = user.nickname(), post = self)
+        if 0 < votes.count():
+            votes[0].value = value
+            votes[0].save()
+        else:
+            Vote.objects.create(
+                username = user.nickname(),
+                post = self,
+                value = value)
+
+    def upvote(self):
+        self.__vote__(1)
+    
+    def downvote(self):
+        self.__vote__(-1)
 
 class Comment(Model, JSONable):
     username = CharField(max_length = 255)
@@ -63,6 +80,25 @@ class Comment(Model, JSONable):
     
     def as_tree_of_json(self):
         return json.dumps(self.as_tree_of_dicts())
+    
+    def __vote__(self, value):
+        votes = CommentVote.objects.\
+            filter(username = user.nickname(), comment = self)
+        if 0 < votes.count():
+            votes[0].value = value
+            votes[0].save()
+        else:
+            CommentVote.objects.create(
+                username = user.nickname(),
+                comment = self,
+                value = value)
+
+    def upvote(self):
+        self.__vote__(1)
+    
+    def downvote(self):
+        self.__vote__(-1)
+
 
 class Tag(Model):
     name = TextField()

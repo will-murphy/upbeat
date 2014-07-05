@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from main.models import Post, Comment, Activity
+from main.models import Post, Comment, Activity, Vote, CommentVote
 import json
 
 # from google.appengine.api import users
@@ -13,7 +13,15 @@ def respond(str, data = {}):
         {'message': str}.items())))
 
 def root(request):
-    return render(request, 'main/home.html', {})
+    return render(request, 'main/home.html', {'listtype': 'hottest'})
+
+def latest(request):
+    return render(request, 'main/home.html', {'listtype': 'latest'})
+
+def user_page(request, username):
+    return render(request, 'main/home.html', {
+        'listtype': 'user|' + username
+        })
 
 def post_create(request):
     post = Post(
@@ -38,7 +46,7 @@ def post_json(request, pk):
     post = get_object_or_404(Post, pk = pk)
     return HttpResponse(post.as_json())
 
-def post_comments_page(request):
+def post_comments_page(request, post_id):
     return render(request, 'main/comments_page.html', {})
 
 def post_by(request):
