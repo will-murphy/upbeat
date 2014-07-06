@@ -1,6 +1,6 @@
 
 class Temp:
-    def nickname():
+    def nickname(self):
         return 'tennien'
 
 user = Temp()

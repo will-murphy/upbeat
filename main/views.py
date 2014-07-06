@@ -44,21 +44,24 @@ def post_downvote(request, pk):
 
 def post_json(request, pk):
     post = get_object_or_404(Post, pk = pk)
+    post.refresh_score()
     return HttpResponse(post.as_json())
 
 def post_comments_page(request, post_id):
     return render(request, 'main/comments_page.html', {})
 
-def post_by(request):
-    return Post.all_as_json(Post.object.get(
-        username = request.GET.get('username')))
+def post_by(request, username):
+    return HttpResponse(Post.all_as_json(map(
+        lambda post: post.refresh_score(),
+        Post.objects.filter(username = username).all())))
 
 def comment_json(request, pk):
     comment = get_object_or_404(Comment, pk = pk)
     return HttpResponse(comment.as_json())
 
-def comment_tree(request):
-    return HttpResponse(comment.tree_as_json())
+def comment_tree(request, pk):
+    comment = get_object_or_404(Comment, pk = pk)
+    return HttpResponse(comment.as_tree_of_json())
 
 def comment_create(request):
     comment = Comment(
@@ -89,6 +92,8 @@ def activity_how_many_unread(request):
 def activity_recent(request):
     results = Activity.objects.\
         filter(reciever = request.GET.get('receiver')).\
-        order_by('-date_sent')\
-        [:int(request.GET.get('count'))]
+        order_by('-date_sent')
+    if request.GET.has_key('max'):
+        results = results[:int(request.GET['max'])]
+    
     return HttpResponse(Comment.all_as_json(list(results)))
