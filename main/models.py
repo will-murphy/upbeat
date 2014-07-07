@@ -31,6 +31,7 @@ class Post(Model, JSONable):
     link = TextField(blank = True)
     text = TextField(blank = True)
     score = BigIntegerField(default = 0)
+    date_pub = DateTimeField(auto_now_add = True)
     
     def json_keys(self):
         return ['username', 'title', 'link', 'text', 'score']
@@ -60,6 +61,38 @@ class Post(Model, JSONable):
         self.score = score
         self.save()
         return self
+        
+        
+        posts = Post.hottest()
+    
+    @staticmethod
+    def hottest(start = False, maximum = False):
+        K = 1e9
+        posts = list(Post.objects.all())
+        map(lambda post: post.refresh_score(), posts)
+        then = datetime.datetime.now()
+        posts.sort(lambda post: 
+            K * math.log(post.score) - (then - post.date_pub).microseconds)
+        
+        if start:
+            posts = posts[start:]
+        
+        if maximum:
+            posts = posts[:maximum]
+        
+        return posts
+    
+    @staticmethod
+    def latest(start = False, maximum = False):
+        posts = Post.objects.order_by('-date_pub')
+        
+        if start:
+            posts = posts[start:]
+        
+        if maximum:
+            posts = posts[:maximum]
+        
+        return list(posts)
 
 class Activity(Model):
     sender = CharField(max_length = 255)

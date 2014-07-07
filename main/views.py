@@ -23,6 +23,18 @@ def user_page(request, username):
         'listtype': 'user|' + username
         })
 
+def post_hottest(request):
+    posts = Post.hottest(
+        request.GET.get('start', 0),
+        request.GET.get('max', None))
+    return HttpResponse(Post.all_as_json(posts))
+
+def post_latest(request):
+    posts = Post.latest(
+        request.GET.get('start', 0),
+        request.GET.get('max', None))
+    return HttpResponse(Post.all_as_json(posts))
+
 def post_create(request):
     post = Post(
         username = user.nickname(),
