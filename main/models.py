@@ -121,9 +121,12 @@ class Comment(Model, JSONable):
         else:
             d = self.as_dict()
             stringified[self.id] = stringified.copy()
-            d['comment_set'] = map(
-                lambda comment: comment.__as_tree_of_dicts_helper__(stringified),
+            map(
+                lambda comment: comment.refresh_score(),
                 self.comment_set.all())
+            d['children'] = map(
+                lambda comment: comment.__as_tree_of_dicts_helper__(stringified),
+                self.comment_set.order_by('score').all())
             return d
     
     def as_tree_of_json(self):

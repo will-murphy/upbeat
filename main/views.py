@@ -78,9 +78,11 @@ def comment_tree(request, pk):
 def comment_create(request):
     comment = Comment(
         username = user.nickname(),
-        title = request.POST['title'],
-        link = request.POST.get('link', False),
-        text = request.POST.get('text', False))
+        text = request.POST.get('text', False),
+        post = Post.objects.get(request.POST.get('post_id', False), None),
+        parent_comment = Post.objects.get(
+            request.POST.get('parent_comment_id', False),
+            None))
     comment.save()
     return respond('Saved comment.')
 
@@ -97,13 +99,13 @@ def comment_downvote(request, pk):
 def activity_how_many_unread(request):
     unread = Activity.objects.filter(
         read = False, 
-        reciever = request.GET.get('reciever'))
+        reciever = request.GET.get('receiver'))
     count = unread.count()
     return HttpResponse(json.dumps(count))
 
 def activity_recent(request):
     results = Activity.objects.\
-        filter(reciever = request.GET.get('receiver')).\
+        filter(reciever = request.GET['receiver']).\
         order_by('-date_sent')
     if request.GET.has_key('max'):
         results = results[:int(request.GET['max'])]
