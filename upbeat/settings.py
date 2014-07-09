@@ -36,7 +36,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'django_extensions',
+=======
+>>>>>>> 8a62348f6c834eb92ae341563e7a6b1af07d2cd1
     'south',
     'main',
 )
