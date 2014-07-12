@@ -211,14 +211,14 @@
 				removeClass(this, 'replying');
 			},
 			saveReply: function(){
-				var text = this.$.edittextarea.value;
+				var text = this.$.replytextarea.value;
 				if(!text){
 					return;
 				}
 
 				this.toggleSave(false);
 			    this.$.xhr.request({
-			        url: '/comment/create',
+			        url: 'api/comment/create',
 			        method: 'POST',
 			        body: objectToFormdata({
 			            post_id: window.postid,
