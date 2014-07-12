@@ -33,9 +33,9 @@ def post_hottest(request):
     
     posts = filter(lambda post: False == post.deleted, posts)
     
-    return HttpResponse(json.dumps(map(
+    return HttpResponse(json.dumps({'posts': map(
         lambda post: post.as_summary_json_dict(), 
-        posts)))
+        posts)}))
 
 def post_latest(request):
     posts = list(Post.latest(
@@ -46,9 +46,9 @@ def post_latest(request):
     
     posts = filter(lambda post: False == post.deleted, posts)
     
-    return HttpResponse(json.dumps(map(
+    return HttpResponse(json.dumps({'posts': map(
         lambda post: post.as_summary_json_dict(),
-        posts)))
+        posts)}))
 
 def post_create(request):    
     if not Post.is_valid_link(request.POST.get('link', '')):
