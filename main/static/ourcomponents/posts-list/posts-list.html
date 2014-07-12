@@ -6,7 +6,7 @@
 
 <polymer-element name="posts-list" attributes="listtype userpage">
 	<template>
-		<link rel="stylesheet" href="../../public/style.css" shim-shadowdom>
+		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom>
 		<style>
 			:host{
 				display:block;
@@ -187,7 +187,7 @@
 				font-size:24px;
 			}
 		</style>
-		<posts-service id="service" on-posts-loaded="{{postsLoaded}}" posts="{{posts}}" userinfo="{{userinfo}}"></posts-service>
+		<posts-service id="service" on-posts-loaded="{{postsLoaded}}" posts="{{posts}}" userinfo="{{userinfo}}" listtype="{{listtype}}"></posts-service>
 		<core-xhr id="xhr"></core-xhr>
 		<div id="cardtitle" class="cardtitle">
 			<core-icon-button class="options" icon="menu" on-tap="{{ options }}"></core-icon-button>

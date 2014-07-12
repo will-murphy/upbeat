@@ -9,7 +9,7 @@
 		</style>
 		<core-ajax id="ajax"
 			auto
-			url="../../public/api/dhp.json"
+			url="/api/{{url}}"
 			on-core-response="{{postsLoaded}}"
 			handleAs="json">
 		</core-ajax>
@@ -17,9 +17,13 @@
 	</template>
 	<script>
 	Polymer('posts-service', {
+		url: '',
 		created: function() {
 			this.posts = [];
 			this.userinfo = {};
+		},
+		ready: function(){
+			alert(this.listtype);
 		},
 		postsLoaded: function() {
 			var response = this.$.ajax.response;

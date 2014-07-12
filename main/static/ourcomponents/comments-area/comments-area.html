@@ -88,8 +88,9 @@
 				if(!text){
 					return;
 				}
+				this.toggleSave(false);
 			    this.$.xhr.request({
-			        url: '/post/create',
+			        url: '/api/comment/create',
 			        method: 'POST',
 			        params: {
 			            post_id: this.postid,
@@ -97,21 +98,27 @@
 			        },
 			        responseType: 'json',
 			        callback: function(data, extra){
-			            // if(extra.status == 200){
-			                // insertNewPost(data.id, title, link);
-			                this.insertNewComment(1, text);
+			            if(extra.status == 200){
+			                this.insertNewComment(data.id, text);
 			                this.$.savetextarea.value = '';
 			                this.$.savecomment.disabled = false;
-			            // }else{
-			            //     progress.stopProgress();
-			            //     posterrortoast.show();
-			            // }
+			            }else{
+			                progress.stopProgress();
+			                posterrortoast.show();
+			            }
+			            this.toggleSave(true);
 			        }.bind(this)
 			    });
 				this.$.savecomment.disabled = true;
 			},
+			toggleSave: function(value){
+				if(value){
+				    this.$.savecomment.removeAttribute('disabled');
+				}else{
+				    this.$.savecomment.setAttribute('disabled', true);
+				}
+			},
 			insertNewComment: function(id, text){
-
 				var indivcomment = document.createElement('indiv-comment');
 				indivcomment.setAttribute('id', id);
 				indivcomment.setAttribute('text', text);
