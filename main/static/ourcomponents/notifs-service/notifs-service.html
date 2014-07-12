@@ -1,0 +1,31 @@
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/core-ajax/core-ajax.html">
+<polymer-element name="notifs-service" attributes="notifs">
+	<template>
+		<style>
+			:host {
+				display: none;
+			}
+		</style>
+		<core-ajax id="ajax"
+			auto
+			url="/api/notifications"
+			on-core-response="{{postsLoaded}}"
+			handleAs="json">
+		</core-ajax>
+		{{posts}}
+	</template>
+	<script>
+	Polymer('notifs-service', {
+		created: function() {
+
+		},
+		ready: function(){
+
+		},
+		postsLoaded: function() {
+
+		}
+	});
+	</script>
+</polymer-element>
