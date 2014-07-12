@@ -52,8 +52,10 @@ def post_latest(request):
         posts)}))
 
 def post_create(request):    
-    if not Post.is_valid_link(request.POST.get('link', '')):
-        return HttpResponse(status = 400)
+    # if not Post.is_valid_link(request.POST.get('link', '')):
+    #     return HttpResponse(status = 400)
+    
+    raise BaseException(str(request.REQUEST))
 
     post = Post(
         username = user.nickname(),

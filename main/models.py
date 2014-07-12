@@ -37,7 +37,7 @@ def ms_since_epoch(dt):
     epoch = \
         datetime.datetime(1970, 1, 1, tzinfo = timezone.get_current_timezone())
     
-    return int(1000000 * (dt - epoch).total_seconds())
+    return int((dt - epoch).total_seconds())
 
 class JSONable():
     def as_json_dict(self):
