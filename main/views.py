@@ -29,7 +29,8 @@ def latest(request):
 def user_page(request, username):
     return render(request, 'main/index.html', {
         'listtype': 'user|' + username,
-        'inuser': user.nickname()
+        'inuser': user.nickname(),
+        'color': Googler.color_of(username)
         })
 
 def post_hottest(request):
@@ -106,9 +107,11 @@ def post_page_json(request, pk):
     return HttpResponse(json.dumps(result))
 
 def post_comments_page(request, post_id):
+    post = get_object_or_404(Post, id = post_id)
     return render(request, 'main/comments.html', {
-        'post': get_object_or_404(Post, id = post_id).as_json_dict(),
-        'inuser': user.nickname()
+        'post': post.as_json_dict(),
+        'inuser': user.nickname(),
+        'color': Googler.color_of(post.username)
         })
 
 def post_by(request, username):
