@@ -14,13 +14,13 @@ def respond(str, data = {}):
         {'message': str}.items())))
 
 def root(request):
-    return render(request, 'main/home.html', {'listtype': 'hottest'})
+    return render(request, 'main/index.html', {'listtype': 'hottest'})
 
 def latest(request):
-    return render(request, 'main/home.html', {'listtype': 'latest'})
+    return render(request, 'main/index.html', {'listtype': 'latest'})
 
 def user_page(request, username):
-    return render(request, 'main/home.html', {
+    return render(request, 'main/index.html', {
         'listtype': 'user|' + username
         })
 
