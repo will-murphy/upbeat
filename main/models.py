@@ -59,6 +59,10 @@ class Post(Model, JSONable):
     date_pub = DateTimeField(auto_now_add = True)
     deleted = BooleanField(default = False)
     
+    def __unicode__(self):
+        return ('(deleted)' if self.deleted else '') + \
+            'username = ' + self.username 
+    
     def json_keys(self):
         return ['id', 'title', 'text', 'link', 'score', 'username']
     
