@@ -191,9 +191,10 @@ dialogshare.addEventListener('tap', function(){
         var text = inputAll[3].inputValue;
     }
 
+    dialogshare.setEnableValue(false);
     progress.startProgress();
     dialogxhr.request({
-        url: '/post/create',
+        url: '/api/post/create',
         method: 'POST',
         params: {
             title: title,
@@ -202,16 +203,16 @@ dialogshare.addEventListener('tap', function(){
         },
         reponseType: 'json',
         callback: function(data, extra){
-            // if(extra.status == 200){
-                // insertNewPost(data.id, title, link);
-                insertNewPost(1, title, link);
+            if(extra.status == 200){
+                insertNewPost(data.id, title, link);
                 progress.stopProgress();
                 dialog.toggle();
                 dialog.clearInput();
-            // }else{
-            //     progress.stopProgress();
-            //     posterrortoast.show();
-            // }
+            }else{
+                progress.stopProgress();
+                posterrortoast.show();
+            }
+            dialogshare.setEnableValue(true);
         }
     });
 });

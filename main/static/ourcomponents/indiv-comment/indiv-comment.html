@@ -173,7 +173,7 @@
 				<textarea id="replytextarea"></textarea>
 				<div class="butts">
 					<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelReply}}"></paper-button>
-					<paper-button class="viewcomments" label="Save" on-tap="{{saveReply}}"></paper-button>
+					<paper-button id="savereply" class="viewcomments" label="Save" on-tap="{{saveReply}}"></paper-button>
 				</div>
 			</div>
 		</div>
@@ -216,8 +216,9 @@
 					return;
 				}
 
+				this.toggleSave(false);
 			    this.$.xhr.request({
-			        url: '/post/create',
+			        url: '/comment/create',
 			        method: 'POST',
 			        params: {
 			            post_id: window.postid,
@@ -226,16 +227,23 @@
 			        },
 			        responseType: 'json',
 			        callback: function(data, extra){
-			            // if(extra.status == 200){
-			                // insertNewPost(data.id, title, link);
-			                this.insertNewChild(1, text);
+			            if(extra.status == 200){
+			                this.insertNewChild(data.id, text);
 			                this.cancelReply();
-			            // }else{
-			            //     progress.stopProgress();
-			            //     posterrortoast.show();
-			            // }
+			            }else{
+			                progress.stopProgress();
+			                posterrortoast.show();
+			            }
+			            this.toggleSave(true);
 			        }.bind(this)
 			    });
+			},
+			toggleSave: function(value){
+				if(value){
+				    this.$.savecomment.removeAttribute('disabled');
+				}else{
+				    this.$.savecomment.setAttribute('disabled', true);
+				}
 			},
 			insertNewChild: function(id, text){
 				var newObj = {
@@ -264,7 +272,7 @@
 				if(!sender.active){
 					this.score--;
 					this.$.xhr.request({
-						url: '/comment/'+this.commentid+'/unvote',
+						url: '/api/comment/'+this.commentid+'/unvote',
 					});
 				}else{
 					var downButt = this.$.down;
@@ -273,7 +281,7 @@
 
 					downButt.active = false;
 					this.$.xhr.request({
-						url: '/comment/'+this.commentid+'/upvote',
+						url: '/api/comment/'+this.commentid+'/upvote',
 					});
 				}
 			},
@@ -281,7 +289,7 @@
 				if(!sender.active){
 					this.score++;
 					this.$.xhr.request({
-						url: '/comment/'+this.commentid+'/unvote',
+						url: '/api/comment/'+this.commentid+'/unvote',
 					});
 				}else{
 					var upButt = this.$.up;
@@ -291,7 +299,7 @@
 
 					upButt.active = false;
 					this.$.xhr.request({
-						url: '/comment/'+this.commentid+'/downvote',
+						url: '/api/comment/'+this.commentid+'/downvote',
 					});
 				}
 			},
@@ -307,7 +315,14 @@
 				this.$.commentbody.innerHTML = stuffEncode(newValue);
 				removeClass(this, 'editing');
 
-				//AJAX - save comment edits
+				this.toggleSave(false);
+			    this.$.xhr.request({
+			        url: '/api/comment/'+this.commentid,
+			        method: 'PUT',
+			        params: {
+			            text: text
+			        }
+			    });
 			},
 			deleteComment: function(){
 				this.score = 0;
@@ -316,6 +331,10 @@
 				addClass(this, 'deleted');
 
 				//AJAX - delete comment
+			    this.$.xhr.request({
+			        url: '/api/comment/'+this.commentid,
+			        method: 'DELETE'
+			    });
 			},
 			//look, if you're reading this, i'm really sorry for the sloppiness,
 			//i just gotta work super fast because i have to get back to making

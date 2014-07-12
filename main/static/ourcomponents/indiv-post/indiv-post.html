@@ -153,7 +153,7 @@
 				if(!sender.active){
 					this.score--;
 					this.$.xhr.request({
-						url: '/post/'+this.postid+'/unvote',
+						url: '/api/post/'+this.postid+'/unvote',
 					});
 				}else{
 					var downButt = this.$.down;
@@ -162,7 +162,7 @@
 
 					downButt.active = false;
 					this.$.xhr.request({
-						url: '/post/'+this.postid+'/upvote',
+						url: '/api/post/'+this.postid+'/upvote',
 					});
 				}
 			},
@@ -170,7 +170,7 @@
 				if(!sender.active){
 					this.score++;
 					this.$.xhr.request({
-						url: '/post/'+this.postid+'/unvote',
+						url: '/api/post/'+this.postid+'/unvote',
 					});
 				}else{
 					var upButt = this.$.up;
@@ -180,7 +180,7 @@
 
 					upButt.active = false;
 					this.$.xhr.request({
-						url: '/post/'+this.postid+'/downvote',
+						url: '/api/post/'+this.postid+'/downvote',
 					});
 				}
 			},
@@ -203,7 +203,7 @@
 			    }.bind(this));
 
 				this.$.xhr.request({
-					url: '/post/'+this.postid,
+					url: '/api/post/'+this.postid,
 					method: 'DELETE'
 				});
 
