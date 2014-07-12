@@ -24,7 +24,7 @@
 <body class="blue" unresolved touch-action="auto">
 	<big-header></big-header>
 	<div class="mainarea">
-		<posts-list listtype="hottest"></posts-list>
+		<posts-list listtype="{{ listtype }}"></posts-list>
 	</div>
 	<hanging-menu></hanging-menu>
 	<paper-dialog backdrop="true" id="newdialog" transition="paper-dialog-transition-bottom">
@@ -49,7 +49,7 @@
 			<div class="bottomstrip">
 				<paper-button class="cancel" label="Cancel"></paper-button>
 				<paper-button disabled class="share" label="Share"></paper-button>
-				<paper-progress value="0"></paper-progress>
+				<paper-progress value="30"></paper-progress>
 			</div>
 		</div>
 	</paper-dialog>
@@ -58,7 +58,7 @@
 	<script src="/static/assets/moment.js"></script>
 	<script src="/static/assets/web-animations.js"></script>
 	<script>
-		window.inuser = 'danieldaylewis';
+		window.inuser = '{{ inuser }}';
 	</script> 
 	<script src="/static/assets/script.js"></script>
 </body>

@@ -26,9 +26,11 @@
 			if(this.listtype == 'hottest'){
 				this.url = 'post/hottest';
 			}else if(this.listtype == 'latest'){
+				this.url = 'post/latest';
+			}else if(this.listtype.substring(0, 5) == 'user|'){
+				var user = this.listtype.substring(5);
 
-			}else{
-
+				this.url = 'user/'+user;
 			}
 		},
 		postsLoaded: function() {

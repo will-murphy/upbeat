@@ -241,8 +241,8 @@
 					this.cardtitle = 'Hottest Posts';
 				}else if(this.listtype == 'latest'){
 					this.cardtitle = 'Latest Posts';
-				}else if(this.listtype.substring(0, 2) == 'u|'){
-					var user = this.listtype.substring(2);
+				}else if(this.listtype.substring(0, 5) == 'user|'){
+					var user = this.listtype.substring(5);
 					this.cardtitle = capThatFirstLetter(user) + "'s Posts";
 					this.userpage = user;
 
@@ -264,9 +264,9 @@
 
 				this.$.xhr.request({
 					url: '/api/user/set-color',
-					params: {
+					body: objectToFormdata({
 						color: color
-					},
+					}),
 					method: 'POST'
 				});
 			},
