@@ -55,8 +55,8 @@
 	<div class="mainarea">
 		<div class="mainpost">
 			<paper-shadow z="1"></paper-shadow>
-			<indiv-post score="19" postid="32" mark="1" timestamp="1404831074000" author="afrojack">
-				<h1>The Golden Ticket is the metaphorical keystone of the aftermath</h1>
+			<indiv-post score="{{ post.score }}" postid="{{ post.id }}" mark="{{ post.mark }}" timestamp="{{ post.timestamp }}" author="{{ post.username }}">
+				<h1>{{ post.text }}</h1>
 			</indiv-post>
 		</div>
 		<comments-area postid="134"></comments-area>
