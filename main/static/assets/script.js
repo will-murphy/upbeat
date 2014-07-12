@@ -160,11 +160,12 @@ var inputAll = document.querySelectorAll('paper-dialog .middle paper-input');
 header.addEventListener('tap', function(){
     dialog.toggle();
 
+    //fix for polymer bug
     setTimeout(function(){
         for (var i = 0; i < inputAll.length; ++i) {
             inputAll[i].labelChanged();
         }
-    }, 100);
+    }, 200);
 });
 
 tabs.addEventListener('core-select', function(){

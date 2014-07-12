@@ -28,7 +28,7 @@ body.blue posts-list::shadow .cardtitle{
 body.blue paper-dialog paper-tabs{
 	background:#7986cb;
 }
-body.blue paper-tabs::shadow #selectionBar {
+body.blue paper-tabs::shadow #selectionBar, body.blue paper-dialog paper-progress::shadow #activeProgress {
 	background:#5c6bc0 !important;
 }
 body.blue .middle paper-input::shadow .focusedColor{
@@ -98,7 +98,7 @@ paper-dialog{
 	width: 494px;
 	min-height: 392px;
 	background:#fefefe;
-	border-radius:2px;
+	border-radius:4px;
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 paper-dialog .wrapper{
@@ -125,6 +125,7 @@ paper-dialog .bottomstrip{
 	bottom:0;
 	text-align:right;
 	padding:9px 10px;
+	border-radius: 0px 0px 4px 4px;
 	box-sizing:border-box;
 }
 paper-dialog .bottomstrip paper-button{
@@ -155,9 +156,6 @@ paper-dialog paper-progress{
 	height:3px;
 	width:100%;
 	bottom:0;
-}
-paper-dialog paper-progress::shadow #activeProgress{
-	background:#ff9800;
 }
 paper-dialog #container{
 	display:none;
