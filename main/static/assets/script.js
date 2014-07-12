@@ -198,8 +198,8 @@ dialogshare.addEventListener('tap', function(){
         method: 'POST',
         params: {
             title: title,
-            link: '',
-            text: ''
+            link: link,
+            text: text
         },
         reponseType: 'json',
         callback: function(data, extra){

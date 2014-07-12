@@ -147,7 +147,7 @@
 				}
 			},
 			recheckTime: function(){
-				this.$.ago.innerHTML = timeago(moment.utc(parseInt(this.$.ago.getAttribute('timestamp')*1000)));
+				this.$.ago.innerHTML = timeago(moment.utc(parseInt(this.$.ago.getAttribute('timestamp'))*1000));
 			},
 			thumbsUp: function(event, detail, sender) {
 				if(!sender.active){
