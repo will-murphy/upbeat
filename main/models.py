@@ -197,7 +197,12 @@ class Comment(Model, JSONable):
     
     def as_tree_of_json_dicts(self):
         tree = self.__as_tree_of_json_dicts_helper__({})
-        # TODO delete evil comments.
+        
+        def pop_deleted_children(children):
+            for child in children:
+                map(pop_deleted_children, child.children)
+                if child.deleted and 0 == len(child.children):
+                    children.remove(child)
     
     def __as_tree_of_json_dicts_helper__(self, stringified):
         if stringified.has_key(self.id):
