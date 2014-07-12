@@ -201,7 +201,7 @@ dialogshare.addEventListener('tap', function(){
     dialogshare.setEnableValue(false);
     progress.startProgress();
     dialogxhr.request({
-        url: '/api/post/create',
+        url: '/api/post/create/',
         method: 'POST',
         body: objectToFormdata({
             title: title,

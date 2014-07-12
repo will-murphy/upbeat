@@ -51,6 +51,7 @@ def post_latest(request):
         lambda post: post.as_summary_json_dict(),
         posts)}))
 
+@csrf_exempt
 def post_create(request):    
     # if not Post.is_valid_link(request.POST.get('link', '')):
     #     return HttpResponse(status = 400)
@@ -65,9 +66,6 @@ def post_create(request):
     post.save()
     post.upvote()
     return respond('Saved post.', {id: post.id})
-
-def post_update(request):
-    pass
 
 def post_delete(request):
     pass
@@ -134,7 +132,9 @@ def comment_create(request):
     return respond('Saved comment.', {id: comment.id})
 
 def comment_update(request):
-    pass
+    comment = get_object_or_404(Comment, id = request.POST['comment_id'])
+    comment.update(
+        text = request.POST.get(text, comment.text))
 
 def comment_delete(request):
     pass
