@@ -101,7 +101,7 @@ def post_page_json(request, pk):
     return HttpResponse(json.dumps(result))
 
 def post_comments_page(request, post_id):
-    return render(request, 'main/comments_page.html', {})
+    return render(request, 'main/comments.html', {})
 
 def post_by(request, username):
     return HttpResponse(Post.all_as_json(map(
