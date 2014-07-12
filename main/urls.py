@@ -28,6 +28,6 @@ urlpatterns = patterns('',
         views.activity_how_many_unread),
     url(r'^api/notifications/recent/?$', views.activity_recent),
     url(r'^api/notifications/?$', views.activity_own),
-    url(r'^api/user/([^/]+)/?$', views.user_page_json),
+    url(r'^api/user/page-json/([^/]+)/?$', views.user_page_json),
     url(r'^api/user/set-color/?$', views.user_set_color),
 )

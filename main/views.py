@@ -211,6 +211,7 @@ def user_page_json(request, username):
     return HttpResponse(json.dumps(response))
 
 def user_set_color(request):
+    raise BaseException(request.POST)
     Googler.create(
         username = user.nickname(),
         color = request.POST.get('color', ''))
