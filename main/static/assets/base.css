@@ -269,26 +269,26 @@ body.grey .middle paper-input::shadow .focusedColor{
 |--------------------------------------------------------------------------
 */
 body.bluegrey big-header{
-	/*500*/
-	background:#9e9e9e !important;
+	/*400*/
+	background:#78909c !important;
 }
 body.bluegrey posts-list::shadow .cardtitle{
-	/*400*/
-	background:#bdbdbd !important;
+	/*300*/
+	background:#90a4ae !important;
 }
 body.bluegrey paper-dialog paper-tabs{
-	/*400*/
-	background:#bdbdbd;
+	/*300*/
+	background:#90a4ae;
 }
 body.bluegrey paper-tabs::shadow #selectionBar, body.bluegrey paper-dialog paper-progress::shadow #activeProgress {
-	/*500*/
-	background:#9e9e9e !important;
+	/*400*/
+	background:#78909c !important;
 }
 body.bluegrey .middle paper-input::shadow .focusedColor{
-	/*500*/
-	background:#9e9e9e;
-	color:#bdbdbd;
 	/*400*/
+	background:#78909c;
+	color:#90a4ae;
+	/*300*/
 }
 
 h3{
