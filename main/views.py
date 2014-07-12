@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from main.models import Post, Comment, Activity, Vote, CommentVote, Googler
 import json
@@ -60,6 +61,7 @@ def post_create(request):
         link = request.POST.get('link', False),
         text = request.POST.get('text', False))
     post.save()
+    post.upvote()
     return respond('Saved post.', {id: post.id})
 
 def post_update(request):
