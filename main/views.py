@@ -106,7 +106,8 @@ def post_page_json(request, pk):
 
 def post_comments_page(request, post_id):
     return render(request, 'main/comments.html', {
-        'post': get_object_or_404(Post, id = post_id).as_json_dict()
+        'post': get_object_or_404(Post, id = post_id).as_json_dict(),
+        'inuser': user.nickname()
         })
 
 def post_by(request, username):
