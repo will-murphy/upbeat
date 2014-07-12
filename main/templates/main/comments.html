@@ -5,15 +5,17 @@
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 	<script src="../components/platform/platform.js"></script>
 	<link rel="import" href="../components/font-roboto/roboto.html">
-	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="base.css" shim-shadowdom>
 	<link rel="import" href="../components/paper-shadow/paper-shadow.html">
 	<link rel="import" href="../components/paper-dialog/paper-dialog.html">
 	<link rel="import" href="../components/paper-tabs/paper-tabs.html">
 	<link rel="import" href="../components/paper-input/paper-input.html">
+	<link rel="import" href="../components/core-ajax/core-xhr.html">
 	<link rel="import" href="../components/paper-dialog/paper-dialog-transition.html">
 	<link rel="import" href="../components/paper-progress/paper-progress.html">
 	<link rel="import" href="../components/core-transition/core-transition.html">
+	<link rel="import" href="../components/paper-shadow/paper-shadow.html">
+	<link rel="import" href="../components/paper-toast/paper-toast.html">
 	<link rel="import" href="../ourcomponents/posts-list/posts-list.html">
 	<link rel="import" href="../ourcomponents/big-header/big-header.html">
 	<link rel="import" href="../ourcomponents/hanging-menu/hanging-menu.html">
@@ -29,6 +31,14 @@
 		.mainpost indiv-post::shadow .viewcomments{
 			display:none;
 		}
+		.mainpost indiv-post h1{
+			color:#585858;
+			text-decoration:none;
+			letter-spacing: .3px;
+			font-size: 18px;
+			font-weight:300;
+			line-height: 1.34;
+		}
 		.mainpost indiv-post .bodytext{
 			color: #585858;
 			font-size: 15px;
@@ -39,19 +49,20 @@
 		}
 	</style>
 </head>
-<body unresolved touch-action="auto">
+<body class="orange" unresolved touch-action="auto">
 	<big-header></big-header>
 	<div class="mainarea">
 		<div class="mainpost">
 			<paper-shadow z="1"></paper-shadow>
 			<indiv-post score="19" postid="32" mark="1" timestamp="1404831074000" author="afrojack">
-				<!-- <p class="bodytext">Yhello?</p> -->
+				<h1>The Golden Ticket is the metaphorical keystone of the aftermath</h1>
 			</indiv-post>
 		</div>
-		<comments-area></comments-area>
+		<comments-area postid="134"></comments-area>
 	</div>
 	<hanging-menu></hanging-menu>
 	<paper-dialog backdrop="true" id="newdialog" transition="paper-dialog-transition-bottom">
+		<core-xhr id="dialogxhr"></core-xhr>
 		<div class="wrapper">
 			<div class="topstrip">
 				<paper-tabs selected="0">
@@ -76,9 +87,14 @@
 			</div>
 		</div>
 	</paper-dialog>
+	<paper-toast id="posterrortoast" text="Post submission unsuccessful."></paper-toast>
 	<script src="sizzle.js"></script>
 	<script src="moment.js"></script>
 	<script src="web-animations.js"></script> 
 	<script src="script.js"></script>
+	<script>
+		window.inuser = 'danieldaylewis';
+		window.postid = 'danieldaylewis';
+	</script>
 </body>
 </html>

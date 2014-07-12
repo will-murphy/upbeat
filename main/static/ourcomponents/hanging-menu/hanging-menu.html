@@ -2,16 +2,16 @@
 <link rel="import" href="../../components/core-icons/core-icons.html">
 <link rel="import" href="../../components/core-icons/iconsets/social-icons.html">
 
-<polymer-element name="hanging-menu">
+<polymer-element name="hanging-menu" attributes="inuser">
 	<template>
 		<link rel="stylesheet" href="../../public/style.css" shim-shadowdom>
 		<style>
 			:host{
 				display:block;
 				position: fixed;
-				top: 192px;
-				left: 50%;
-				margin-left: -548px;
+				top: 187px;
+				right: 50%;
+				margin-right: 451px;
 			}
 			ul{
 				text-align:right;
@@ -55,14 +55,24 @@
 				</a>
 			</li>
 			<li>
-				<a href="/user/userhere">
+				<a href="/user/{{inuser}}">
 					<core-icon icon="account-circle" size="18"></core-icon>
 					My Profile
+				</a>
+			</li>
+			<li>
+				<a href="/notifications">
+					<core-icon icon="social:notifications" size="18"></core-icon>
+					Notifications
 				</a>
 			</li>
 		</ul>
 	</template>
 	<script>
-		Polymer({});
+		Polymer({
+			created: function(){
+				this.inuser = window.inuser;
+			}
+		});
 	</script>
 </polymer-element>

@@ -1,0 +1,39 @@
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/core-ajax/core-ajax.html">
+<polymer-element name="posts-service" attributes="posts userinfo">
+	<template>
+		<style>
+			:host {
+				display: none;
+			}
+		</style>
+		<core-ajax id="ajax"
+			auto
+			url="../../public/api/dhp.json"
+			on-core-response="{{postsLoaded}}"
+			handleAs="json">
+		</core-ajax>
+		{{posts}}
+	</template>
+	<script>
+	Polymer('posts-service', {
+		created: function() {
+			this.posts = [];
+			this.userinfo = {};
+		},
+		postsLoaded: function() {
+			var response = this.$.ajax.response;
+			// Make a copy of the loaded data
+			this.posts = response.posts.slice(0);
+
+			if(response.userinfo){
+				this.userinfo = response.userinfo;
+			}
+
+			
+
+			this.fire('posts-loaded');
+		}
+	});
+	</script>
+</polymer-element>

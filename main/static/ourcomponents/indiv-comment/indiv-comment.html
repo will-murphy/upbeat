@@ -1,7 +1,8 @@
 <link rel="import" href="../../components/polymer/polymer.html">
 <link rel="import" href="../../components/paper-shadow/paper-shadow.html">
+<link rel="import" href="../../components/core-ajax/core-xhr.html">
 
-<polymer-element name="indiv-comment">
+<polymer-element name="indiv-comment" attributes="commentid mark text score username childs">
 	<template>
 		<link rel="stylesheet" href="../../public/style.css" shim-shadowdom>
 		<style>
@@ -9,6 +10,11 @@
 				display:block;
 				font-weight:300;
 				color:#636363;
+			}
+			.commentchildren{
+				padding-left:30px;
+			}
+			.inner{
 				padding-top:14px;
 			}
 			.toprow{
@@ -34,15 +40,29 @@
 				fill: #aeaeae;
 				display:inline-block;
 				vertical-align:middle;
+				transition:all .13s ease;
+			}
+			.toprow paper-icon-button:hover{
+				fill:#bcbcbc;
 			}
 			.toprow paper-icon-button::shadow core-icon, .toprow paper-icon-button::shadow core-icon svg{
 				height:15px !important;
 				width:15px !important;
 			}
+
 			.actualcomment{
-				padding: 7px 0px;
+				padding: 7px 0px 4px;
 				line-height: 1.43;
 				font-size: 15px;
+				color:#343434;
+			}
+			.actualcomment a{
+				color: rgb(132,132,132);
+				text-decoration:none;
+				transition:all .13s ease;
+			}
+			.actualcomment a:hover{
+				color:rgb(186,186,186);
 			}
 			.bottomrow{
 
@@ -53,35 +73,268 @@
 				display:inline-block;
 				vertical-align:middle;
 			}
-			.bottomrow .reply{
+			.bottomrow paper-button{
 				font-size:14px;
 				color:#929292;
+				text-transform:none;
 				cursor:pointer;
-				margin-left:15px;
+				margin-left:12px;
 				display:inline-block;
 				vertical-align:middle;
+				margin-right: -10px;
 				transition:all .13s ease;
 			}
 			.bottomrow .reply:hover{
 				color:#b7b7b7;
 			}
+			.replysection{
+				overflow:hidden;
+				padding-left:2px;
+				height:0px;
+				visibility:hidden;
+				transition:all .27s cubic-bezier(.4,0,.2,1);
+			}
+			.textsection textarea{
+				border: 0;
+				resize: none;
+				outline: 0;
+				margin-top:16px;
+				font-size: 13px;
+				font-weight: 300;
+				font-family:'RobotoDraft';
+				box-shadow: 0px 0px 2px rgba(0,0,0,.25);
+				min-height: 73px;
+				padding: 6px 9px;
+				color:#787878;
+				width: 400px;
+				border-radius: 2px;
+			}
+			.textsection .butts{
+				padding-top: 2px;
+			}
+			.textsection paper-button{
+				color:#929292;
+				font-size: 14px;
+				text-transform:none;
+			}
+			:host(.replying) .replysection{
+				height:143px;
+				visibility:visible;
+			}
+			.editsection{
+				display:none;
+			}
+			#edittextarea{
+				margin-top:3px;
+			}
+			:host(.editing) .bottomrow{
+				display:none;
+			}
+			:host(.editing) #commentbody{
+				display:none;
+			}
+			:host(.editing) .editsection{
+				display:block;
+			}
+			:host(.deleted) .bottomrow{
+				display:none;
+			}
+			:host(.deleted) .toprow paper-icon-button{
+				display:none;
+			}
 		</style>
-		<div class="toprow">
-			<paper-icon-button active?="{{mark == 1}}" id="up" isToggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button>
-			<paper-icon-button active?="{{mark == -1}}" id="down" isToggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
-			<a class="author" href="">larrypage</a>
-			<span class="date">2 hours ago</span>
+		<core-xhr id="xhr"></core-xhr>
+		<div class="inner">
+			<div class="toprow">
+				<paper-icon-button id="up" isToggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button>
+				<paper-icon-button id="down" isToggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
+				<a class="author" href="">{{ username }}</a>
+				<span class="date">2 hours ago</span>
+			</div>
+			<div class="actualcomment">
+				<div id="commentbody"></div>
+				<div class="editsection textsection">
+					<textarea id="edittextarea"></textarea>
+					<div class="butts">
+						<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelEdit}}"></paper-button>
+						<paper-button class="viewcomments" label="Save" on-tap="{{saveEdit}}"></paper-button>
+					</div>
+				</div>
+			</div>
+			<div class="bottomrow">
+				<div class="score">{{ score }}</div>
+				<paper-button class="reply" label="Reply" on-tap="{{reply}}"></paper-button>
+				<template if="{{inuser == username}}">
+					<paper-button class="edit" label="Edit" on-tap="{{edit}}"></paper-button>
+					<paper-button class="delete" label="Delete (double-click)" on-dblclick="{{deleteComment}}"></paper-button>
+				</template>
+			</div>
+			<div class="replysection textsection">
+				<textarea id="replytextarea"></textarea>
+				<div class="butts">
+					<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelReply}}"></paper-button>
+					<paper-button class="viewcomments" label="Save" on-tap="{{saveReply}}"></paper-button>
+				</div>
+			</div>
 		</div>
-		<div class="actualcomment">
-			@EAWharton Yeah, these are posted throughout the week, with more coming soon :D! We're working hard to foster these kinds of awesome interactions between peers who can help each other out by giving them a cool way to reach out and ask or offer. Let us know what you think!
+		<div id="commentchildren" class="commentchildren" parentid="{{commentid}}">
+			<content></content>
 		</div>
-		<div class="bottomrow">
-			<div class="score">378</div>
-			<div class="reply">Reply</div>
-		</div>
-		<content></content>
 	</template>
 	<script>
-		Polymer({});
+		Polymer({
+			text: 'ok',
+			score: 38,
+			username: 'abc',
+			created: function(){
+				this.inuser = window.inuser;
+			},
+			ready: function(){
+				this.childs = [];
+				this.recalculate();
+			},
+			domReady: function(){
+				if(this.mark == 1){
+					this.$.up.active = true;
+				}else if(this.mark == -1){
+					this.$.down.active = true;
+				}
+			},
+			recalculate: function(){
+				this.$.commentbody.innerHTML = stuffEncode(this.text);
+			},
+			reply: function(){
+				addClass(this, 'replying');
+			},
+			cancelReply: function(){
+				this.$.replytextarea.value = '';
+				removeClass(this, 'replying');
+			},
+			saveReply: function(){
+				var text = this.$.replytextarea.value;
+				if(!text){
+					return;
+				}
+
+			    this.$.xhr.request({
+			        url: '/post/create',
+			        method: 'POST',
+			        params: {
+			            post_id: window.postid,
+			            parent_comment_id: this.parentNode.getAttribute('parentid'),
+			            text: text
+			        },
+			        responseType: 'json',
+			        callback: function(data, extra){
+			            // if(extra.status == 200){
+			                // insertNewPost(data.id, title, link);
+			                this.insertNewChild(1, text);
+			                this.cancelReply();
+			            // }else{
+			            //     progress.stopProgress();
+			            //     posterrortoast.show();
+			            // }
+			        }.bind(this)
+			    });
+			},
+			insertNewChild: function(id, text){
+				var newObj = {
+					id: id,
+					text: text,
+					score: 1,
+					mark: 1,
+					username: window.inuser,
+					timestamp: (+new Date)/1000
+				};
+
+				var newcomment = document.createElement('indiv-comment');
+				newcomment.setAttribute('commentid', id);
+				newcomment.setAttribute('text', text);
+				newcomment.setAttribute('score', 1);
+				newcomment.setAttribute('mark', 1);
+				newcomment.setAttribute('username', window.inuser);
+				newcomment.setAttribute('timestamp', (+new Date)/1000);
+
+				prepend(newcomment, this.$.commentchildren)
+
+				newcomment.recalculate();
+				newcomment.animateDawg();
+			},
+			thumbsUp: function(event, detail, sender){
+				if(!sender.active){
+					this.score--;
+					this.$.xhr.request({
+						url: '/comment/'+this.commentid+'/unvote',
+					});
+				}else{
+					var downButt = this.$.down;
+					var downbuttActive = downButt.active;
+					this.score = parseInt(this.score) + 1 + (downbuttActive ? 1 : 0);
+
+					downButt.active = false;
+					this.$.xhr.request({
+						url: '/comment/'+this.commentid+'/upvote',
+					});
+				}
+			},
+			thumbsDown: function(event, detail, sender){
+				if(!sender.active){
+					this.score++;
+					this.$.xhr.request({
+						url: '/comment/'+this.commentid+'/unvote',
+					});
+				}else{
+					var upButt = this.$.up;
+
+					var upButtActive = upButt.active;
+					this.score = parseInt(this.score) - 1 - (upButtActive ? 1 : 0);
+
+					upButt.active = false;
+					this.$.xhr.request({
+						url: '/comment/'+this.commentid+'/downvote',
+					});
+				}
+			},
+			edit: function(){
+				addClass(this, 'editing');
+				this.$.edittextarea.value = this.text;
+			},
+			cancelEdit: function(){
+				removeClass(this, 'editing');
+			},
+			saveEdit: function(){
+				var newValue = this.$.edittextarea.value;
+				this.$.commentbody.innerHTML = stuffEncode(newValue);
+				removeClass(this, 'editing');
+
+				//AJAX - save comment edits
+			},
+			deleteComment: function(){
+				this.score = 0;
+				this.username = '[deleted]';
+				this.$.commentbody.innerHTML = '[deleted]';
+				addClass(this, 'deleted');
+
+				//AJAX - delete comment
+			},
+			//look, if you're reading this, i'm really sorry for the sloppiness,
+			//i just gotta work super fast because i have to get back to making
+			//ad layouts
+			animateDawg: function(){
+				var height = this.offsetHeight;
+
+				// newPost.style.height = '0px';
+				var player = document.timeline.play(new Animation(this, [
+				      {height: '0px', transform: "rotateX(90deg)"}, 
+				      {height: height+'px', transform: "rotateX(0deg)"}
+				    ],
+				    {
+				      direction: "alternate",
+				      duration: 382,
+				      iterations: 1,
+				      easing: 'cubic-bezier(.4,0,.2,1)'
+				    }));
+			}
+		});
 	</script>
 </polymer-element>
