@@ -31,6 +31,8 @@ def post_hottest(request):
     
     for post in posts: post.refresh_score()
     
+    posts = filter(lambda post: False == post.deleted, posts)
+    
     return HttpResponse(json.dumps(map(
         lambda post: post.as_summary_json_dict(), 
         posts)))
@@ -41,7 +43,9 @@ def post_latest(request):
         request.GET.get('max', None)))
     
     for post in posts: post.refresh_score()
-        
+    
+    posts = filter(lambda post: False == post.deleted, posts)
+    
     return HttpResponse(json.dumps(map(
         lambda post: post.as_summary_json_dict(),
         posts)))
@@ -56,7 +60,7 @@ def post_create(request):
         link = request.POST.get('link', False),
         text = request.POST.get('text', False))
     post.save()
-    return respond('Saved post.')
+    return respond('Saved post.', {id: post.id})
 
 def post_upvote(request, pk):
     post = get_object_or_404(Post, pk = pk)
@@ -77,6 +81,10 @@ def post_page_json(request, pk):
     result = {}
     
     post = get_object_or_404(Post, pk = pk)
+    
+    if post.deleted:
+        return render(request, 'main/post_has_been_deleted.html', {username: post.username})
+    
     post.refresh_score()
     result['post'] = post.as_full_json_dict()
     
@@ -92,7 +100,7 @@ def post_comments_page(request, post_id):
 def post_by(request, username):
     return HttpResponse(Post.all_as_json(map(
         lambda post: post.refresh_score(),
-        Post.objects.filter(username = username).all())))
+        Post.objects.filter(username = username, deleted = False).all())))
 
 def comment_json(request, pk):
     comment = get_object_or_404(Comment, pk = pk)
@@ -113,7 +121,7 @@ def comment_create(request):
     
     comment.save()
     comment.gen_activities()
-    return respond('Saved comment.')
+    return respond('Saved comment.', {id: comment.id})
 
 def comment_upvote(request, pk):
     comment = get_object_or_404(Comment, pk = pk)

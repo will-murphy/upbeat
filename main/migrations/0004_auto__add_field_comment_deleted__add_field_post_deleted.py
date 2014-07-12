@@ -8,12 +8,24 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Comment.date_pub'
-        db.rename_column(u'main_activity', 'reciever', 'receiver')
+        # Adding field 'Comment.deleted'
+        db.add_column(u'main_comment', 'deleted',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
+
+        # Adding field 'Post.deleted'
+        db.add_column(u'main_post', 'deleted',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        db.rename_column(u'main_activity', 'receiver', 'reciever')
+        # Deleting field 'Comment.deleted'
+        db.delete_column(u'main_comment', 'deleted')
+
+        # Deleting field 'Post.deleted'
+        db.delete_column(u'main_post', 'deleted')
+
 
     models = {
         u'main.activity': {
@@ -28,6 +40,7 @@ class Migration(SchemaMigration):
         u'main.comment': {
             'Meta': {'object_name': 'Comment'},
             'date_pub': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'parent_comment': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Comment']", 'null': 'True', 'blank': 'True'}),
             'post': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Post']", 'null': 'True', 'blank': 'True'}),
@@ -51,6 +64,7 @@ class Migration(SchemaMigration):
         u'main.post': {
             'Meta': {'object_name': 'Post'},
             'date_pub': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'link': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'score': ('django.db.models.fields.BigIntegerField', [], {'default': '0'}),

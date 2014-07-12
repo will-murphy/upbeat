@@ -57,9 +57,16 @@ class Post(Model, JSONable):
     text = TextField(blank = True)
     score = BigIntegerField(default = 0)
     date_pub = DateTimeField(auto_now_add = True)
+    deleted = BooleanField(default = False)
     
     def json_keys(self):
         return ['id', 'title', 'text', 'link', 'score', 'username']
+    
+    def soft_delete(self):
+        for comment in self.comment_set.all():
+            comment.soft_delete()
+        self.deleted = True
+        self.save()
     
     def as_json_dict(self):
         d = super(Post, self).as_json_dict()
@@ -171,9 +178,10 @@ class Comment(Model, JSONable):
     parent_comment = ForeignKey('Comment', blank = True, null = True)
     score = BigIntegerField(default = 0)
     date_pub = DateTimeField(auto_now_add = True)
+    deleted = BooleanField(default = False)
     
     def json_keys(self):
-        return ['id', 'text', 'score', 'username']
+        return ['id', 'text', 'score', 'username', 'deleted']
     
     def as_json_dict(self):
         self.refresh_score()
@@ -188,7 +196,8 @@ class Comment(Model, JSONable):
         return d
     
     def as_tree_of_json_dicts(self):
-        return self.__as_tree_of_json_dicts_helper__({})
+        tree = self.__as_tree_of_json_dicts_helper__({})
+        # TODO delete evil comments.
     
     def __as_tree_of_json_dicts_helper__(self, stringified):
         if stringified.has_key(self.id):
@@ -239,6 +248,10 @@ class Comment(Model, JSONable):
         self.score = score
         self.save()
         return self
+    
+    def soft_delete(self):
+        self.deleted = True
+        self.save()
     
     def gen_activities(self):
         username_pattern = re.compile('(?<=@)[A-Za-z0-9_]+')
