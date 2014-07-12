@@ -196,11 +196,11 @@ dialogshare.addEventListener('tap', function(){
     dialogxhr.request({
         url: '/api/post/create',
         method: 'POST',
-        params: {
+        body: JSON.stringify({
             title: title,
             link: link,
             text: text
-        },
+        }),
         reponseType: 'json',
         callback: function(data, extra){
             if(extra.status == 200){
