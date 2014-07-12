@@ -11,77 +11,257 @@ body big-header{
 body posts-list::shadow .cardtitle{
 	transition:all .23s cubic-bezier(0,0,.2,1);
 }
+/*
+|--------------------------------------------------------------------------
+| red
+|--------------------------------------------------------------------------
+*/
 body.red big-header{
-	background:#e51c23 !important;
+	/*400*/
 	background:#e84e40 !important;
 }
 body.red posts-list::shadow .cardtitle{
-	background:#e84e40 !important;
+	/*300*/
 	background:#f36c60 !important;
 }
+body.red paper-dialog paper-tabs{
+	/*300*/
+	background:#f36c60;
+}
+body.red paper-tabs::shadow #selectionBar, body.red paper-dialog paper-progress::shadow #activeProgress {
+	/*400*/
+	background:#e84e40 !important;
+}
+body.red .middle paper-input::shadow .focusedColor{
+	/*400*/
+	background:#e84e40;
+	color:#f36c60;
+	/*300*/
+}
+/*
+|--------------------------------------------------------------------------
+| blue
+|--------------------------------------------------------------------------
+*/
 body.blue big-header{
+	/*400*/
 	background:#5c6bc0 !important;
 }
 body.blue posts-list::shadow .cardtitle{
+	/*300*/
 	background:#7986cb !important;
 }
 body.blue paper-dialog paper-tabs{
+	/*300*/
 	background:#7986cb;
 }
 body.blue paper-tabs::shadow #selectionBar, body.blue paper-dialog paper-progress::shadow #activeProgress {
+	/*400*/
 	background:#5c6bc0 !important;
 }
 body.blue .middle paper-input::shadow .focusedColor{
+	/*400*/
 	background:#5c6bc0;
 	color:#7986cb;
+	/*300*/
 }
+/*
+|--------------------------------------------------------------------------
+| lightblue
+|--------------------------------------------------------------------------
+*/
 body.lightblue big-header{
 	background:#29b6f6 !important;
 }
 body.lightblue posts-list::shadow .cardtitle{
 	background:#4fc3f7 !important;
 }
+/*
+|--------------------------------------------------------------------------
+| teal
+|--------------------------------------------------------------------------
+*/
 body.teal big-header{
+	/*500*/
 	background:#009688 !important;
 }
 body.teal posts-list::shadow .cardtitle{
+	/*400*/
 	background:#26a69a !important;
 }
+body.teal paper-dialog paper-tabs{
+	/*400*/
+	background:#26a69a;
+}
+body.teal paper-tabs::shadow #selectionBar, body.teal paper-dialog paper-progress::shadow #activeProgress {
+	/*500*/
+	background:#009688 !important;
+}
+body.teal .middle paper-input::shadow .focusedColor{
+	/*500*/
+	background:#009688;
+	color:#26a69a;
+	/*400*/
+}
+/*
+|--------------------------------------------------------------------------
+| purple
+|--------------------------------------------------------------------------
+*/
 body.purple big-header{
+	/*400*/
 	background:#ab47bc !important;
 }
 body.purple posts-list::shadow .cardtitle{
+	/*300*/
 	background:#ba68c8 !important;
 }
+body.purple paper-dialog paper-tabs{
+	/*300*/
+	background:#ba68c8;
+}
+body.purple paper-tabs::shadow #selectionBar, body.purple paper-dialog paper-progress::shadow #activeProgress {
+	/*400*/
+	background:#ab47bc !important;
+}
+body.purple .middle paper-input::shadow .focusedColor{
+	/*400*/
+	background:#ab47bc;
+	color:#ba68c8;
+	/*300*/
+}
+/*
+|--------------------------------------------------------------------------
+| green
+|--------------------------------------------------------------------------
+*/
 body.green big-header{
+	/*300*/
 	background:#42bd41 !important;
 }
 body.green posts-list::shadow .cardtitle{
+	/*200*/
 	background:#72d572 !important;
 }
+body.green paper-dialog paper-tabs{
+	/*200*/
+	background:#72d572;
+}
+body.green paper-tabs::shadow #selectionBar, body.green paper-dialog paper-progress::shadow #activeProgress {
+	/*300*/
+	background:#42bd41 !important;
+}
+body.green .middle paper-input::shadow .focusedColor{
+	/*300*/
+	background:#42bd41;
+	color:#72d572;
+	/*200*/
+}
+/*
+|--------------------------------------------------------------------------
+| orange
+|--------------------------------------------------------------------------
+*/
 body.orange big-header{
 	background:#ffa726 !important;
 }
 body.orange posts-list::shadow .cardtitle{
 	background:#ffb74d !important;
 }
+body.orange paper-dialog paper-tabs{
+	/*200*/
+	background:#72d572;
+}
+body.orange paper-tabs::shadow #selectionBar, body.orange paper-dialog paper-progress::shadow #activeProgress {
+	/*300*/
+	background:#42bd41 !important;
+}
+body.orange .middle paper-input::shadow .focusedColor{
+	/*300*/
+	background:#42bd41;
+	color:#72d572;
+	/*200*/
+}
+/*
+|--------------------------------------------------------------------------
+| deeporange
+|--------------------------------------------------------------------------
+*/
 body.deeporange big-header{
+	/*400*/
 	background:#ff7043 !important;
 }
 body.deeporange posts-list::shadow .cardtitle{
+	/*300*/
 	background:#ff8a65 !important;
 }
+body.deeporange paper-dialog paper-tabs{
+	/*300*/
+	background:#ff8a65;
+}
+body.deeporange paper-tabs::shadow #selectionBar, body.deeporange paper-dialog paper-progress::shadow #activeProgress {
+	/*400*/
+	background:#ff7043 !important;
+}
+body.deeporange .middle paper-input::shadow .focusedColor{
+	/*400*/
+	background:#ff7043;
+	color:#ff8a65;
+	/*300*/
+}
+/*
+|--------------------------------------------------------------------------
+| brown
+|--------------------------------------------------------------------------
+*/
 body.brown big-header{
+	/*400*/
 	background:#8d6e63 !important;
 }
 body.brown posts-list::shadow .cardtitle{
+	/*300*/
 	background:#a1887f !important;
 }
+body.brown paper-dialog paper-tabs{
+	/*300*/
+	background:#a1887f;
+}
+body.brown paper-tabs::shadow #selectionBar, body.brown paper-dialog paper-progress::shadow #activeProgress {
+	/*400*/
+	background:#8d6e63 !important;
+}
+body.brown .middle paper-input::shadow .focusedColor{
+	/*400*/
+	background:#8d6e63;
+	color:#a1887f;
+	/*300*/
+}
+/*
+|--------------------------------------------------------------------------
+| grey
+|--------------------------------------------------------------------------
+*/
 body.grey big-header{
+	/*500*/
 	background:#9e9e9e !important;
 }
 body.grey posts-list::shadow .cardtitle{
+	/*400*/
 	background:#bdbdbd !important;
+}
+body.grey paper-dialog paper-tabs{
+	/*400*/
+	background:#bdbdbd;
+}
+body.grey paper-tabs::shadow #selectionBar, body.grey paper-dialog paper-progress::shadow #activeProgress {
+	/*500*/
+	background:#9e9e9e !important;
+}
+body.grey .middle paper-input::shadow .focusedColor{
+	/*500*/
+	background:#9e9e9e;
+	color:#bdbdbd;
+	/*400*/
 }
 
 h3{

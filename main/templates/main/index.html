@@ -21,7 +21,7 @@
 	<link rel="import" href="/static/ourcomponents/big-header/big-header.html">
 	<link rel="import" href="/static/ourcomponents/hanging-menu/hanging-menu.html">
 </head>
-<body class="blue" unresolved touch-action="auto">
+<body class="{% if listtype == 'hottest' or listtype == 'latest' %}blue{% else %}{{ color|default:'grey' }}{% endif %}" unresolved touch-action="auto">
 	<big-header></big-header>
 	<div class="mainarea">
 		<posts-list listtype="{{ listtype }}"></posts-list>
