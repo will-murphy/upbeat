@@ -62,6 +62,12 @@ def post_create(request):
     post.save()
     return respond('Saved post.', {id: post.id})
 
+def post_update(request):
+    pass
+
+def post_delete(request):
+    pass
+
 def post_upvote(request, pk):
     post = get_object_or_404(Post, pk = pk)
     post.upvote()
@@ -122,6 +128,12 @@ def comment_create(request):
     comment.save()
     comment.gen_activities()
     return respond('Saved comment.', {id: comment.id})
+
+def comment_update(request):
+    pass
+
+def comment_delete(request):
+    pass
 
 def comment_upvote(request, pk):
     comment = get_object_or_404(Comment, pk = pk)
