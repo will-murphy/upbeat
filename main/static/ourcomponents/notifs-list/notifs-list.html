@@ -2,10 +2,10 @@
 <link rel="import" href="../../components/paper-shadow/paper-shadow.html">
 <link rel="import" href="../../components/core-icon-button/core-icon-button.html">
 <link rel="import" href="../../components/core-ajax/core-xhr.html">
-<link rel="import" href="../../ourcomponents/indiv-post/indiv-post.html">
-<link rel="import" href="../../ourcomponents/posts-service/posts-service.html">
+<link rel="import" href="../../ourcomponents/indiv-notif/indiv-notif.html">
+<link rel="import" href="../../ourcomponents/notifs-service/notifs-service.html">
 
-<polymer-element name="posts-list" attributes="listtype userpage">
+<polymer-element name="notifs-list" attributes="listtype userpage">
 	<template>
 		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom>
 		<style>
@@ -29,22 +29,6 @@
 				border-radius:2px 2px 0px 0px;
 				overflow:hidden;
 			}
-			.cardtitle .pickcolor{
-				position: absolute;
-				z-index:2;
-				height: 100%;
-				width: 100%;
-				left: 0px;
-				top: -100%;
-				transition:all .23s cubic-bezier(.4,0,.2,1);
-			}
-			.cardtitle .pickcolor h4{
-				font-size: 17px;
-				font-weight: 300;
-				letter-spacing: .5px;
-				text-shadow: 0px 0px 1px rgba(0,0,0,.2);
-				margin: 19px 0px 0px 36px;
-			}
 			.cardtitle .main{
 				position: absolute;
 				height: 100%;
@@ -55,22 +39,12 @@
 				box-sizing:border-box;
 				transition:all .23s cubic-bezier(.4,0,.2,1);
 			}
-			:host(.isself) .cardtitle core-icon-button.options{
-				display:block;
-			}
 			.cardtitle core-icon-button.options{
 				position: absolute;
-				display:none;
 				z-index:5;
 				top: 6px;
 				right: 7px;
 				fill: #e3e3e3;
-			}
-			.cardtitle.optioning .pickcolor{
-				top:0%;
-			}
-			.cardtitle.optioning .main{
-				top:100%;
 			}
 			:host indiv-post h1{
 				color:#585858;
@@ -80,116 +54,20 @@
 				font-weight:300;
 				line-height: 1.34;
 			}
-			.colors{
-				padding-top:7px;
-				margin-left:36px;
-			}
-			.colors .topcolors{
-				margin-left:20px;
-			}
-			.colors .bottomcolors{
-				margin-top:-1px;
-			}
-			.colors .color{
-				height:22px;
-				width:22px;
-				border-radius:42px;
-				margin-right:10px;
-				cursor:pointer;
-				display:inline-block;
-				/*border:2px solid rgba(205,205,205,.84);*/
-				box-shadow:0px 0px 1px rgba(255,255,255,1);
-				transition:all .13s ease;
-			}
-			.colors .color:hover{
-				opacity:.7;
-			}
-			.colors .color.red{
-				background:#e51c23;
-			}
-			.colors .color.lightblue{
-				background:#29b6f6;
-			}
-			.colors .color.teal{
-				background:#00897b;
-			}
-			.colors .color.purple{
-				background:#ab47bc;
-			}
-			.colors .color.green{
-				background:#42bd41;
-			}
-			.colors .color.orange{
-				background:#ffa726;
-			}
-			.colors .color.grey{
-				background:#9e9e9e;
-			}
-			.colors .color.deeporange{
-				background:#ff7043;
-			}
-			.colors .color.brown{
-				background:#8d6e63;
-			}
-			.emptymessage{
-				position:relative;
-				text-align: center;
-				color:#585858;
-				font-size: 19px;
-				font-weight: 300;
-				letter-spacing: .3px;
-				max-height:0px;
-				opacity:0;
-				transition:all .42s cubic-bezier(0,0,.2,1);
-			}
-			.emptymessage p{
-				font-size:23px;
-			}
-			.emptymessage hr{
-				position: absolute;
-				border: 0px;
-				height: 1px;
-				background: #e1e1e1;
-				left: 260px;
-				right: 260px;
-				top: 90px;
-			}
-			.emptymessage h5{
-				margin-top: 65px;
-				padding: 0px 224px;
-				font-size: 20px;
-				line-height: 1.6;
-			}
-			.emptymessage span{
-				display:inline-block;
-				font-size: 13px;
-				margin-top:10px;
-				letter-spacing: .6px;
-			}
-			:host(.emptylist) .emptymessage{
-				max-height:370px;
-				visibility:visible;
-				opacity:1;
-				overflow:hidden;
-			}
-			:host(.emptylist) .emptymessage .inner{
-				-webkit-transform:translate(0px, 0px);
-				transform:translate(0px, 0px);
-			}
-			.emptymessage .inner{
-				transition:all .23s cubic-bezier(0,0,.2,1);
-				-webkit-transform:translate(0px, -55px);
-				transform:translate(0px, -55px);
-				padding:42px 40px 48px;
-			}
 			.cardtitle h1{
 				text-shadow: 0px 0px 1px rgba(0,0,0,.3);
 				letter-spacing: .9px;
 				font-size:24px;
 			}
 		</style>
-		<posts-service id="service" on-posts-loaded="{{postsLoaded}}" posts="{{posts}}" userinfo="{{userinfo}}" listtype="{{listtype}}"></posts-service>
+		<notifs-service id="service"></notifs-service>
 		<core-xhr id="xhr"></core-xhr>
+		<div class="cardtitle">
+			<div class="main">
+				<h1>Notifications</h1>
+			</div>
+		</div>
+		<paper-shadow z="1"></paper-shadow>
 	</template>
 	<script>
 		Polymer('notifs-list', {

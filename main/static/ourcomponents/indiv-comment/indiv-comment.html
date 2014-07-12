@@ -157,7 +157,7 @@
 					<textarea id="edittextarea"></textarea>
 					<div class="butts">
 						<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelEdit}}"></paper-button>
-						<paper-button class="viewcomments" label="Save" on-tap="{{saveEdit}}"></paper-button>
+						<paper-button id="editsave" class="viewcomments" label="Save" on-tap="{{saveEdit}}"></paper-button>
 					</div>
 				</div>
 			</div>
@@ -211,7 +211,7 @@
 				removeClass(this, 'replying');
 			},
 			saveReply: function(){
-				var text = this.$.replytextarea.value;
+				var text = this.$.edittextarea.value;
 				if(!text){
 					return;
 				}
@@ -240,9 +240,9 @@
 			},
 			toggleSave: function(value){
 				if(value){
-				    this.$.savecomment.removeAttribute('disabled');
+				    this.$.editsave.removeAttribute('disabled');
 				}else{
-				    this.$.savecomment.setAttribute('disabled', true);
+				    this.$.editsave.setAttribute('disabled', true);
 				}
 			},
 			insertNewChild: function(id, text){
@@ -311,17 +311,17 @@
 				removeClass(this, 'editing');
 			},
 			saveEdit: function(){
-				var newValue = this.$.edittextarea.value;
-				this.$.commentbody.innerHTML = stuffEncode(newValue);
+				var text = this.$.edittextarea.value;
+				this.$.commentbody.innerHTML = stuffEncode(text);
 				removeClass(this, 'editing');
 
 				this.toggleSave(false);
 			    this.$.xhr.request({
-			        url: '/api/comment/'+this.commentid,
-			        method: 'PUT',
-			        params: {
+			        url: '/api/comment/update/'+this.commentid,
+			        method: 'POST',
+			        body: objectToFormdata({
 			            text: text
-			        }
+			        })
 			    });
 			},
 			deleteComment: function(){
