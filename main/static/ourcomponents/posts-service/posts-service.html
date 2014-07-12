@@ -1,6 +1,6 @@
 <link rel="import" href="../../components/polymer/polymer.html">
 <link rel="import" href="../../components/core-ajax/core-ajax.html">
-<polymer-element name="posts-service" attributes="posts userinfo">
+<polymer-element name="posts-service" attributes="listtype posts userinfo">
 	<template>
 		<style>
 			:host {
@@ -23,7 +23,13 @@
 			this.userinfo = {};
 		},
 		ready: function(){
-			alert(this.listtype);
+			if(this.listtype == 'hottest'){
+				this.url = 'post/hottest';
+			}else if(this.listtype == 'latest'){
+
+			}else{
+
+			}
 		},
 		postsLoaded: function() {
 			var response = this.$.ajax.response;
