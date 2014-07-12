@@ -128,6 +128,13 @@ function stuffEncode(text){
 function prepend(child, parent){
     parent.insertBefore(child,parent.firstChild);
 }
+function objectToFormdata(obj){
+    var formdata = new FormData();
+    for(var name in obj){
+        formdata.append(name, obj[name]);
+    }
+    return formdata;
+}
 
 console.log('%cGoogle', 'background: green; color: white; display: block;');
 
@@ -196,12 +203,12 @@ dialogshare.addEventListener('tap', function(){
     dialogxhr.request({
         url: '/api/post/create',
         method: 'POST',
-        body: JSON.stringify({
+        body: objectToFormdata({
             title: title,
             link: link,
             text: text
         }),
-        reponseType: 'json',
+        responseType: 'json',
         callback: function(data, extra){
             if(extra.status == 200){
                 insertNewPost(data.id, title, link);

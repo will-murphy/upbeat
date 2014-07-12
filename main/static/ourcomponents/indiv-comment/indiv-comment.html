@@ -220,11 +220,11 @@
 			    this.$.xhr.request({
 			        url: '/comment/create',
 			        method: 'POST',
-			        params: {
+			        body: objectToFormdata({
 			            post_id: window.postid,
 			            parent_comment_id: this.parentNode.getAttribute('parentid'),
 			            text: text
-			        },
+			        }),
 			        responseType: 'json',
 			        callback: function(data, extra){
 			            if(extra.status == 200){

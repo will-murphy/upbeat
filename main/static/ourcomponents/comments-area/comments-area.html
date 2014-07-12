@@ -92,10 +92,10 @@
 			    this.$.xhr.request({
 			        url: '/api/comment/create',
 			        method: 'POST',
-			        params: {
+			        body: objectToFormdata({
 			            post_id: this.postid,
 			            text: text
-			        },
+			        }),
 			        responseType: 'json',
 			        callback: function(data, extra){
 			            if(extra.status == 200){
