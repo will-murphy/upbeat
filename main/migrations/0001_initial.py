@@ -26,7 +26,7 @@ class Migration(SchemaMigration):
             ('sender', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('reciever', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('read', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('text', self.gf('django.db.models.fields.TextField')()),
+            ('comment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Comment'])),
             ('date_sent', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal(u'main', ['Activity'])
@@ -35,9 +35,10 @@ class Migration(SchemaMigration):
         db.create_table(u'main_comment', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('username', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('text', self.gf('django.db.models.fields.TextField')()),
+            ('text', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('post', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Post'], null=True, blank=True)),
             ('parent_comment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Comment'], null=True, blank=True)),
+            ('score', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
         ))
         db.send_create_signal(u'main', ['Comment'])
 
@@ -62,7 +63,7 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('username', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('post', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Post'])),
-            ('value', self.gf('django.db.models.fields.SmallIntegerField')()),
+            ('mark', self.gf('django.db.models.fields.SmallIntegerField')(default=0)),
         ))
         db.send_create_signal(u'main', ['Vote'])
 
@@ -71,9 +72,17 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('username', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('comment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Comment'])),
-            ('value', self.gf('django.db.models.fields.SmallIntegerField')()),
+            ('mark', self.gf('django.db.models.fields.SmallIntegerField')(default=0)),
         ))
         db.send_create_signal(u'main', ['CommentVote'])
+
+        # Adding model 'Googler'
+        db.create_table(u'main_googler', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('username', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('color', self.gf('django.db.models.fields.CharField')(max_length=255)),
+        ))
+        db.send_create_signal(u'main', ['Googler'])
 
 
     def backwards(self, orm):
@@ -98,31 +107,41 @@ class Migration(SchemaMigration):
         # Deleting model 'CommentVote'
         db.delete_table(u'main_commentvote')
 
+        # Deleting model 'Googler'
+        db.delete_table(u'main_googler')
+
 
     models = {
         u'main.activity': {
             'Meta': {'object_name': 'Activity'},
+            'comment': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Comment']"}),
             'date_sent': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'read': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'reciever': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'sender': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'text': ('django.db.models.fields.TextField', [], {})
+            'sender': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'main.comment': {
             'Meta': {'object_name': 'Comment'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'parent_comment': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Comment']", 'null': 'True', 'blank': 'True'}),
             'post': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Post']", 'null': 'True', 'blank': 'True'}),
-            'text': ('django.db.models.fields.TextField', [], {}),
+            'score': ('django.db.models.fields.BigIntegerField', [], {'default': '0'}),
+            'text': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'main.commentvote': {
             'Meta': {'object_name': 'CommentVote'},
             'comment': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Comment']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'username': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'value': ('django.db.models.fields.SmallIntegerField', [], {})
+            'mark': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
+            'username': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+        },
+        u'main.googler': {
+            'Meta': {'object_name': 'Googler'},
+            'color': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'username': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'main.post': {
             'Meta': {'object_name': 'Post'},
@@ -138,14 +157,14 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'Tag'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.TextField', [], {}),
-            'posts': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['main.Post']", 'symmetrical': 'False'})
+            'posts': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['main.Post']", 'null': 'True', 'blank': 'True'})
         },
         u'main.vote': {
             'Meta': {'object_name': 'Vote'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'mark': ('django.db.models.fields.SmallIntegerField', [], {'default': '0'}),
             'post': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Post']"}),
-            'username': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'value': ('django.db.models.fields.SmallIntegerField', [], {})
+            'username': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         }
     }
 
