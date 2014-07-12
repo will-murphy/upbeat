@@ -120,9 +120,9 @@ function htmlEscape(str) {
             .replace(/>/g, '&gt;');
 }
 function stuffEncode(text){
+    result = htmlEscape(text);
     var result = linkify(text);
     result = result.replace(/(?:\r\n|\r|\n)/g, '<br />');
-    result = htmlEscape(text);
     return result;
 }
 function prepend(child, parent){

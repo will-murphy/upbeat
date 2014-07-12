@@ -317,10 +317,11 @@
 
 				this.toggleSave(false);
 			    this.$.xhr.request({
-			        url: '/api/comment/update/'+this.commentid,
+			        url: '/api/comment/update/',
 			        method: 'POST',
 			        body: objectToFormdata({
-			            text: text
+			            text: text,
+			            id: this.commentid
 			        })
 			    });
 			},
