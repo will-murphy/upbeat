@@ -15,10 +15,16 @@ def respond(str, data = {}):
         {'message': str}.items())))
 
 def root(request):
-    return render(request, 'main/index.html', {'listtype': 'hottest'})
+    return render(request, 'main/index.html', {
+        'listtype': 'hottest',
+        'inuser': user.nickname()
+        })
 
 def latest(request):
-    return render(request, 'main/index.html', {'listtype': 'latest'})
+    return render(request, 'main/index.html', {
+        'listtype': 'latest',
+        'inuser': user.nickname()
+        })
 
 def user_page(request, username):
     return render(request, 'main/index.html', {
@@ -51,24 +57,20 @@ def post_latest(request):
         lambda post: post.as_summary_json_dict(),
         posts)}))
 
-@csrf_exempt
-def post_create(request):    
-    # if not Post.is_valid_link(request.POST.get('link', '')):
-    #     return HttpResponse(status = 400)
-    
-    raise BaseException(str(request.REQUEST))
-
-    post = Post(
+def post_create(request):
+    post = Post.objects.create(
         username = user.nickname(),
         title = request.POST['title'],
-        link = request.POST.get('link', False),
-        text = request.POST.get('text', False))
+        link = request.POST.get('link', ['']),
+        text = request.POST.get('text', ['']))
     post.save()
     post.upvote()
-    return respond('Saved post.', {id: post.id})
+    return respond('Saved post.', {'id': post.id})
 
 def post_delete(request):
-    pass
+    post = get_object_or_404(Post, pk = request.POST.get('post_id', ''))
+    post.soft_delete()
+    return respond('Deleted post.')
 
 def post_upvote(request, pk):
     post = get_object_or_404(Post, pk = pk)
@@ -103,7 +105,9 @@ def post_page_json(request, pk):
     return HttpResponse(json.dumps(result))
 
 def post_comments_page(request, post_id):
-    return render(request, 'main/comments.html', {})
+    return render(request, 'main/comments.html', {
+        'post': get_object_or_404(Post, id = post_id).as_json_dict()
+        })
 
 def post_by(request, username):
     return HttpResponse(Post.all_as_json(map(
@@ -137,7 +141,11 @@ def comment_update(request):
         text = request.POST.get(text, comment.text))
 
 def comment_delete(request):
-    pass
+    comment = get_object_or_404(
+        Comment, 
+        id = request.POST.get('comment_id', ''))
+    comment.soft_delete()
+    return respond('Deleted comment.')
 
 def comment_upvote(request, pk):
     comment = get_object_or_404(Comment, pk = pk)
