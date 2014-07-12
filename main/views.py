@@ -28,7 +28,8 @@ def latest(request):
 
 def user_page(request, username):
     return render(request, 'main/index.html', {
-        'listtype': 'user|' + username
+        'listtype': 'user|' + username,
+        'inuser': user.nickname()
         })
 
 def post_hottest(request):
