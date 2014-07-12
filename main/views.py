@@ -149,6 +149,7 @@ def comment_create(request):
             id = request.POST.get('comment_id', None)))
     
     comment.gen_activities()
+    comment.upvote()
     return respond('Saved comment.', {'id': comment.id})
 
 def comment_update(request):
@@ -197,14 +198,17 @@ def activity_recent(request):
 def activity_own(request):
     activities = Activity.objects.filter(receiver = user.nickname()).all()
     
-    response = map(
+    activities = map(
         lambda activity: {
             'username': activity.sender,
-            'text': activity.comment.text,
-            'post_id': activity.comment.post.id,
-            'title': activity.comment.post.title,
+            'text': activity.text,
         },
         activities)
+    
+    response = {
+        'read': activities.filter(read = True),
+        'unread': activities.filter(read = False)
+    }
     
     return HttpResponse(json.dumps(response))
 

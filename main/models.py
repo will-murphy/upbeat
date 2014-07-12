@@ -169,7 +169,8 @@ class Activity(Model, JSONable):
     sender = CharField(max_length = 255)
     receiver = CharField(max_length = 255)
     read = BooleanField(default = False)
-    comment = ForeignKey('Comment')
+    comment = ForeignKey('Comment', blank = True, null = True)
+    post = ForeignKey('Post', blank = True, null = True)
     date_sent = DateTimeField(auto_now_add = True)
 
     def json_keys(self):
