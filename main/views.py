@@ -153,7 +153,7 @@ def comment_create(request):
     return respond('Saved comment.', {'id': comment.id})
 
 def comment_update(request):
-    comment = get_object_or_404(Comment, id = request.POST['comment_id'])
+    comment = get_object_or_404(Comment, id = request.POST['id'])
     comment.update(
         text = request.POST.get(text, comment.text))
 
