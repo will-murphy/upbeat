@@ -1,0 +1,81 @@
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/paper-fab/paper-fab.html">
+<link rel="import" href="../../components/core-icons/core-icons.html">
+<link rel="import" href="../../components/core-icons/iconsets/device-icons.html">
+<link rel="import" href="../../components/paper-dialog/paper-dialog.html">
+
+<polymer-element name="big-header">
+	<template>
+		<style>
+			:host{
+				display:block;
+				position:fixed;
+				height:148px;
+				width:100%;
+				/*background:#3f51b5;*/
+				background:#5c6bc0;
+				box-shadow: 0px 2px 0px #ffffff;
+				border-bottom: 1px solid #878787;
+			}
+			.leftside{
+				height: 100%;
+			}
+			#logo{
+				font-size: 36px;
+				font-weight: 600;
+				color:white;
+				display:inline-block;
+				position: absolute;
+				top: 90px;
+				left: 50%;
+				margin-left: -614px;
+				font-family:'Source Sans Pro';
+			}
+			#logo.colored{
+				letter-spacing: -5.2px;
+			}
+			#logo core-icon{
+				fill:#ffffff;
+				margin-top: -4px;
+			}
+			.letterb{
+				color:#1369ea;
+			}
+			.letterr{
+				color:#d8422d;
+			}
+			.lettery{
+				color:#ffbb03;
+			}
+			.letterg{
+				color:#009a57;
+			}
+			paper-fab{
+				position: fixed;
+				top: 120px;
+				left: 50%;
+				margin-left: 440px;
+				font-size: 48px;
+			}
+		</style>
+		<div class="leftside">
+<!-- 			<div id="logo" class="colored">
+				<span class="letterb">U</span>
+				<span class="letterr">p</span>
+				<span class="lettery">b</span>
+				<span class="letterb">e</span>
+				<span class="letterg">a</span>
+				<span class="letterr">t</span>
+			</div> -->
+			<div id="logo">
+				<core-icon icon="device:data-usage" size="40"></core-icon>
+				Upbeat
+			</div>
+			<paper-fab icon="add"></paper-fab>
+
+		</div>
+	</template>
+	<script>
+		Polymer({});
+	</script>
+</polymer-element>

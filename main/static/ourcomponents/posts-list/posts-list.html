@@ -1,0 +1,67 @@
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/paper-shadow/paper-shadow.html">
+<link rel="import" href="../../ourcomponents/indiv-post/indiv-post.html">
+
+<polymer-element name="posts-list" attributes="listtype">
+	<template>
+		<link rel="stylesheet" href="../../public/style.css" shim-shadowdom>
+		<style>
+			:host{
+				display:block;
+				margin:0 auto;
+				height:2000px;
+				width:100%;
+				background:#fefefe;
+				border-radius:2px;
+			}
+			.cardtitle{
+				height:103px;
+				color:white;
+				width:100%;
+				background:#7986cb;
+				padding: 56px 0px 0px 36px;
+				font-weight:400;
+				box-sizing:border-box;
+				box-shadow: 0px 2px 0px #ffffff;
+				border-bottom: 1px solid #878787;
+			}
+			.cardtitle h1{
+				text-shadow: 0px 0px 1px rgba(0,0,0,.3);
+				letter-spacing: .9px;
+				font-size:24px;
+			}
+		</style>
+		<div class="cardtitle">
+			<h1>{{ cardtitle }}</h1>
+		</div>
+		<div class="posts">
+			<content></content>
+			<indiv-post score="19" postid="32" mark="1" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+			<indiv-post score="19" postid="32" timestamp="1404831074000" author="afrojack"></indiv-post>
+		</div>
+		<paper-shadow z="1"></paper-shadow>
+	</template>
+	<script>
+		Polymer('posts-list', {
+			ready: function(){
+				if(this.listtype == 'hottest'){
+					this.cardtitle = 'Hottest Posts';
+				}else if(this.listtype == 'latest'){
+					this.cardtitle = 'Latest Posts';
+				}else if(this.listtype.substring(0, 2) == 'u|'){
+					var user = this.listtype.substring(2);
+					this.cardtitle = user + "'s Posts";
+				}
+			}
+		});
+	</script>
+</polymer-element>

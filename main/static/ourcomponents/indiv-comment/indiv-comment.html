@@ -1,0 +1,87 @@
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/paper-shadow/paper-shadow.html">
+
+<polymer-element name="indiv-comment">
+	<template>
+		<link rel="stylesheet" href="../../public/style.css" shim-shadowdom>
+		<style>
+			:host{
+				display:block;
+				font-weight:300;
+				color:#636363;
+				padding-top:14px;
+			}
+			.toprow{
+				margin-left:-6px;
+			}
+			.toprow .author, .toprow .date{
+				font-size:13px;
+				text-decoration:none;
+				margin-left:10px;
+				color:#707070;
+				display:inline-block;
+				vertical-align:middle;
+			}
+			.toprow .date{
+				margin-left:14px;
+				font-size:12px;
+				color:#929292;
+			}
+			.toprow .author:hover{
+				text-decoration:underline;
+			}
+			.toprow paper-icon-button{
+				fill: #aeaeae;
+				display:inline-block;
+				vertical-align:middle;
+			}
+			.toprow paper-icon-button::shadow core-icon, .toprow paper-icon-button::shadow core-icon svg{
+				height:15px !important;
+				width:15px !important;
+			}
+			.actualcomment{
+				padding: 7px 0px;
+				line-height: 1.43;
+				font-size: 15px;
+			}
+			.bottomrow{
+
+			}
+			.bottomrow .score{
+				font-size:14px;
+				color:#838383;
+				display:inline-block;
+				vertical-align:middle;
+			}
+			.bottomrow .reply{
+				font-size:14px;
+				color:#929292;
+				cursor:pointer;
+				margin-left:15px;
+				display:inline-block;
+				vertical-align:middle;
+				transition:all .13s ease;
+			}
+			.bottomrow .reply:hover{
+				color:#b7b7b7;
+			}
+		</style>
+		<div class="toprow">
+			<paper-icon-button active?="{{mark == 1}}" id="up" isToggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button>
+			<paper-icon-button active?="{{mark == -1}}" id="down" isToggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
+			<a class="author" href="">larrypage</a>
+			<span class="date">2 hours ago</span>
+		</div>
+		<div class="actualcomment">
+			@EAWharton Yeah, these are posted throughout the week, with more coming soon :D! We're working hard to foster these kinds of awesome interactions between peers who can help each other out by giving them a cool way to reach out and ask or offer. Let us know what you think!
+		</div>
+		<div class="bottomrow">
+			<div class="score">378</div>
+			<div class="reply">Reply</div>
+		</div>
+		<content></content>
+	</template>
+	<script>
+		Polymer({});
+	</script>
+</polymer-element>

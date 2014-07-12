@@ -1,0 +1,45 @@
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/paper-shadow/paper-shadow.html">
+<link rel="import" href="../../ourcomponents/indiv-comment/indiv-comment.html">
+
+<polymer-element name="comments-area">
+	<template>
+		<link rel="stylesheet" href="../../public/style.css" shim-shadowdom>
+		<style>
+			:host{
+				display:block;
+				margin-top:12px;
+				min-height:200px;
+				background:white;
+				color:#676767;
+			}
+			h3{
+				padding: 25px 36px 8px;
+				font-weight: 300;
+				font-size: 18px;
+				letter-spacing: .1px;
+			}
+			.commenttree{
+				padding: 0px 36px 28px;
+			}
+			.commentchildren{
+				padding-left:30px;
+			}
+		</style>
+		<paper-shadow z="1"></paper-shadow>
+		<h3>Comments</h3>
+		<div class="commenttree">
+			<indiv-comment></indiv-comment>
+			<indiv-comment>
+				<div class="commentchildren">
+					<indiv-comment></indiv-comment>
+					<indiv-comment></indiv-comment>
+				</div>
+			</indiv-comment>
+			<indiv-comment></indiv-comment>
+		</div>
+	</template>
+	<script>
+		Polymer({});
+	</script>
+</polymer-element>
