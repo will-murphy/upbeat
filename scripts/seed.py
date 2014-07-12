@@ -4,7 +4,7 @@ def delete_all(name):
     for obj in main.models.Post.objects.all(): obj.delete()
 
 def run():
-    for name in ['Post', 'Tag', 'Comment']: delete_all(name)
+    for name in ['Post', 'Tag', 'Comment', 'Activity']: delete_all(name)
     
     post1 = main.models.Post.objects.create(
         username = 'page',
@@ -41,6 +41,9 @@ def run():
         text = 'Excuse me, @wacko, you\'re going to have to leave.',
         parent_comment = comment2)
     
-    comment1.gen_activities()
-    comment2.gen_activities()
-    comment3.gen_activities()
+    comment1.gen_reply_activity()
+    comment1.gen_mention_activities()
+    comment2.gen_reply_activity()
+    comment2.gen_mention_activities()
+    comment3.gen_reply_activity()
+    comment3.gen_mention_activities()

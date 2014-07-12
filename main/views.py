@@ -148,7 +148,8 @@ def comment_create(request):
             None,
             id = request.POST.get('comment_id', None)))
     
-    comment.gen_activities()
+    comment.gen_mention_activities()
+    comment.gen_reply_activity()
     comment.upvote()
     return respond('Saved comment.', {'id': comment.id})
 
@@ -188,27 +189,25 @@ def activity_how_many_unread(request):
 
 def activity_recent(request):
     results = Activity.objects.\
-        filter(reciever = user.nickname()).\
+        filter(receiver = user.nickname()).\
         order_by('-date_sent')
+    
     if request.GET.has_key('max'):
         results = results[:int(request.GET['max'])]
     
-    return HttpResponse(Comment.all_as_json(list(results)))
+    return HttpResponse(Activity.all_as_json(list(results)))
 
 def activity_own(request):
-    activities = Activity.objects.filter(receiver = user.nickname()).all()
+    activities = Activity.objects.filter(receiver = user.nickname())
     
     activities = map(
-        lambda activity: {
-            'username': activity.sender,
-            'text': activity.text,
-        },
+        lambda activity: activity.as_json_dict(),
         activities)
     
-    response = {
-        'read': activities.filter(read = True),
-        'unread': activities.filter(read = False)
-    }
+    response = [
+        filter(lambda activity: activity['read'] == False, activities),
+        filter(lambda activity: activity['read'] == True, activities)
+    ]
     
     return HttpResponse(json.dumps(response))
 

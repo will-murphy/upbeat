@@ -17,19 +17,9 @@ class Migration(SchemaMigration):
             ('text', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('score', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
             ('date_pub', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('deleted', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal(u'main', ['Post'])
-
-        # Adding model 'Activity'
-        db.create_table(u'main_activity', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('sender', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('reciever', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('read', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('comment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Comment'])),
-            ('date_sent', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'main', ['Activity'])
 
         # Adding model 'Comment'
         db.create_table(u'main_comment', (
@@ -39,8 +29,54 @@ class Migration(SchemaMigration):
             ('post', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Post'], null=True, blank=True)),
             ('parent_comment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Comment'], null=True, blank=True)),
             ('score', self.gf('django.db.models.fields.BigIntegerField')(default=0)),
+            ('date_pub', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('deleted', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal(u'main', ['Comment'])
+
+        # Adding model 'Activity'
+        db.create_table(u'main_activity', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('sender', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('receiver', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('read', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('date_sent', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+        ))
+        db.send_create_signal(u'main', ['Activity'])
+
+        # Adding model 'UpvoteActivity'
+        db.create_table(u'main_upvoteactivity', (
+            (u'activity_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['main.Activity'], unique=True, primary_key=True)),
+        ))
+        db.send_create_signal(u'main', ['UpvoteActivity'])
+
+        # Adding model 'PostUpvoteActivity'
+        db.create_table(u'main_postupvoteactivity', (
+            (u'activity_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['main.Activity'], unique=True, primary_key=True)),
+            ('post', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Post'])),
+        ))
+        db.send_create_signal(u'main', ['PostUpvoteActivity'])
+
+        # Adding model 'CommentUpvoteActivity'
+        db.create_table(u'main_commentupvoteactivity', (
+            (u'activity_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['main.Activity'], unique=True, primary_key=True)),
+            ('comment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Comment'])),
+        ))
+        db.send_create_signal(u'main', ['CommentUpvoteActivity'])
+
+        # Adding model 'CommentMentionActivity'
+        db.create_table(u'main_commentmentionactivity', (
+            (u'activity_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['main.Activity'], unique=True, primary_key=True)),
+            ('comment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Comment'])),
+        ))
+        db.send_create_signal(u'main', ['CommentMentionActivity'])
+
+        # Adding model 'ReplyActivity'
+        db.create_table(u'main_replyactivity', (
+            (u'activity_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['main.Activity'], unique=True, primary_key=True)),
+            ('comment', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['main.Comment'])),
+        ))
+        db.send_create_signal(u'main', ['ReplyActivity'])
 
         # Adding model 'Tag'
         db.create_table(u'main_tag', (
@@ -80,7 +116,7 @@ class Migration(SchemaMigration):
         db.create_table(u'main_googler', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('username', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('color', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('color', self.gf('django.db.models.fields.CharField')(default='', max_length=255)),
         ))
         db.send_create_signal(u'main', ['Googler'])
 
@@ -89,11 +125,26 @@ class Migration(SchemaMigration):
         # Deleting model 'Post'
         db.delete_table(u'main_post')
 
+        # Deleting model 'Comment'
+        db.delete_table(u'main_comment')
+
         # Deleting model 'Activity'
         db.delete_table(u'main_activity')
 
-        # Deleting model 'Comment'
-        db.delete_table(u'main_comment')
+        # Deleting model 'UpvoteActivity'
+        db.delete_table(u'main_upvoteactivity')
+
+        # Deleting model 'PostUpvoteActivity'
+        db.delete_table(u'main_postupvoteactivity')
+
+        # Deleting model 'CommentUpvoteActivity'
+        db.delete_table(u'main_commentupvoteactivity')
+
+        # Deleting model 'CommentMentionActivity'
+        db.delete_table(u'main_commentmentionactivity')
+
+        # Deleting model 'ReplyActivity'
+        db.delete_table(u'main_replyactivity')
 
         # Deleting model 'Tag'
         db.delete_table(u'main_tag')
@@ -114,21 +165,32 @@ class Migration(SchemaMigration):
     models = {
         u'main.activity': {
             'Meta': {'object_name': 'Activity'},
-            'comment': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Comment']"}),
             'date_sent': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'read': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'reciever': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'receiver': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'sender': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'main.comment': {
             'Meta': {'object_name': 'Comment'},
+            'date_pub': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'parent_comment': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Comment']", 'null': 'True', 'blank': 'True'}),
             'post': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Post']", 'null': 'True', 'blank': 'True'}),
             'score': ('django.db.models.fields.BigIntegerField', [], {'default': '0'}),
             'text': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+        },
+        u'main.commentmentionactivity': {
+            'Meta': {'object_name': 'CommentMentionActivity', '_ormbases': [u'main.Activity']},
+            u'activity_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['main.Activity']", 'unique': 'True', 'primary_key': 'True'}),
+            'comment': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Comment']"})
+        },
+        u'main.commentupvoteactivity': {
+            'Meta': {'object_name': 'CommentUpvoteActivity', '_ormbases': [u'main.Activity']},
+            u'activity_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['main.Activity']", 'unique': 'True', 'primary_key': 'True'}),
+            'comment': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Comment']"})
         },
         u'main.commentvote': {
             'Meta': {'object_name': 'CommentVote'},
@@ -139,13 +201,14 @@ class Migration(SchemaMigration):
         },
         u'main.googler': {
             'Meta': {'object_name': 'Googler'},
-            'color': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'color': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'main.post': {
             'Meta': {'object_name': 'Post'},
             'date_pub': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'link': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'score': ('django.db.models.fields.BigIntegerField', [], {'default': '0'}),
@@ -153,11 +216,25 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.TextField', [], {}),
             'username': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
+        u'main.postupvoteactivity': {
+            'Meta': {'object_name': 'PostUpvoteActivity', '_ormbases': [u'main.Activity']},
+            u'activity_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['main.Activity']", 'unique': 'True', 'primary_key': 'True'}),
+            'post': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Post']"})
+        },
+        u'main.replyactivity': {
+            'Meta': {'object_name': 'ReplyActivity', '_ormbases': [u'main.Activity']},
+            u'activity_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['main.Activity']", 'unique': 'True', 'primary_key': 'True'}),
+            'comment': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['main.Comment']"})
+        },
         u'main.tag': {
             'Meta': {'object_name': 'Tag'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.TextField', [], {}),
             'posts': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['main.Post']", 'null': 'True', 'blank': 'True'})
+        },
+        u'main.upvoteactivity': {
+            'Meta': {'object_name': 'UpvoteActivity', '_ormbases': [u'main.Activity']},
+            u'activity_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['main.Activity']", 'unique': 'True', 'primary_key': 'True'})
         },
         u'main.vote': {
             'Meta': {'object_name': 'Vote'},

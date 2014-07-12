@@ -39,6 +39,10 @@ def ms_since_epoch(dt):
     
     return int((dt - epoch).total_seconds())
 
+def mentions(text):
+    username_pattern = re.compile('(?<=@)[A-Za-z0-9_]+')
+    return set(username_pattern.findall(text))
+
 class JSONable():
     def as_json_dict(self):
         return pick(self.__dict__, self.json_keys())
@@ -67,6 +71,7 @@ class Post(Model, JSONable):
         return ['id', 'title', 'text', 'link', 'score', 'username']
     
     def soft_delete(self):
+        # TO-DO: delete comment tree, likes, and activities
         for comment in self.comment_set.all():
             comment.soft_delete()
         self.deleted = True
@@ -100,10 +105,12 @@ class Post(Model, JSONable):
             vote.mark = mark
             vote.save()
         else:
-            Vote.objects.create(
+            vote = Vote.objects.create(
                 username = user.nickname(),
                 post = self,
                 mark = mark)
+        
+        vote.gen_activity()
 
     def upvote(self):
         self.__vote__(1)
@@ -164,18 +171,6 @@ class Post(Model, JSONable):
         is_http_url = None != URLValidator().regex.search(str)
         return is_http_url or is_go_link
 
-
-class Activity(Model, JSONable):
-    sender = CharField(max_length = 255)
-    receiver = CharField(max_length = 255)
-    read = BooleanField(default = False)
-    comment = ForeignKey('Comment', blank = True, null = True)
-    post = ForeignKey('Post', blank = True, null = True)
-    date_sent = DateTimeField(auto_now_add = True)
-
-    def json_keys(self):
-        return ['sender', 'receiver', 'read']
-
 class Comment(Model, JSONable):
     username = CharField(max_length = 255)
     text = TextField(blank = True)
@@ -184,6 +179,12 @@ class Comment(Model, JSONable):
     score = BigIntegerField(default = 0)
     date_pub = DateTimeField(auto_now_add = True)
     deleted = BooleanField(default = False)
+    
+    def get_parent(self):
+        return self.post or self.parent_comment
+    
+    def get_post(self):
+        return self.post or self.parent_comment.get_post()
     
     def json_keys(self):
         return ['id', 'text', 'score', 'username', 'deleted']
@@ -235,10 +236,12 @@ class Comment(Model, JSONable):
             vote.mark = mark
             vote.save()
         else:
-            CommentVote.objects.create(
+            vote = CommentVote.objects.create(
                 username = user.nickname(),
                 comment = self,
                 mark = mark)
+        
+        vote.gen_activity()
 
     def upvote(self):
         self.__vote__(1)
@@ -258,15 +261,23 @@ class Comment(Model, JSONable):
         return self
     
     def soft_delete(self):
+        # TO-DO: delete comment tree, likes, and activities
         self.deleted = True
         self.save()
     
-    def gen_activities(self):
-        username_pattern = re.compile('(?<=@)[A-Za-z0-9_]+')
-        for username in set(username_pattern.findall(self.text)):
-            Activity.objects.create(
-                sender = user.nickname(),
-                receiver = username,
+    def gen_mention_activities(self):
+        for username in mentions(self.text):
+            if username != self.username:
+                CommentMentionActivity.objects.get_or_create(
+                    sender = self.username,
+                    receiver = username,
+                    comment = self)
+    
+    def gen_reply_activity(self):
+        if self.username != self.get_parent().username:
+            ReplyActivity.objects.get_or_create(
+                sender = self.username,
+                receiver = self.get_parent().username,
                 comment = self)
     
     @staticmethod
@@ -276,6 +287,61 @@ class Comment(Model, JSONable):
             if child['deleted'] and 0 == len(child['children']):
                 children.remove(child)
 
+class Activity(Model, JSONable):
+    sender = CharField(max_length = 255)
+    receiver = CharField(max_length = 255)
+    read = BooleanField(default = False)
+    date_sent = DateTimeField(auto_now_add = True)
+
+    def json_keys(self):
+        return ['sender', 'receiver', 'read']
+
+class UpvoteActivity(Activity):
+    pass
+
+class PostUpvoteActivity(Activity):
+    post = ForeignKey(Post)
+    
+    def as_json_dict(self):
+        return {
+            'type': 'post like',
+            'sender': self.username,
+            'post_id': self.post.id,
+            'title': self.post.title
+        }
+
+class CommentUpvoteActivity(Activity):
+    comment = ForeignKey(Comment)
+    
+    def as_json_dict(self):
+        return {
+            'type': 'comment like',
+            'sender': self.username,
+            'comment_id': self.comment.id
+        }
+
+class CommentMentionActivity(Activity):
+    comment = ForeignKey(Comment)
+    
+    def as_json_dict(self):
+        return {
+            'type': 'mention in comment',
+            'sender': self.username,
+            'comment_id': self.comment.id,
+            'post_id': self.get_post().id
+        }
+
+class ReplyActivity(Activity):
+    comment = ForeignKey(Comment)
+    
+    def as_json_dict(self):
+        return {
+            'type': 'mention in comment',
+            'sender': self.username,
+            'comment_id': self.comment.id,
+            'post_id': self.get_post().id
+        }
+
 class Tag(Model):
     name = TextField()
     posts = ManyToManyField(Post, blank = True, null = True)
@@ -284,11 +350,25 @@ class Vote(Model):
     username = CharField(max_length = 255)
     post = ForeignKey(Post)
     mark = SmallIntegerField(default = 0)
+    
+    def gen_activity(self):
+        if self.mark == 1 and self.username != self.post.username:
+            PostUpvoteActivity.objects.get_or_create(
+                sender = self.username,
+                receiver = self.post.username,
+                post = self.post)
 
 class CommentVote(Model):
     username = CharField(max_length = 255)
     comment = ForeignKey(Comment)
     mark = SmallIntegerField(default = 0)
+    
+    def gen_activity(self):
+        if self.mark == 1 and self.username != self.comment.username:
+            CommentUpvoteActivity.objects.get_or_create(
+                sender = self.username,
+                receiver = self.comment.username,
+                post = self.comment)
 
 class Googler(Model):
     username = CharField(max_length = 255)
