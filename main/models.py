@@ -287,7 +287,7 @@ class CommentVote(Model):
 
 class Googler(Model):
     username = CharField(max_length = 255)
-    color = CharField(max_length = 255)
+    color = CharField(max_length = 255, default = '')
     
     @staticmethod
     def color_of(username):

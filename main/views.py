@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
-from main.models import Post, Comment, Activity, Vote, CommentVote, Googler
+from main.models import Post, Comment, Activity, Vote, CommentVote, Googler, \
+    get_object_or
 import json
 import re
 
@@ -31,6 +32,11 @@ def user_page(request, username):
         'listtype': 'user|' + username,
         'inuser': user.nickname(),
         'color': Googler.color_of(username)
+        })
+
+def notifications_page(request):
+    return render(request, 'main/notifications.html', {
+        'inuser': user.nickname()
         })
 
 def post_hottest(request):
@@ -130,15 +136,20 @@ def comment_tree(request, pk):
 def comment_create(request):
     username_pattern = re.compile('(?<=@)[a-zA-Z0-9]+')
     
-    comment = Comment(
+    comment = Comment.objects.create(
         username = user.nickname(),
         text = request.POST.get('text', ''),
-        post = Post.objects.get(request.POST.get('post_id', False), None),
-        parent_comment = Post.objects.get(request.POST.get('parent_comment_id', False), None))
+        post = get_object_or(
+            Post, 
+            None, 
+            id = request.POST.get('post_id', None)),
+        parent_comment = get_object_or(
+            Comment,
+            None,
+            id = request.POST.get('comment_id', None)))
     
-    comment.save()
     comment.gen_activities()
-    return respond('Saved comment.', {id: comment.id})
+    return respond('Saved comment.', {'id': comment.id})
 
 def comment_update(request):
     comment = get_object_or_404(Comment, id = request.POST['comment_id'])
@@ -211,7 +222,7 @@ def user_page_json(request, username):
     return HttpResponse(json.dumps(response))
 
 def user_set_color(request):
-    raise BaseException(request.POST)
-    Googler.create(
-        username = user.nickname(),
-        color = request.POST.get('color', ''))
+    googler, created = Googler.objects.get_or_create(username = user.nickname())
+    googler.color = request.POST.get('color', '')
+    googler.save()
+    return respond('Set ' + googler.username + '\'s color to ' + googler.color + '.')
