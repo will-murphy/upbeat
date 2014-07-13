@@ -54,7 +54,12 @@ class JSONable():
     def all_as_json(objs):
         return '[' + ', '.join(map((lambda obj: obj.as_json()), objs)) + ']'
 
-class Post(Model, JSONable):
+class Deletable():
+    def soft_delete():
+        self.delete = True
+        self.save()
+
+class Post(Model, JSONable, Deletable):
     username = CharField(max_length = 255)
     title = TextField()
     link = TextField(blank = True)
@@ -71,12 +76,16 @@ class Post(Model, JSONable):
         return ['id', 'title', 'text', 'link', 'score', 'username']
     
     def soft_delete(self):
-        # TO-DO: delete comment tree, likes, and activities
-        for comment in self.comment_set.all():
-            comment.soft_delete()
-        self.deleted = True
-        self.save()
-    
+        super(Post, self).soft_delete()
+        
+        things = \
+            self.comment_set.all() + \
+            self.postupvoteactivity_set.all() + \
+            self.vote_set()
+        
+        for thing in things:
+            thing.soft_delete()
+        
     def as_json_dict(self):
         d = super(Post, self).as_json_dict()
         d['mark'] = get_object_attr_or(
@@ -171,7 +180,7 @@ class Post(Model, JSONable):
         is_http_url = None != URLValidator().regex.search(str)
         return is_http_url or is_go_link
 
-class Comment(Model, JSONable):
+class Comment(Model, JSONable, Deletable):
     username = CharField(max_length = 255)
     text = TextField(blank = True)
     post = ForeignKey(Post, blank = True, null = True)
@@ -261,6 +270,18 @@ class Comment(Model, JSONable):
         return self
     
     def soft_delete(self):
+        super(Comment, self).soft_delete()
+        
+        things = \
+            self.comment_set() + \
+            self.commentupvoteactivity_set() + \
+            self.commentmentionactivity_set() + \
+            self.replyactivity_set() + \
+            self.commentvote_set()
+        
+        for thing in things:
+            thing.soft_delete()
+        
         # TO-DO: delete comment tree, likes, and activities
         self.deleted = True
         self.save()
@@ -314,8 +335,9 @@ class Activity(Model, JSONable):
 class UpvoteActivity(Activity):
     pass
 
-class PostUpvoteActivity(Activity):
+class PostUpvoteActivity(Activity, Deletable):
     post = ForeignKey(Post)
+    deleted = BooleanField(default = False)
     
     def as_json_dict(self):
         return {
@@ -326,8 +348,9 @@ class PostUpvoteActivity(Activity):
             'read': self.read,
         }
 
-class CommentUpvoteActivity(Activity):
+class CommentUpvoteActivity(Activity, Deletable):
     comment = ForeignKey(Comment)
+    deleted = BooleanField(default = False)
     
     def as_json_dict(self):
         return {
@@ -337,8 +360,9 @@ class CommentUpvoteActivity(Activity):
             'read': self.read,
         }
 
-class CommentMentionActivity(Activity):
+class CommentMentionActivity(Activity, Deletable):
     comment = ForeignKey(Comment)
+    deleted = BooleanField(default = False)
     
     def as_json_dict(self):
         return {
@@ -350,8 +374,9 @@ class CommentMentionActivity(Activity):
             'read': self.read,
         }
 
-class ReplyActivity(Activity):
+class ReplyActivity(Activity, Deletable):
     comment = ForeignKey(Comment)
+    deleted = BooleanField(default = False)
     
     def as_json_dict(self):
         return {
@@ -367,10 +392,11 @@ class Tag(Model):
     name = TextField()
     posts = ManyToManyField(Post, blank = True, null = True)
 
-class Vote(Model):
+class Vote(Model, Deletable):
     username = CharField(max_length = 255)
     post = ForeignKey(Post)
     mark = SmallIntegerField(default = 0)
+    deleted = BooleanField(default = False)
     
     def gen_activity(self):
         if self.mark == 1 and self.username != self.post.username:
@@ -379,10 +405,11 @@ class Vote(Model):
                 receiver = self.post.username,
                 post = self.post)
 
-class CommentVote(Model):
+class CommentVote(Model, Deletable):
     username = CharField(max_length = 255)
     comment = ForeignKey(Comment)
     mark = SmallIntegerField(default = 0)
+    deleted = BooleanField(default = False)
     
     def gen_activity(self):
         if self.mark == 1 and self.username != self.comment.username:

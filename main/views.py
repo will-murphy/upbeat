@@ -201,6 +201,9 @@ def activity_recent(request):
     return HttpResponse(Activity.all_as_json(list(results)))
 
 def activity_own(request):
+    
+    # Get the activities.
+    
     activities = filter(
         lambda activity: activity.receiver == user.nickname(), 
         Activity.all_objects())
@@ -210,9 +213,23 @@ def activity_own(request):
         activities)
     
     response = [
-        filter(lambda activity: activity['read'] == False, activities),
+        filter(lambda activity: activity['read'] == False, activities), 
         filter(lambda activity: activity['read'] == True, activities)
     ]
+    
+    # Read all unreads.
+    
+    unreads = filter(
+        lambda activity: \
+            activity.receiver == user.nickname() and \
+            activity.read == False,
+        Activity.all_objects())
+    
+    for unread in unreads:
+        unread.read = True
+        unread.save()
+    
+    # Return the activities.
     
     return HttpResponse(json.dumps(response))
 
