@@ -17,9 +17,9 @@ def run():
         text = 'After the recent collapse of Facebook and rise to prominance of Google Bookface, I am pleased to announce that we have partnered with the US Government in instanting the One Google program by which all children will be required at birth to create a Bookface account and friend their nearest family members. We have also dissolved the US Congress and are in the final stages of acquiring the United Nations.')
 
     post3 = main.models.Post.objects.create(
-        username = 'penguin',
+        username = 'tennien',
         title = 'Penguin Penguin Penguin',
-        text = 'Penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin. Penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin. Penguin penguin penguin @penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin. Penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin.')
+        text = 'Penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin. Penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin. Penguin penguin penguin @penguin penguin penguin penguin penguin @tennien penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin. Penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin penguin.')
 
     main.models.Tag.objects.create(name = 'Hashtag')
     main.models.Tag.objects.create(name = 'Chicken')
@@ -38,7 +38,7 @@ def run():
 
     comment3 = main.models.Comment.objects.create(
         username = 'security',
-        text = 'Excuse me, @wacko, you\'re going to have to leave.',
+        text = 'Excuse me, @wacko, you\'re going to have to leave. @tennien',
         parent_comment = comment2)
     
     comment1.gen_reply_activity()
