@@ -102,7 +102,7 @@ def post_page_json(request, pk):
     post = get_object_or_404(Post, pk = pk)
     
     if post.deleted:
-        return render(request, 'main/post-deleted.html', {username: post.username})
+        return render(request, 'main/post-deleted.html', {'username': post.username})
     
     post.refresh_score()
     result['post'] = post.as_full_json_dict()
