@@ -210,7 +210,7 @@ def activity_own(request):
     return HttpResponse(json.dumps(response))
 
 def user_page_json(request, username):
-    posts = Post.objects.filter(username = username)
+    posts = Post.objects.filter(username = username).order_by('-date_pub')
     
     response = {
         'userinfo': {
