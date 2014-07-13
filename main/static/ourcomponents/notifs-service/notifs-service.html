@@ -1,6 +1,6 @@
 <link rel="import" href="../../components/polymer/polymer.html">
 <link rel="import" href="../../components/core-ajax/core-ajax.html">
-<polymer-element name="notifs-service" attributes="notifs">
+<polymer-element name="notifs-service" attributes="notifgroups notifkeys">
 	<template>
 		<style>
 			:host {
@@ -23,16 +23,14 @@
 		ready: function(){
 
 		},
-		notifsLoaded: function() {
+		notifsLoaded: function(response) {
 			var response = this.$.ajax.response;
 			// Make a copy of the loaded data
-			this.notifs = response.posts.slice(0);
+			this.notifgroups = response;
 
-			if(response.userinfo){
-				this.userinfo = response.userinfo;
-			}
+			this.notifkeys = Object.keys(this.notifgroups);
 
-			this.fire('posts-loaded');
+			this.fire('notifs-loaded');
 		}
 	});
 	</script>

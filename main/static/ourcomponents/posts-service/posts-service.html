@@ -1,6 +1,6 @@
 <link rel="import" href="../../components/polymer/polymer.html">
 <link rel="import" href="../../components/core-ajax/core-ajax.html">
-<polymer-element name="posts-service" attributes="listtype posts userinfo">
+<polymer-element name="posts-service" attributes="listtype posts">
 	<template>
 		<style>
 			:host {
@@ -20,7 +20,6 @@
 		url: '',
 		created: function() {
 			this.posts = [];
-			this.userinfo = {};
 		},
 		ready: function(){
 			if(this.listtype == 'hottest'){
@@ -37,12 +36,6 @@
 			var response = this.$.ajax.response;
 			// Make a copy of the loaded data
 			this.posts = response.posts.slice(0);
-
-			if(response.userinfo){
-				this.userinfo = response.userinfo;
-			}
-
-			
 
 			this.fire('posts-loaded');
 		}
