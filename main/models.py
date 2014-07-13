@@ -55,9 +55,13 @@ class JSONable():
         return '[' + ', '.join(map((lambda obj: obj.as_json()), objs)) + ']'
 
 class Deletable():
-    def soft_delete():
-        self.delete = True
+    def soft_delete(self):
+        self.deleted = True
         self.save()
+    
+    @classmethod
+    def not_deleted(cls):
+        return cls.objects.filter(deleted = False)
 
 class Post(Model, JSONable, Deletable):
     username = CharField(max_length = 255)
@@ -73,15 +77,15 @@ class Post(Model, JSONable, Deletable):
             'username = ' + self.username 
     
     def json_keys(self):
-        return ['id', 'title', 'text', 'link', 'score', 'username']
+        return ['id', 'title', 'text', 'link', 'score', 'username', 'deleted']
     
     def soft_delete(self):
         super(Post, self).soft_delete()
         
         things = \
-            self.comment_set.all() + \
-            self.postupvoteactivity_set.all() + \
-            self.vote_set()
+            list(self.comment_set.all()) + \
+            list(self.postupvoteactivity_set.all()) + \
+            list(self.vote_set.all())
         
         for thing in things:
             thing.soft_delete()
@@ -149,7 +153,7 @@ class Post(Model, JSONable, Deletable):
     
     @staticmethod
     def hottest(start = False, maximum = False):
-        posts = list(Post.objects.all())
+        posts = list(Post.not_deleted())
         then = timezone.now()
         posts.sort(key = lambda post: post.hottest_rank())
         
@@ -163,7 +167,7 @@ class Post(Model, JSONable, Deletable):
     
     @staticmethod
     def latest(start = False, maximum = False):
-        posts = Post.objects.order_by('-date_pub')
+        posts = Post.not_deleted().order_by('-date_pub')
         
         if start:
             posts = posts[start:]
@@ -273,11 +277,11 @@ class Comment(Model, JSONable, Deletable):
         super(Comment, self).soft_delete()
         
         things = \
-            self.comment_set() + \
-            self.commentupvoteactivity_set() + \
-            self.commentmentionactivity_set() + \
-            self.replyactivity_set() + \
-            self.commentvote_set()
+            list(self.comment_set.all()) + \
+            list(self.commentupvoteactivity_set.all()) + \
+            list(self.commentmentionactivity_set.all()) + \
+            list(self.replyactivity_set.all()) + \
+            list(self.commentvote_set.all())
         
         for thing in things:
             thing.soft_delete()

@@ -109,8 +109,6 @@ def post_page_json(request, pk):
     post.refresh_score()
     result['post'] = post.as_full_json_dict()
     
-    raise BaseException(post.score)
-    
     result['comments'] = map(
         lambda comment: comment.as_tree_of_json_dicts(),
         post.comment_set.all())
@@ -213,9 +211,9 @@ def activity_own(request):
         activities)
     
     response = {
-        'unread': \
+        'Unread': \
             filter(lambda activity: activity['read'] == False, activities), 
-        'old': \
+        'Old': \
             filter(lambda activity: activity['read'] == True, activities)
     }
     
