@@ -282,7 +282,6 @@ class Comment(Model, JSONable, Deletable):
         for thing in things:
             thing.soft_delete()
         
-        # TO-DO: delete comment tree, likes, and activities
         self.deleted = True
         self.save()
     
