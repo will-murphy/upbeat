@@ -164,8 +164,9 @@ def comment_create(request):
 
 def comment_update(request):
     comment = get_object_or_404(Comment, id = request.POST['id'])
-    comment.update(
-        text = request.POST.get(text, comment.text))
+    comment.text = request.POST.get('text', comment.text)
+    comment.save()
+    return respond('Updated comment.')
 
 def comment_delete(request, pk):
     comment = get_object_or_404(Comment, id = pk)

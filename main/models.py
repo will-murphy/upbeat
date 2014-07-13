@@ -142,6 +142,10 @@ class Post(Model, JSONable, Deletable):
         self.save()
         return self
     
+    def clean(self):
+        self.refresh_score()
+        return self
+    
     def hottest_rank(self):
         K = 1e9
         self.refresh_score()
