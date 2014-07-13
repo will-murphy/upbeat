@@ -139,17 +139,23 @@ def comment_tree(request, pk):
 def comment_create(request):
     username_pattern = re.compile('(?<=@)[a-zA-Z0-9]+')
     
+    post = get_object_or(
+        Post, 
+        None, 
+        id = request.POST.get('post_id', None))
+    
+    parent_comment = get_object_or(
+        Comment,
+        None,
+        id = request.POST.get('parent_comment_id', None))
+    
+    if parent_comment: post = None
+    
     comment = Comment.objects.create(
         username = user.nickname(),
         text = request.POST.get('text', ''),
-        post = get_object_or(
-            Post, 
-            None, 
-            id = request.POST.get('post_id', None)),
-        parent_comment = get_object_or(
-            Comment,
-            None,
-            id = request.POST.get('comment_id', None)))
+        post = post,
+        parent_comment = parent_comment)
     
     comment.gen_mention_activities()
     comment.gen_reply_activity()
