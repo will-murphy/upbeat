@@ -75,8 +75,8 @@ def post_create(request):
     post.upvote()
     return respond('Saved post.', {'id': post.id})
 
-def post_delete(request):
-    post = get_object_or_404(Post, pk = request.POST.get('post_id', ''))
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk = pk)
     post.soft_delete()
     return respond('Deleted post.')
 
@@ -158,10 +158,8 @@ def comment_update(request):
     comment.update(
         text = request.POST.get(text, comment.text))
 
-def comment_delete(request):
-    comment = get_object_or_404(
-        Comment, 
-        id = request.POST.get('comment_id', ''))
+def comment_delete(request, pk):
+    comment = get_object_or_404(Comment, id = pk)
     comment.soft_delete()
     return respond('Deleted comment.')
 
