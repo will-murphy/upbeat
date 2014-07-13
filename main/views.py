@@ -96,6 +96,7 @@ def post_unvote(request, pk):
     return respond('Unvoted post.')
 
 def post_page_json(request, pk):
+    raise BaseException('here')
     result = {}
     
     post = get_object_or_404(Post, pk = pk)
@@ -105,6 +106,8 @@ def post_page_json(request, pk):
     
     post.refresh_score()
     result['post'] = post.as_full_json_dict()
+    
+    raise BaseException(post.score)
     
     result['comments'] = map(
         lambda comment: comment.as_tree_of_json_dicts(),
@@ -196,7 +199,9 @@ def activity_recent(request):
     return HttpResponse(Activity.all_as_json(list(results)))
 
 def activity_own(request):
-    activities = Activity.objects.filter(receiver = user.nickname())
+    activities = filter(
+        lambda activity: activity.receiver == user.nickname(), 
+        Activity.all_objects())
     
     activities = map(
         lambda activity: activity.as_json_dict(),

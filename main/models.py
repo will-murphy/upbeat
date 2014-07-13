@@ -295,6 +295,22 @@ class Activity(Model, JSONable):
 
     def json_keys(self):
         return ['sender', 'receiver', 'read']
+    
+    @staticmethod
+    def all_objects():
+        subclasses = [
+            UpvoteActivity,
+            PostUpvoteActivity,
+            CommentUpvoteActivity,
+            CommentMentionActivity,
+            ReplyActivity,
+        ]
+        
+        activities = []        
+        for subclass in subclasses:
+            activities += subclass.objects.all()
+        
+        return activities
 
 class UpvoteActivity(Activity):
     pass
@@ -305,9 +321,10 @@ class PostUpvoteActivity(Activity):
     def as_json_dict(self):
         return {
             'type': 'post like',
-            'sender': self.username,
+            'sender': self.sender,
             'post_id': self.post.id,
-            'title': self.post.title
+            'title': self.post.title,
+            'read': self.read,
         }
 
 class CommentUpvoteActivity(Activity):
@@ -316,8 +333,9 @@ class CommentUpvoteActivity(Activity):
     def as_json_dict(self):
         return {
             'type': 'comment like',
-            'sender': self.username,
-            'comment_id': self.comment.id
+            'sender': self.sender,
+            'comment_id': self.comment.id,
+            'read': self.read,
         }
 
 class CommentMentionActivity(Activity):
@@ -326,9 +344,10 @@ class CommentMentionActivity(Activity):
     def as_json_dict(self):
         return {
             'type': 'mention in comment',
-            'sender': self.username,
+            'sender': self.sender,
             'comment_id': self.comment.id,
-            'post_id': self.get_post().id
+            'post_id': self.comment.get_post().id,
+            'read': self.read,
         }
 
 class ReplyActivity(Activity):
@@ -337,9 +356,10 @@ class ReplyActivity(Activity):
     def as_json_dict(self):
         return {
             'type': 'mention in comment',
-            'sender': self.username,
+            'sender': self.sender,
             'comment_id': self.comment.id,
-            'post_id': self.get_post().id
+            'post_id': self.comment.get_post().id,
+            'read': self.read,
         }
 
 class Tag(Model):
