@@ -217,12 +217,13 @@
 				}
 
 				this.toggleSave(false);
+
 			    this.$.xhr.request({
 			        url: '/api/comment/create',
 			        method: 'POST',
 			        body: objectToFormdata({
 			            post_id: window.postid,
-			            parent_comment_id: this.parentNode.getAttribute('parentid'),
+			            parent_comment_id: this.commentid,
 			            text: text
 			        }),
 			        responseType: 'json',
