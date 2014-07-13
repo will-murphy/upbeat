@@ -242,6 +242,8 @@ def activity_own(request):
 def user_page_json(request, username):
     posts = Post.not_deleted().filter(username = username).order_by('-date_pub')
     
+    for post in posts: post.refresh_score()
+    
     response = {
         'userinfo': {
             'posts': posts.count(),
