@@ -299,7 +299,6 @@ class Activity(Model, JSONable):
     @staticmethod
     def all_objects():
         subclasses = [
-            UpvoteActivity,
             PostUpvoteActivity,
             CommentUpvoteActivity,
             CommentMentionActivity,
@@ -347,6 +346,7 @@ class CommentMentionActivity(Activity):
             'sender': self.sender,
             'comment_id': self.comment.id,
             'post_id': self.comment.get_post().id,
+            'text': self.comment.text,
             'read': self.read,
         }
 
@@ -359,6 +359,7 @@ class ReplyActivity(Activity):
             'sender': self.sender,
             'comment_id': self.comment.id,
             'post_id': self.comment.get_post().id,
+            'text': self.comment.text,
             'read': self.read,
         }
 
