@@ -41,9 +41,16 @@ def run():
         text = 'Excuse me, @wacko, you\'re going to have to leave. @tennien',
         parent_comment = comment2)
     
+    comment4 = main.models.Comment.objects.create(
+        username = 'grok',
+        text = 'Me comment.',
+        post = post3)
+    
     comment1.gen_reply_activity()
     comment1.gen_mention_activities()
     comment2.gen_reply_activity()
     comment2.gen_mention_activities()
     comment3.gen_reply_activity()
     comment3.gen_mention_activities()
+    comment4.gen_reply_activity()
+    comment4.gen_mention_activities()
