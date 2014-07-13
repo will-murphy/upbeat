@@ -57,7 +57,7 @@ function timeago(mom){
     difference = Math.round(difference/1000);
 
     if(difference < 60){
-        return 'just moments ago';
+        return 'just now';
     }else if(difference < 60*2){
         return '1 min ago';
     }else if(difference < 60*60){

@@ -272,7 +272,7 @@ body.bluegrey big-header{
 	/*400*/
 	background:#78909c !important;
 }
-body.bluegrey posts-list::shadow .cardtitle, body.bluegrey notifs-list::shadow .cardtitle{
+body.bluegrey posts-list::shadow .cardtitle{
 	/*300*/
 	background:#90a4ae !important;
 }

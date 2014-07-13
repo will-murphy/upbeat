@@ -218,7 +218,7 @@
 
 				this.toggleSave(false);
 			    this.$.xhr.request({
-			        url: 'api/comment/create',
+			        url: '/api/comment/create',
 			        method: 'POST',
 			        body: objectToFormdata({
 			            post_id: window.postid,
@@ -246,15 +246,6 @@
 				}
 			},
 			insertNewChild: function(id, text){
-				var newObj = {
-					id: id,
-					text: text,
-					score: 1,
-					mark: 1,
-					username: window.inuser,
-					timestamp: (+new Date)/1000
-				};
-
 				var newcomment = document.createElement('indiv-comment');
 				newcomment.setAttribute('commentid', id);
 				newcomment.setAttribute('text', text);

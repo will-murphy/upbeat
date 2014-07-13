@@ -1,0 +1,38 @@
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/core-icons/core-icons.html">
+<link rel="import" href="../../components/core-ajax/core-xhr.html">
+
+<polymer-element name="indiv-notif" attributes="">
+	<template>
+		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom>
+		<style>
+			:host{
+				display:block;
+				border-bottom: 1px solid #f1f1f1;
+				cursor:pointer;
+				position:relative;
+				overflow:hidden;
+				color:#575757;
+				box-sizing:border-box;
+			}
+			.padding{
+				padding:25px 36px 22px 36px;
+			}
+			.top{
+				margin-bottom: 4px;
+				font-size: 15px;
+			}
+		</style>
+		<div class="padding">
+			<div class="top">
+				alanahaim liked your post
+			</div>
+			<content select=".meat"></content>
+		</div>
+	</template>
+	<script>
+		Polymer('indiv-notif', {
+
+		});
+	</script>
+</polymer-element>

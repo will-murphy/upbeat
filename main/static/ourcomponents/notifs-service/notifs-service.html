@@ -10,7 +10,7 @@
 		<core-ajax id="ajax"
 			auto
 			url="/api/notifications"
-			on-core-response="{{postsLoaded}}"
+			on-core-response="{{notifsLoaded}}"
 			handleAs="json">
 		</core-ajax>
 		{{posts}}
@@ -18,13 +18,21 @@
 	<script>
 	Polymer('notifs-service', {
 		created: function() {
-
+			this.notifs = [];
 		},
 		ready: function(){
 
 		},
-		postsLoaded: function() {
+		notifsLoaded: function() {
+			var response = this.$.ajax.response;
+			// Make a copy of the loaded data
+			this.notifs = response.posts.slice(0);
 
+			if(response.userinfo){
+				this.userinfo = response.userinfo;
+			}
+
+			this.fire('posts-loaded');
 		}
 	});
 	</script>
