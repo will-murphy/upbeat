@@ -100,12 +100,6 @@ def post_page_json(request, pk):
     
     post = get_object_or_404(Post, pk = pk)
     
-    if post.deleted:
-        return render(
-            request, 
-            'main/post-deleted.html', 
-            {'username': post.username})
-    
     post.refresh_score()
     result['post'] = post.as_full_json_dict()
     
@@ -117,6 +111,14 @@ def post_page_json(request, pk):
 
 def post_comments_page(request, post_id):
     post = get_object_or_404(Post, id = post_id)
+    
+    if post.deleted: 
+        return render(request, 'main/post-deleted.html', {
+            'post': post.as_json_dict(),
+            'inuser': user.nickname(),
+            'color': Googler.color_of(post.username)
+            })
+    
     return render(request, 'main/comments.html', {
         'post': post.as_json_dict(),
         'inuser': user.nickname(),
