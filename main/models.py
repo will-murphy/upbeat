@@ -204,7 +204,7 @@ class Comment(Model, JSONable):
     def as_tree_of_json_dicts(self):
         tree = self.__as_tree_of_json_dicts_helper__({})
         
-        Comment.pop_deleted_children(tree['children'])
+        # Comment.pop_deleted_children(tree['children'])
         
         return tree
     
@@ -219,7 +219,7 @@ class Comment(Model, JSONable):
             map(
                 lambda comment: comment.refresh_score(),
                 self.comment_set.all())
-            d['children'] = map(
+            d['childs'] = map(
                 lambda comment: 
                     comment.__as_tree_of_json_dicts_helper__(stringified),
                 self.comment_set.order_by('score').all())
