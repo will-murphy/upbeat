@@ -36,13 +36,27 @@
 				text-shadow: 0px 0px 1px rgba(0,0,0,.3);
 				letter-spacing: .9px;
 			}
+			.notifs{
+				padding-bottom:10px;
+			}
 			indiv-notif .meat{
 				color: #5f5f5f;
 				font-size: 18px;
 			}
 			indiv-notif .top{
-				margin-bottom: 4px;
+				margin-bottom: 6px;
 				font-size: 14px;
+			}
+			indiv-notif .top a{
+				font-weight:400;
+			}
+			indiv-notif a{
+				color: rgb(87, 87, 87);
+				text-decoration:none;
+				transition:all .13s ease;
+			}
+			indiv-notif a:hover{
+				color: rgb(158, 158, 158);
 			}
 		</style>
 		<notifs-service id="service" notifgroups="{{notifgroups}}" notifkeys="{{notifkeys}}"></notifs-service>
@@ -53,14 +67,44 @@
 					<div class="notifs">
 						<template repeat="{{notif in notifgroups[notifkey]}}">
 							<template if="{{notif.type == 'mention in comment'}}">
-							<indiv-notif>
-								<div class="top">
-									{{sender}} mentioned you in a comment
-								</div>
-								<div class="meat">
-									{{text}}
-								</div>
-							</indiv-notif>
+								<indiv-notif>
+									<div class="top">
+										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> mentioned you in a comment
+									</div>
+									<div class="meat">
+										<a href="/comments/{{notif.post_id}}">{{notif.text}}</a>
+									</div>
+								</indiv-notif>
+							</template>
+							<template if="{{notif.type == 'reply'}}">
+								<indiv-notif>
+									<div class="top">
+										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> replied to your comment
+									</div>
+									<div class="meat">
+										<a href="/comments/{{notif.post_id}}">{{notif.text}}</a>
+									</div>
+								</indiv-notif>
+							</template>
+							<template if="{{notif.type == 'post like'}}">
+								<indiv-notif>
+									<div class="top">
+										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> liked your post
+									</div>
+									<div class="meat">
+										<a href="/comments/{{notif.post_id}}">{{notif.text}}</a>
+									</div>
+								</indiv-notif>
+							</template>
+							<template if="{{notif.type == 'comment like'}}">
+								<indiv-notif>
+									<div class="top">
+										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> liked your comment
+									</div>
+									<div class="meat">
+										<a href="/comments/{{notif.post_id}}">{{notif.text}}</a>
+									</div>
+								</indiv-notif>
 							</template>
 						</template>
 					</div>
