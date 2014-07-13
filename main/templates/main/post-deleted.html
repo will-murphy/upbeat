@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+	<title>unquote</title>
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+	<script src="/static/components/platform/platform.js"></script>
+	<link rel="import" href="/static/components/font-roboto/roboto.html">
+	<link rel="stylesheet" href="/static/assets/base.css" shim-shadowdom>
+	<link rel="import" href="/static/components/paper-shadow/paper-shadow.html">
+	<link rel="import" href="/static/components/paper-dialog/paper-dialog.html">
+	<link rel="import" href="/static/components/paper-tabs/paper-tabs.html">
+	<link rel="import" href="/static/components/paper-input/paper-input.html">
+	<link rel="import" href="/static/components/core-ajax/core-xhr.html">
+	<link rel="import" href="/static/components/paper-dialog/paper-dialog-transition.html">
+	<link rel="import" href="/static/components/paper-progress/paper-progress.html">
+	<link rel="import" href="/static/components/core-transition/core-transition.html">
+	<link rel="import" href="/static/components/paper-shadow/paper-shadow.html">
+	<link rel="import" href="/static/components/paper-toast/paper-toast.html">
+	<link rel="import" href="/static/ourcomponents/posts-list/posts-list.html">
+	<link rel="import" href="/static/ourcomponents/big-header/big-header.html">
+	<link rel="import" href="/static/ourcomponents/hanging-menu/hanging-menu.html">
+	<link rel="import" href="/static/ourcomponents/comments-area/comments-area.html">
+	<style>
+		.mainarea{
+			padding-top:70px;
+		}
+	</style>
+</head>
+<body class="{{ color|default:'grey' }}" unresolved touch-action="auto">
+	<big-header></big-header>
+	<div class="mainarea">
+		<h4>Post has been deleted</h4>
+	</div>
+	<hanging-menu></hanging-menu>
+	<paper-dialog backdrop="true" id="newdialog" transition="paper-dialog-transition-bottom">
+		<core-xhr id="dialogxhr"></core-xhr>
+		<div class="wrapper">
+			<div class="topstrip">
+				<paper-tabs selected="0">
+					<paper-tab>Link Post</paper-tab>
+					<paper-tab>Text Post</paper-tab>
+				</paper-tabs>
+			</div>
+			<div class="middle on0">
+				<div class="page0">
+					<paper-input class="title" multiline="" floatinglabel="" label="Post Title"></paper-input>
+					<paper-input class="field" max-rows="7" validate="((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)|go\/[^ \n\r\t]*$" multiline="" floatinglabel="" label="Link"></paper-input>
+				</div>
+				<div class="page1">
+					<paper-input class="title" multiline="" floatinglabel="" label="Post Title"></paper-input>
+					<paper-input class="field" max-rows="7" multiline="" floatinglabel="" label="Body Text"></paper-input>
+				</div>
+			</div>
+			<div class="bottomstrip">
+				<paper-button class="cancel" label="Cancel"></paper-button>
+				<paper-button disabled class="share" label="Share"></paper-button>
+				<paper-progress value="0"></paper-progress>
+			</div>
+		</div>
+	</paper-dialog>
+	<paper-toast id="posterrortoast" text="Post submission unsuccessful."></paper-toast>
+	<paper-toast id="commenterrortoast" text="Comment submission unsuccessful."></paper-toast>
+	<script src="/static/assets/sizzle.js"></script>
+	<script src="/static/assets/moment.js"></script>
+	<script src="/static/assets/web-animations.js"></script>
+	<script>
+		window.inuser = '{{ inuser }}';
+		window.postid = '{{ post.id }}';
+	</script>
+	<script src="/static/assets/script.js"></script>
+</body>
+</html>

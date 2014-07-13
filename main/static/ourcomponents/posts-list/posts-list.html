@@ -188,7 +188,7 @@
 				font-size:24px;
 			}
 		</style>
-		<posts-service id="service" on-posts-loaded="{{postsLoaded}}" posts="{{posts}}" userinfo="{{userinfo}}" listtype="{{listtype}}"></posts-service>
+		<posts-service id="service" on-posts-loaded="{{postsLoaded}}" posts="{{posts}}" listtype="{{listtype}}"></posts-service>
 		<core-xhr id="xhr"></core-xhr>
 		<div id="cardtitle" class="cardtitle">
 			<core-icon-button class="options" icon="menu" on-tap="{{ options }}"></core-icon-button>
@@ -211,7 +211,7 @@
 				</div>
 			</div>
 			<div class="main">
-				<h1>{{ cardtitle }}<span id="extranumber" hidden?="{{ !extranumber }}"> ({{ extranumber }})</span></h1>
+				<h1>{{ cardtitle }}</h1>
 			</div>
 		</div>
 		<div class="emptymessage">
@@ -235,7 +235,6 @@
 	</template>
 	<script>
 		Polymer('posts-list', {
-			extranumber: "",
 			userpage: false,
 			ready: function(){
 				if(this.listtype == 'hottest'){
@@ -275,9 +274,6 @@
 				toggleClass(this.$.cardtitle, 'optioning');
 			},
 			postsLoaded: function(){
-				if(this.userinfo.postcount){
-					this.extranumber = this.userinfo.postcount;
-				}
 
 				if(!this.posts.length){
 					addClass(this, 'emptylist');
@@ -301,11 +297,9 @@
 				});
 			},
 			postAdded: function(){
-				this.extranumber++;
 				removeClass(this, 'emptylist');
 			},
 			postDeleted: function(){
-				this.extranumber--;
 				var newlength = Sizzle('indiv-post', this.$.postsdiv).length - 1;
 
 				if(newlength){
