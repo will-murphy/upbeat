@@ -212,10 +212,12 @@ def activity_own(request):
         lambda activity: activity.as_json_dict(),
         activities)
     
-    response = [
-        filter(lambda activity: activity['read'] == False, activities), 
-        filter(lambda activity: activity['read'] == True, activities)
-    ]
+    response = {
+        'unread': \
+            filter(lambda activity: activity['read'] == False, activities), 
+        'old': \
+            filter(lambda activity: activity['read'] == True, activities)
+    }
     
     # Read all unreads.
     
