@@ -387,7 +387,7 @@ class ReplyActivity(Activity, Deletable):
     
     def as_json_dict(self):
         return {
-            'type': 'mention in comment',
+            'type': 'reply',
             'sender': self.sender,
             'comment_id': self.comment.id,
             'post_id': self.comment.get_post().id,
