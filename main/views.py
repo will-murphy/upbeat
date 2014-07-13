@@ -137,8 +137,6 @@ def comment_tree(request, pk):
     return HttpResponse(comment.as_tree_of_json())
 
 def comment_create(request):
-    username_pattern = re.compile('(?<=@)[a-zA-Z0-9]+')
-    
     post = get_object_or(
         Post, 
         None, 
@@ -240,7 +238,7 @@ def activity_own(request):
     return HttpResponse(json.dumps(response))
 
 def user_page_json(request, username):
-    posts = Post.objects.filter(username = username).order_by('-date_pub')
+    posts = Post.not_deleted().filter(username = username).order_by('-date_pub')
     
     response = {
         'userinfo': {
