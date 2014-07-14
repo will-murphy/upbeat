@@ -74,7 +74,7 @@
 		</div>
 		<div id="commenttree" class="commenttree" postid="{{postid}}">
 			<template repeat="{{ comments }}" id="t">
-				<indiv-comment commentid="{{id}}" text="{{text}}" score="{{score}}" mark="{{mark}}" username="{{username}}"></indiv-comment>
+				<indiv-comment commentid="{{id}}" text="{{text}}" score="{{score}}" timestamp="{{timestamp}}" mark="{{mark}}" username="{{username}}" deleted="{{deleted}}"></indiv-comment>
 				<div class="commentchildren" parentid="{{id}}">
 					<template ref="t" repeat="{{ childs }}"></template>
 				</div>

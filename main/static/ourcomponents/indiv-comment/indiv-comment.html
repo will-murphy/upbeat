@@ -2,7 +2,7 @@
 <link rel="import" href="../../components/paper-shadow/paper-shadow.html">
 <link rel="import" href="../../components/core-ajax/core-xhr.html">
 
-<polymer-element name="indiv-comment" attributes="commentid mark text score username childs">
+<polymer-element name="indiv-comment" attributes="commentid mark text score username childs timestamp deleted">
 	<template>
 		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom>
 		<style>
@@ -10,6 +10,7 @@
 				display:block;
 				font-weight:300;
 				color:#636363;
+				word-wrap:break;
 			}
 			.commentchildren{
 				padding-left:30px;
@@ -20,7 +21,7 @@
 			.toprow{
 				margin-left:-6px;
 			}
-			.toprow .author, .toprow .date{
+			.toprow .author, .toprow #ago{
 				font-size:13px;
 				text-decoration:none;
 				margin-left:10px;
@@ -28,12 +29,12 @@
 				display:inline-block;
 				vertical-align:middle;
 			}
-			.toprow .date{
+			.toprow #ago{
 				margin-left:14px;
 				font-size:12px;
 				color:#929292;
 			}
-			.toprow .author:hover{
+			.toprow a.author:hover{
 				text-decoration:underline;
 			}
 			.toprow paper-icon-button{
@@ -145,37 +146,48 @@
 		</style>
 		<core-xhr id="xhr"></core-xhr>
 		<div class="inner">
-			<div class="toprow">
-				<paper-icon-button id="up" isToggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button>
-				<paper-icon-button id="down" isToggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
-				<a class="author" href="">{{ username }}</a>
-				<span class="date">2 hours ago</span>
-			</div>
-			<div class="actualcomment">
-				<div id="commentbody"></div>
-				<div class="editsection textsection">
-					<textarea id="edittextarea"></textarea>
-					<div class="butts">
-						<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelEdit}}"></paper-button>
-						<paper-button id="editsave" class="viewcomments" label="Save" on-tap="{{saveEdit}}"></paper-button>
+			<template if="{{deleted}}">
+				<div class="toprow">
+					<span class="author">[deleted]</span>
+					<span id="ago" timestamp="{{timestamp}}"></span>
+				</div>
+				<div class="actualcomment">
+					<div id="commentbody">[deleted]</div>
+				</div>		
+			</template>
+			<template if="{{!deleted}}">
+				<div class="toprow">
+					<paper-icon-button id="up" isToggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button>
+					<paper-icon-button id="down" isToggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
+					<a class="author" href="/user/{{username}}">{{ username }}</a>
+					<span id="ago" timestamp="{{timestamp}}"></span>
+				</div>
+				<div class="actualcomment">
+					<div id="commentbody"></div>
+					<div class="editsection textsection">
+						<textarea id="edittextarea"></textarea>
+						<div class="butts">
+							<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelEdit}}"></paper-button>
+							<paper-button id="editsave" class="viewcomments" label="Save" on-tap="{{saveEdit}}"></paper-button>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="bottomrow">
-				<div class="score">{{ score }}</div>
-				<paper-button class="reply" label="Reply" on-tap="{{reply}}"></paper-button>
-				<template if="{{inuser == username}}">
-					<paper-button class="edit" label="Edit" on-tap="{{edit}}"></paper-button>
-					<paper-button class="delete" label="Delete (double-click)" on-dblclick="{{deleteComment}}"></paper-button>
-				</template>
-			</div>
-			<div class="replysection textsection">
-				<textarea id="replytextarea"></textarea>
-				<div class="butts">
-					<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelReply}}"></paper-button>
-					<paper-button id="savereply" class="viewcomments" label="Save" on-tap="{{saveReply}}"></paper-button>
+				<div class="bottomrow">
+					<div class="score">{{ score }}</div>
+					<paper-button class="reply" label="Reply" on-tap="{{reply}}"></paper-button>
+					<template if="{{inuser == username}}">
+						<paper-button class="edit" label="Edit" on-tap="{{edit}}"></paper-button>
+						<paper-button class="delete" label="Delete (double-click)" on-dblclick="{{deleteComment}}"></paper-button>
+					</template>
 				</div>
-			</div>
+				<div class="replysection textsection">
+					<textarea id="replytextarea"></textarea>
+					<div class="butts">
+						<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelReply}}"></paper-button>
+						<paper-button id="savereply" class="viewcomments" label="Save" on-tap="{{saveReply}}"></paper-button>
+					</div>
+				</div>
+			</template>
 		</div>
 		<div id="commentchildren" class="commentchildren" parentid="{{commentid}}">
 			<content></content>
@@ -191,17 +203,31 @@
 			},
 			ready: function(){
 				this.childs = [];
-				this.recalculate();
+				if(!this.deleted){
+					this.recalculate();
+				}
 			},
 			domReady: function(){
-				if(this.mark == 1){
-					this.$.up.active = true;
-				}else if(this.mark == -1){
-					this.$.down.active = true;
+				var self = this;
+				setInterval(function(){
+					self.recheckTime();
+				}, 20000);
+				self.recheckTime();
+
+				if(!this.deleted){
+					if(this.mark == 1){
+						this.$.up.active = true;
+					}else if(this.mark == -1){
+						this.$.down.active = true;
+					}
 				}
+
 			},
 			recalculate: function(){
 				this.$.commentbody.innerHTML = stuffEncode(this.text);
+			},
+			recheckTime: function(){
+				this.$.ago.innerHTML = timeago(moment.utc(parseInt(this.$.ago.getAttribute('timestamp'))*1000));
 			},
 			reply: function(){
 				addClass(this, 'replying');
@@ -318,14 +344,15 @@
 			    });
 			},
 			deleteComment: function(){
-				this.score = 0;
-				this.username = '[deleted]';
-				this.$.commentbody.innerHTML = '[deleted]';
-				addClass(this, 'deleted');
+				this.deleted = true;
+				// this.score = 0;
+				// this.username = '[deleted]';
+				// this.$.commentbody.innerHTML = '[deleted]';
+				// addClass(this, 'deleted');
 
 				//AJAX - delete comment
 			    this.$.xhr.request({
-			        url: '/api/comment/'+this.commentid,
+			        url: '/api/comment/'+this.commentid+'/delete',
 			        method: 'DELETE'
 			    });
 			},
