@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponsePermanentRedirect
 from main.models import Post, Comment, Activity, Vote, CommentVote, Googler, \
     get_object_or
 import json
@@ -9,6 +9,8 @@ import re
 # from google.appengine.api import users
 # user = users.get_current_users()
 from main.temp import user
+
+#TO-DO: refresh page post
 
 def respond(str, data = {}):
     return HttpResponse(json.dumps(dict(
@@ -113,6 +115,8 @@ def post_page_json(request, pk):
 
 def post_comments_page(request, post_id):
     post = get_object_or_404(Post, id = post_id)
+    
+    post.refresh_score()
     
     if post.deleted: 
         return render(request, 'main/post-deleted.html', {
@@ -247,7 +251,9 @@ def activity_own(request):
     return HttpResponse(json.dumps(response))
 
 def user_page_json(request, username):
-    posts = Post.not_deleted().filter(username = username).order_by('-date_pub')
+    posts = Post.not_deleted().\
+        filter(username = username).\
+        order_by('-date_pub')
     
     for post in posts: post.refresh_score()
     
@@ -266,3 +272,7 @@ def user_set_color(request):
     googler.color = request.POST.get('color', '')
     googler.save()
     return respond('Set ' + googler.username + '\'s color to ' + googler.color + '.')
+
+def unshorten(request):
+    return HttpResponsePermanentRedirect(
+        '/comments/' + request.META['QUERY_STRING'])
