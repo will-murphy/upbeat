@@ -103,9 +103,11 @@ def post_page_json(request, pk):
     post.refresh_score()
     result['post'] = post.as_full_json_dict()
     
+    for comment in post.comment_set.all(): comment.refresh_score()
+    
     result['comments'] = map(
         lambda comment: comment.as_tree_of_json_dicts(),
-        post.comment_set.all())
+        post.comment_set.order_by('-score').all())
     
     return HttpResponse(json.dumps(result))
 
@@ -217,12 +219,16 @@ def activity_own(request):
         lambda activity: activity.as_json_dict(),
         activities)
     
-    response = {
-        'Unread': \
-            filter(lambda activity: activity['read'] == False, activities), 
-        'Old': \
-            filter(lambda activity: activity['read'] == True, activities)
-    }
+    if 0 == len(activities):
+        response = {'No': []}
+    else:
+        response = {
+            'Unread': filter(
+                lambda activity: activity['read'] == False,
+                activities), 
+            'Old': filter(lambda activity: activity['read'] == True,
+                activities)
+        }
     
     # Read all unreads.
     
