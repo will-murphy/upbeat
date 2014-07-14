@@ -61,9 +61,18 @@ WSGI_APPLICATION = 'upbeat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # dev
-        # 'ENGINE': 'django.db.backends.mysql', # prod
+        # 'ENGINE': 'django.db.backends.sqlite3', # dev
+        'ENGINE': 'django.db.backends.mysql', # prod
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '/cloudsql/google.com:townsquare:sql',
+        'NAME': 'speckle',
+        'USER': 'root',
     }
 }
 
