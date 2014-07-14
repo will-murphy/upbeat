@@ -281,7 +281,6 @@ class Comment(Model, JSONable, Deletable):
         super(Comment, self).soft_delete()
         
         things = \
-            list(self.comment_set.all()) + \
             list(self.commentupvoteactivity_set.all()) + \
             list(self.commentmentionactivity_set.all()) + \
             list(self.replyactivity_set.all()) + \
