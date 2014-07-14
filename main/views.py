@@ -10,8 +10,6 @@ import re
 # user = users.get_current_users()
 from main.temp import user
 
-#TO-DO: refresh page post
-
 def respond(str, data = {}):
     return HttpResponse(json.dumps(dict(
         data.items() + \
