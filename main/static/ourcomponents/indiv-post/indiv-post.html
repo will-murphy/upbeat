@@ -103,6 +103,19 @@
 				font-size:13px;
 				margin-left:22px;
 			}
+			span.copypost{
+				position:relative;
+				z-index:10;
+				cursor:text;
+				font-size: 13px;
+				letter-spacing: .5px;
+				color: #aaa;
+				font-weight: 300;
+				padding: 0px 20px;
+				margin-left:10px;
+				display: inline-block;
+				top:1px;
+			}
 		</style>
 		<div class="padding">
 			<a href="{{link?link:'/comments/'+postid}}"><paper-ripple></paper-ripple></a>
@@ -120,6 +133,7 @@
 				<template if="{{inuser == username}}">
 					<paper-button class="deletepost" label="Delete Post (double-click)" on-dblclick="{{deletePost}}"></paper-button>
 				</template>
+				<span class="copypost">go/twsq?{{postid}}</span>
 				<p class="info">
 					<a class="author" href="/user/{{username}}">Submitted by <span>{{username}}</span></a><br>
 					<span id="ago" timestamp="{{timestamp}}"></span>
@@ -145,6 +159,8 @@
 				}else if(this.mark == -1){
 					this.$.down.active = true;
 				}
+
+				console.log(this.score);
 			},
 			recheckTime: function(){
 				this.$.ago.innerHTML = timeago(moment.utc(parseInt(this.$.ago.getAttribute('timestamp'))*1000));
