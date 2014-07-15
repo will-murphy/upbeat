@@ -19,6 +19,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'll96&pk#*94vl^%nd5r849y3e5(0n*f(8o^gt*zwgrbjnikz_j'
 
+# SECURITY WARNING: keep this application-specific password secret!
+# vrel sszw uuxl zkwb
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -68,12 +71,12 @@ DATABASES = {
 }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '/cloudsql/google.com:townsquare:sql',
-        'NAME': 'speckle',
-        'USER': 'root',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'HOST': '/cloudsql/google.com:townsquare:sql',
+    #     'NAME': 'speckle',
+    #     'USER': 'root',
+    # }
 }
 
 # Internationalization
