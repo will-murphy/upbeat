@@ -24,7 +24,7 @@
 				background:#7986cb;
 				font-weight:400;
 				box-sizing:border-box;
-				box-shadow: 0px 2px 0px #ffffff;
+				/*box-shadow: 0px 2px 0px #ffffff;*/
 				border-bottom: 1px solid rgba(50,50,50,.1);
 				border-radius:2px 2px 0px 0px;
 				overflow:hidden;
@@ -258,6 +258,8 @@
 				this.quotetext = quote[0];
 				this.quoteattr = quote[1];
 
+				// this.$.postsdiv.style.opacity = 0;
+
 				this.addEventListener('postDeleted', this.postDeleted);
 			},
 			colorTap: function(event, detail, sender){
@@ -281,6 +283,37 @@
 				if(!this.posts.length){
 					addClass(this, 'emptylist');
 				}
+
+				// this.async(function(){
+				// 	var posts = Sizzle('indiv-post', this.$.postsdiv);
+
+				// 	for(var x = 0; x < Math.max(posts.length, 10); x++){
+				// 		var player = document.timeline.play(new Animation(posts[x], [
+				// 		      {paddingTop: '90px', transform: "scale(.84)", opacity: 0},
+				// 		      {paddingTop: '0px', transform: "scale(1)", opacity: 1}
+				// 		    ],
+				// 		    {
+				// 		      direction: "alternate",
+				// 		      duration: 800,
+				// 		      fill: 'forwards',
+				// 		      iterations: 1,
+				// 		      easing: 'cubic-bezier(.4,0,.2,1)',
+				// 		      delay: 70*x,
+				// 		    }));
+				// 	}
+				// });
+
+				// var player = document.timeline.play(new Animation(this.$.postsdiv, [
+				//       {opacity: 0},
+				//       {opacity: 1}
+				//     ],
+				//     {
+				//       direction: "alternate",
+				//       duration: 800,
+				//       fill: 'forwards',
+				//       iterations: 1,
+				//       easing: 'cubic-bezier(.4,0,.2,1)'
+				//     }));
 			},
 			createNewPost: function(id, title, link){
 				var newObj = {

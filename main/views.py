@@ -31,7 +31,8 @@ def user_page(request, username):
     return render(request, 'main/index.html', {
         'listtype': 'user|' + username,
         'inuser': user.nickname(),
-        'color': Googler.color_of(username)
+        'color': Googler.color_of(username),
+        'username': username.capitalize()
         })
 
 def notifications_page(request):
