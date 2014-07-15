@@ -26,6 +26,9 @@
 				border-radius:2px 2px 0px 0px;
 				overflow:hidden;
 			}
+			.island.empty{
+				padding-bottom:217px;
+			}
 			.island h3{
 				color:#b3b3b3;
 				padding: 25px 36px 8px;
@@ -112,7 +115,7 @@
 				</div>
 			</template>
 			<template if="{{notifkey == 'No'}}">
-				<div class="island">
+				<div class="island empty">
 					<h3>No Notifications Yet</h3>
 				</div>
 			</template>

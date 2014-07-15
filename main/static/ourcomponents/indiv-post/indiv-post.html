@@ -159,8 +159,6 @@
 				}else if(this.mark == -1){
 					this.$.down.active = true;
 				}
-
-				console.log(this.score);
 			},
 			recheckTime: function(){
 				this.$.ago.innerHTML = timeago(moment.utc(parseInt(this.$.ago.getAttribute('timestamp'))*1000));
