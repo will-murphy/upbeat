@@ -31,8 +31,7 @@ def user_page(request, username):
     return render(request, 'main/index.html', {
         'listtype': 'user|' + username,
         'inuser': user.nickname(),
-        'color': Googler.color_of(username),
-        'username': username.capitalize()
+        'color': Googler.color_of(username)
         })
 
 def notifications_page(request):
@@ -43,7 +42,7 @@ def notifications_page(request):
 def post_hottest(request):
     posts = list(Post.hottest(
         request.GET.get('start', 0),
-        request.GET.get('max', None)))
+        request.GET.get('max', 150)))
     
     for post in posts: post.refresh_score()
     
@@ -56,7 +55,7 @@ def post_hottest(request):
 def post_latest(request):
     posts = list(Post.latest(
         request.GET.get('start', 0),
-        request.GET.get('max', None)))
+        request.GET.get('max', 150)))
     
     for post in posts: post.refresh_score()
     
@@ -230,7 +229,7 @@ def activity_own(request):
                 lambda activity: activity['read'] == False,
                 activities), 
             'Old': filter(lambda activity: activity['read'] == True,
-                activities)
+                activities)[:20]
         }
     
     # Read all unreads.
@@ -252,7 +251,8 @@ def activity_own(request):
 def user_page_json(request, username):
     posts = Post.not_deleted().\
         filter(username = username).\
-        order_by('-date_pub')
+        order_by('-date_pub')\
+        [:100]
     
     for post in posts: post.refresh_score()
     

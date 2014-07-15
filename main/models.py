@@ -53,6 +53,10 @@ class JSONable():
     @staticmethod
     def all_as_json(objs):
         return '[' + ', '.join(map((lambda obj: obj.as_json()), objs)) + ']'
+    
+    @staticmethod
+    def all_as_json_dict(objs):
+        return [obj.as_json_dict() for obj in objs]
 
 class Deletable():
     def soft_delete(self):

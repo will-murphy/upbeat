@@ -1,0 +1,122 @@
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/paper-fab/paper-fab.html">
+<link rel="import" href="../../components/core-icons/core-icons.html">
+<link rel="import" href="../../components/core-icons/iconsets/device-icons.html">
+<link rel="import" href="../../components/core-icons/iconsets/image-icons.html">
+<link rel="import" href="../../components/paper-dialog/paper-dialog.html">
+
+<polymer-element name="big-header">
+	<template>
+		<style>
+			:host{
+				display:block;
+				position:fixed;
+				height:148px;
+				width:100%;
+				box-shadow: 0px 2px 0px #ffffff;
+				border-bottom: 1px solid rgba(50,50,50,.1);
+			}
+			.leftside{
+				height: 100%;
+			}
+			#logo{
+				display:block;
+				text-decoration:none;
+				font-size: 28px;
+				font-weight: 400;
+				letter-spacing:.7px;
+				color:white;
+				display:inline-block;
+				position: absolute;
+				top: 101px;
+				white-space:nowrap;
+				text-shadow: 0px 0px 1px rgba(0,0,0,.3);
+				right: 50%;
+				margin-right: 421px;
+				-webkit-transform:rotate(0deg);
+				transform:rotate(0deg);
+			}
+			#logo core-icon{
+				transition:all .13s cubic-bezier(0,0,.2,1);
+			}
+			#logo core-icon svg{
+				-webkit-filter: drop-shadow( 0px 0px 1px rgba(0,0,0,.13) );
+			}
+			#logo:hover core-icon.logoicon{
+				-webkit-transform:rotate(630deg);
+				transform:rotate(630deg);
+				opacity:0;
+			}
+			#logo:hover core-icon.home{
+				opacity:1;
+			}
+			#logo.colored{
+				letter-spacing: -5.2px;
+			}
+			#logo core-icon{
+				fill:#ffffff;
+				margin-top: -4px;
+			}
+			#logo .home{
+				position:absolute;
+				opacity:0;
+				top: 14px;
+				left: 12px;
+				transition:all .32s cubic-bezier(0,0,.2,1);
+			}
+			#logo .square{
+				position: absolute;
+				top: 1px;
+				left: -1px;
+				opacity:0;
+				-webkit-filter: drop-shadow( 0px 0px 1px rgba(0,0,0,.13) );
+				transition:all .23s cubic-bezier(0,0,.2,1);
+			}
+			#logo:hover .square{
+				-webkit-transform:rotate(630deg);
+				transform:rotate(630deg);
+				opacity:1;
+			}
+			.letterb{
+				color:#1369ea;
+			}
+			.letterr{
+				color:#d8422d;
+			}
+			.lettery{
+				color:#ffbb03;
+			}
+			.letterg{
+				color:#009a57;
+			}
+			paper-fab{
+				position: fixed;
+				top: 120px;
+				left: 50%;
+				margin-left: 423px;
+				font-size: 48px;
+			}
+		</style>
+		<div class="leftside">
+<!-- 			<div id="logo" class="colored">
+				<span class="letterb">U</span>
+				<span class="letterr">p</span>
+				<span class="lettery">b</span>
+				<span class="letterb">e</span>
+				<span class="letterg">a</span>
+				<span class="letterr">t</span>
+			</div> -->
+			<a href="/" id="logo">
+				<core-icon class="home" icon="google" size="14"></core-icon>
+				<core-icon class="square" icon="image:crop-square" size="40"></core-icon>
+				<core-icon class="logoicon" icon="device:data-usage" size="38"></core-icon>
+				Town Square
+			</a>
+			<paper-fab icon="add"></paper-fab>
+
+		</div>
+	</template>
+	<script>
+		Polymer({});
+	</script>
+</polymer-element>

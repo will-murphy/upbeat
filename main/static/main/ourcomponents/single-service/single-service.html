@@ -1,0 +1,30 @@
+<link rel="import" href="../../components/polymer/polymer.html">
+<link rel="import" href="../../components/core-ajax/core-ajax.html">
+<polymer-element name="single-service" attributes="postid comments">
+	<template>
+		<style>
+			:host {
+				display: none;
+			}
+		</style>
+		<core-ajax id="ajax"
+			auto
+			url="/api/post/page-json/{{postid}}"
+			on-core-response="{{postLoaded}}"
+			handleAs="json">
+		</core-ajax>
+		{{posts}}
+	</template>
+	<script>
+	Polymer('single-service', {
+		created: function() {
+			this.comments = [];
+		},
+		postLoaded: function() {
+			var response = this.$.ajax.response;
+			// Make a copy of the loaded data
+			this.comments = response.comments.slice(0);
+		}
+	});
+	</script>
+</polymer-element>
