@@ -17,21 +17,26 @@ def respond(str, data = {}):
 
 def root(request):
     return render(request, 'main/index.html', {
+        'title': 'Hottest',
         'listtype': 'hottest',
         'inuser': user.nickname()
         })
 
 def latest(request):
     return render(request, 'main/index.html', {
+        'title': 'Latest',
         'listtype': 'latest',
         'inuser': user.nickname()
         })
 
 def user_page(request, username):
     return render(request, 'main/index.html', {
+        'title': username.capitalize() + "'s Profile",
         'listtype': 'user|' + username,
         'inuser': user.nickname(),
-        'color': Googler.color_of(username)
+        'color': Googler.color_of(username),
+        'username': username,
+        'Username': username.capitalize()
         })
 
 def notifications_page(request):
