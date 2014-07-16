@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>deleted</title>
+	<title>Deleted Post - Town Square</title>
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 	<script src="/static/components/platform/platform.js"></script>
 	<link rel="import" href="/static/components/font-roboto/roboto.html">
@@ -24,12 +24,25 @@
 		.mainarea{
 			padding-top:70px;
 		}
+		.notice{
+			background: white;
+			border-radius: 2px;
+			padding: 40px 0px 42px;
+			text-align: center;
+		}
+		.notice h4{
+			font-weight: 300;
+			font-size: 19px;
+		}
 	</style>
 </head>
 <body class="{{ color|default:'grey' }}" unresolved touch-action="auto">
 	<big-header></big-header>
 	<div class="mainarea">
-		<h4>Post has been deleted</h4>
+		<div class="notice">
+			<paper-shadow z="1"></paper-shadow>
+			<h4>Post has been deleted</h4>
+		</div>
 	</div>
 	<hanging-menu></hanging-menu>
 	<paper-dialog backdrop="true" id="newdialog" transition="paper-dialog-transition-bottom">

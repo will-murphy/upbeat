@@ -1,0 +1,3 @@
+- Vulcanize polymer
+- When the user hits "Enter" in the title field, it should go to the link/text field
+- When the user hits "Enter" in the link field, it should submit.
