@@ -23,8 +23,11 @@
 				font-weight:300;
 				margin-bottom: 16px;
 				box-sizing:border-box;
-				border-radius:2px 2px 0px 0px;
+				border-radius:2px;
 				overflow:hidden;
+			}
+			.island.none{
+				padding-bottom:18px;
 			}
 			.island h3{
 				color:#b3b3b3;
@@ -112,26 +115,12 @@
 				</div>
 			</template>
 			<template if="{{notifkey == 'No'}}">
-				<div class="island">
+				<div class="island none">
 					<h3>No Notifications Yet</h3>
+					<paper-shadow z="1"></paper-shadow>
 				</div>
 			</template>
 		</template>
-<!-- 		<div class="island">
-			<h3>Unread Notifications</h3>
-			<div class="notifs">
-				<indiv-notif>
-					<div class="meat">
-						Getting the Scoop, but Not Necessarily the Story
-					</div>
-				</indiv-notif>
-			</div>
-			<paper-shadow z="1"></paper-shadow>
-		</div>
-		<div class="island">
-			<h3>Old Notifications</h3>
-			<paper-shadow z="1"></paper-shadow>
-		</div> -->
 	</template>
 	<script>
 		Polymer('notifs-list', {
