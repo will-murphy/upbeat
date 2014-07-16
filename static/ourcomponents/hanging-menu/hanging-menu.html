@@ -1,5 +1,6 @@
 <link rel="import" href="../../components/polymer/polymer.html">
 <link rel="import" href="../../components/core-icons/core-icons.html">
+<link rel="import" href="../../components/core-ajax/core-xhr.html">
 <link rel="import" href="../../components/core-icons/iconsets/social-icons.html">
 
 <polymer-element name="hanging-menu" attributes="inuser">
@@ -35,10 +36,46 @@
 			a core-icon{
 				fill:#858585;
 				letter-spacing:.3px;
-				position: relative;
-				top: -1px;
+				/*position: relative;*/
+				margin-top:1px;
 				margin-right:1px;
-				transition:all .13s ease;
+				transition:all .24s ease;
+			}
+			.iconspace{
+				display:inline-block;
+				position:relative;
+				vertical-align: top;
+			}
+			.iconspace core-icon{
+				position:absolute;
+				visibility:visible;
+				opacity:1;
+				top: 0px;
+				right: -1px;
+				-webkit-transform: scale(1);
+				transform: scale(1);
+			}
+			.iconspace span{
+				visibility:hidden;
+				opacity:0;
+				top: 0px;
+				right: -1px;
+				position:absolute;
+				-webkit-transform: scale(.15);
+				transform: scale(.15);
+				transition:-webkit-transform .24s ease;
+			}
+			.iconspace.shownotifs core-icon{
+				visibility:hidden;
+				opacity:0;
+				-webkit-transform: scale(.15);
+				transform: scale(.15);
+			}
+			.iconspace.shownotifs span{
+				-webkit-transform: scale(1);
+				transform: scale(1);
+				visibility:visible;
+				opacity:1;
 			}
 		</style>
 		<ul>
@@ -62,16 +99,39 @@
 			</li>
 			<li>
 				<a href="/notifications">
-					<core-icon icon="social:notifications" size="18"></core-icon>
+					<div id="iconspace" class="iconspace">
+						<core-icon icon="social:notifications" size="18"></core-icon>
+						<span>{{notifcount}}</span>
+					</div>
 					Notifications
 				</a>
 			</li>
 		</ul>
+		<core-xhr id="xhr"></core-xhr>
 	</template>
 	<script>
 		Polymer({
+			notifcount: '',
 			created: function(){
 				this.inuser = window.inuser;
+			},
+			domReady: function(){
+				setInterval(this.pingStart.bind(this), 2000);
+			},
+			pingStart: function(){
+				this.$.xhr.request({
+					url: '/api/notifications/how-many-unread',
+			        responseType: 'text',
+			        callback: function(data, extra){
+			        	if(data == 0){
+			        		removeClass(this.$.iconspace, 'shownotifs');
+			        		this.notifcount = '';
+			        	}else{
+			        		addClass(this.$.iconspace, 'shownotifs');
+			        		this.notifcount = '('+data+')';
+			        	}
+			        }.bind(this)
+				});
 			}
 		});
 	</script>
