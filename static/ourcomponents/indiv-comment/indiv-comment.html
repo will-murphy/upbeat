@@ -29,6 +29,25 @@
 				display:inline-block;
 				vertical-align:middle;
 			}
+			.toprow .op{
+				display:none;
+			}
+			.toprow .op, .toprow .specialuser{
+				font-size: 11px;
+				margin-left: 14px;
+				color: #585858;
+				position: relative;
+				top: 0px;
+				display: inline-block;
+				vertical-align:middle;
+			}
+			.toprow .specialuser{
+				color:#bdbdbd;
+				font-size:9px;
+				text-transform: uppercase;
+				letter-spacing: .3px;
+				margin-left:11px;
+			}
 			.toprow #ago{
 				margin-left:14px;
 				font-size:12px;
@@ -143,6 +162,20 @@
 			:host(.deleted) .toprow paper-icon-button{
 				display:none;
 			}
+			div.profpic{
+				position:relative;
+				z-index:10;
+				height: 17px;
+				width: 17px;
+				display: inline-block;
+				background-size: cover;
+				background-position: 50% 50%;
+				border-radius: 40px;
+				vertical-align: middle;
+				margin-top:-2px;
+				margin-left: 6px;
+				opacity:.67;
+			}
 		</style>
 		<core-xhr id="xhr"></core-xhr>
 		<div class="inner">
@@ -159,7 +192,9 @@
 				<div class="toprow">
 					<paper-icon-button id="up" isToggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button>
 					<paper-icon-button id="down" isToggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
-					<a class="author" href="/user/{{username}}">{{ username }}</a>
+					<span class="op" hidden?="{{ username == window.postusername }}">OP</span>
+					<a class="author" href="/user/{{username}}">{{ username }}<div class="profpic" style="background-image:url('https://teams-service.googleplex.com/photos/{{username}}?sz=72&type=plus&type=security&type=silhouette');"></div></a>
+					<span class="specialuser" hidden?="{{ isspecial }}">Initial Contributor</span>
 					<span id="ago" timestamp="{{timestamp}}"></span>
 				</div>
 				<div class="actualcomment">
@@ -198,8 +233,11 @@
 			text: 'ok',
 			score: 38,
 			username: 'abc',
+			isspecial: false,
 			created: function(){
 				this.inuser = window.inuser;
+
+				this.isspecial = window.specialusers.indexOf(this.username) !== -1;
 			},
 			ready: function(){
 				this.childs = [];

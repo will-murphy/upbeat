@@ -7,6 +7,7 @@
 	<link rel="import" href="/static/components/font-roboto/roboto.html">
 	<link rel="stylesheet" href="/static/assets/base.css" shim-shadowdom>
 	<link rel="import" href="/static/assets/imports.html">
+	<link rel="icon" href="/static/assets/favicon.ico">
 	<style>
 		.mainarea{
 			padding-top:70px;
@@ -36,9 +37,9 @@
 			line-height: 1.43;
 		}
 		.mainarea .mainpost{
-			-webkit-transform:translate(0px, 300px);
+			-webkit-transform:translate(0px, 345px);
 			opacity:.8;
-			transform:translate(0px, 300px);
+			transform:translate(0px, 345px);
 			transition:all .42s cubic-bezier(0,0,.2,1);
 		}
 		.mainarea.init .mainpost{
@@ -48,8 +49,8 @@
 		}
 		.mainarea comments-area{
 			opacity:.8;
-			-webkit-transform:translate(0px, 300px);
-			transform:translate(0px, 300px);
+			-webkit-transform:translate(0px, 345px);
+			transform:translate(0px, 345px);
 			transition:all .42s cubic-bezier(0,0,.2,1) .08s;
 		}
 		.mainarea.init comments-area{
@@ -107,9 +108,12 @@
 	<script>
 		window.inuser = '{{ inuser }}';
 		window.postid = '{{ post.id }}';
+		window.postusername = '{{ post.username }}';
 
 		window.onload = function() {
-			//the f*** polymer? really?
+			//the f*** polymer, really?
+			//why do you alter the browser's
+			//load behavior..? eh, whatevs
 			setTimeout(function(){
 				addClass(Sizzle('.mainarea')[0], 'init');
 			}, 400);
