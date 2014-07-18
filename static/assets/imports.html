@@ -801,7 +801,7 @@ d.prototype={valueFn:function(){if(!this.valueFn_){var a=this.value;this.valueFn
 //# sourceMappingURL=polymer.js.map</script>
 <!--<link rel="import" href="../polymer-dev/polymer.html">--> 
 
-<polymer-element name="paper-shadow" assetpath="../../../static/components/paper-shadow/">
+<polymer-element name="paper-shadow" assetpath="../components/paper-shadow/">
 
   <template>
 
@@ -1158,7 +1158,7 @@ Example:
 
 
 
-<polymer-element name="core-meta" attributes="list label type" hidden assetpath="../../../static/components/core-meta/">
+<polymer-element name="core-meta" attributes="list label type" hidden assetpath="../components/core-meta/">
 <script>
 
   (function() {
@@ -1246,7 +1246,7 @@ Example:
 </polymer-element>
 
 
-<polymer-element name="core-transition" extends="core-meta" assetpath="../../../static/components/core-transition/">
+<polymer-element name="core-transition" extends="core-meta" assetpath="../components/core-transition/">
   
   <script>
     Polymer('core-transition', {
@@ -1290,7 +1290,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="core-key-helper" assetpath="../../../static/components/core-overlay/">
+<polymer-element name="core-key-helper" assetpath="../components/core-overlay/">
   <script>
     Polymer('core-key-helper', {
       ENTER_KEY: 13,
@@ -1308,7 +1308,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<polymer-element name="core-overlay-layer" assetpath="../../../static/components/core-overlay/">
+<polymer-element name="core-overlay-layer" assetpath="../components/core-overlay/">
 <template>
   <style>
     :host {
@@ -1484,7 +1484,7 @@ Fired when the `core-overlay`'s `opened` property changes.
   }
 </style>
 
-<polymer-element name="core-overlay" assetpath="../../../static/components/core-overlay/">
+<polymer-element name="core-overlay" assetpath="../components/core-overlay/">
 <script>
 (function() {
 
@@ -2064,7 +2064,7 @@ Fired when the `core-overlay`'s `opened` property changes.
 
 
 
-<polymer-element name="paper-dialog" attributes="opened heading transition autoCloseDisabled" assetpath="../../../static/components/paper-dialog/">
+<polymer-element name="paper-dialog" attributes="opened heading transition autoCloseDisabled" assetpath="../components/paper-dialog/">
 
   <template>
 
@@ -2370,7 +2370,7 @@ contains the selection state.
 -->
 
 
-<polymer-element name="core-selection" attributes="multi" hidden assetpath="../../../static/components/core-selection/">
+<polymer-element name="core-selection" attributes="multi" hidden assetpath="../components/core-selection/">
   <script>
     Polymer('core-selection', {
       /**
@@ -2447,7 +2447,7 @@ contains the selection state.
 </polymer-element>
 
 
-<polymer-element name="core-selector" attributes="selected multi valueattr selectedClass selectedProperty selectedAttribute selectedItem selectedModel selectedIndex notap target itemsSelector activateEvent" assetpath="../../../static/components/core-selector/">
+<polymer-element name="core-selector" attributes="selected multi valueattr selectedClass selectedProperty selectedAttribute selectedItem selectedModel selectedIndex notap target itemsSelector activateEvent" assetpath="../components/core-selector/">
 
   <template>
     <core-selection id="selection" multi="{{multi}}" on-core-select="{{selectionSelect}}"></core-selection>
@@ -2899,7 +2899,7 @@ Apply `circle` class to make the rippling effect within a circle.
 
 
 
-<polymer-element name="paper-ripple" attributes="initialOpacity opacityDecayVelocity" assetpath="../../../static/components/paper-ripple/">
+<polymer-element name="paper-ripple" attributes="initialOpacity opacityDecayVelocity" assetpath="../components/paper-ripple/">
 <template>
 
   <style>
@@ -3278,7 +3278,7 @@ Apply `circle` class to make the rippling effect within a circle.
 </polymer-element>
 
 
-<polymer-element name="paper-tab" attributes="noink" assetpath="../../../static/components/paper-tabs/">
+<polymer-element name="paper-tab" attributes="noink" assetpath="../components/paper-tabs/">
 <template>
 
   <style>/*
@@ -3359,7 +3359,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </polymer-element>
 
 
-<polymer-element name="paper-tabs" extends="core-selector" attributes="noink nobar" assetpath="../../../static/components/paper-tabs/">
+<polymer-element name="paper-tabs" extends="core-selector" attributes="noink nobar" assetpath="../components/paper-tabs/">
 <template>
 
   <style>/*
@@ -3606,7 +3606,7 @@ Fired when the inputValue of this text input changes and passes validation.
 -->
 
 
-<polymer-element name="core-input" assetpath="../../../static/components/core-input/">
+<polymer-element name="core-input" assetpath="../components/core-input/">
 
   <template>
 
@@ -3647,7 +3647,7 @@ textarea[fit] {
 }</style>
 
     <template if="{{multiline}}">
-      <textarea id="input" value="{{inputValue}}" rows="{{rows}}" fit?="{{rows === 'fit'}}" disabled?="{{disabled}}" placeholder="{{placeholder}}" aria-labelledby="placeholder" aria-invalid="{{invalid}}" on-change="{{inputChangeAction}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}"></textarea>
+      <textarea id="input" value="{{inputValue}}" rows="{{rows}}" fit?="{{rows === &apos;fit&apos;}}" disabled?="{{disabled}}" placeholder="{{placeholder}}" aria-labelledby="placeholder" aria-invalid="{{invalid}}" on-change="{{inputChangeAction}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}"></textarea>
     </template>
 
     <template if="{{!multiline}}">
@@ -3838,7 +3838,7 @@ textarea[fit] {
 </polymer-element>
 
 
-<polymer-element name="paper-input" extends="core-input" attributes="label floatingLabel maxRows error" on-down="{{downAction}}" on-up="{{upAction}}" assetpath="../../../static/components/paper-input/">
+<polymer-element name="paper-input" extends="core-input" attributes="label floatingLabel maxRows error" on-down="{{downAction}}" on-up="{{upAction}}" assetpath="../components/paper-input/">
 
   <template>
 
@@ -3961,7 +3961,7 @@ textarea[fit] {
 }
 
 #errorIcon {
-  background-image: url(../../../static/components/paper-input/error-100.png);
+  background-image: url(../components/paper-input/error-100.png);
   background-size: 24px 24px;
   height: 24px;
   width: 24px;
@@ -3970,7 +3970,7 @@ textarea[fit] {
 
 @media (min-resolution: 2dppx) {
   #errorIcon {
-    background-image: url(../../../static/components/paper-input/error-200.png);
+    background-image: url(../components/paper-input/error-200.png);
     background-size: 24px 24px;
   }
 }
@@ -4396,7 +4396,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="core-xhr" hidden assetpath="../../../static/components/core-ajax/">
+<polymer-element name="core-xhr" hidden assetpath="../components/core-ajax/">
 
   <script>
 
@@ -4508,7 +4508,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="core-transition-css" extends="core-transition" attributes="transitionType" assetpath="../../../static/components/core-transition/">
+<polymer-element name="core-transition-css" extends="core-transition" attributes="transitionType" assetpath="../components/core-transition/">
 <template>
   <style no-shim="">/* Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -4620,7 +4620,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <core-transition-css id="core-transition-right" transitiontype="right"></core-transition-css>
 
 
-<polymer-element name="paper-dialog-transition" extends="core-transition-css" assetpath="../../../static/components/paper-dialog/">
+<polymer-element name="paper-dialog-transition" extends="core-transition-css" assetpath="../components/paper-dialog/">
 
 <template>
   <style no-shim="">/* Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
@@ -4773,7 +4773,7 @@ One can build a progress bar using `core-range` like this:
 
 
 
-<polymer-element name="core-range" attributes="value min max step ratio" assetpath="../../../static/components/core-range/">
+<polymer-element name="core-range" attributes="value min max step ratio" assetpath="../components/core-range/">
 <script>
 
   Polymer('core-range', {
@@ -4856,7 +4856,7 @@ One can build a progress bar using `core-range` like this:
 </polymer-element>
 
 
-<polymer-element name="paper-progress" extends="core-range" attributes="secondaryProgress" assetpath="../../../static/components/paper-progress/">
+<polymer-element name="paper-progress" extends="core-range" attributes="secondaryProgress" assetpath="../components/paper-progress/">
 
   <template>
   
@@ -5038,7 +5038,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 
-<polymer-element name="core-media-query" attributes="query queryMatches" assetpath="../../../static/components/core-media-query/">
+<polymer-element name="core-media-query" attributes="query queryMatches" assetpath="../components/core-media-query/">
   <template>
     <style>
       :host {
@@ -5091,7 +5091,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </polymer-element>
 
 
-<polymer-element name="paper-toast" attributes="text duration opened responsiveWidth swipeDisabled" assetpath="../../../static/components/paper-toast/">
+<polymer-element name="paper-toast" attributes="text duration opened responsiveWidth swipeDisabled" assetpath="../components/paper-toast/">
 
 <template>
 
@@ -5492,7 +5492,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="core-iconset" extends="core-meta" attributes="src width icons iconSize" assetpath="../../../static/components/core-iconset/">
+<polymer-element name="core-iconset" extends="core-meta" attributes="src width icons iconSize" assetpath="../components/core-iconset/">
   
   <script>
   
@@ -5694,7 +5694,7 @@ html /deep/ core-icon[size=""] > svg {
 }
 </style>
 
-<polymer-element name="core-icon" attributes="src size icon" assetpath="../../../static/components/core-icon/">
+<polymer-element name="core-icon" attributes="src size icon" assetpath="../components/core-icon/">
 <script>
 (function() {
   
@@ -5847,7 +5847,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="core-iconset-svg" extends="core-meta" attributes="iconSize" assetpath="../../../static/components/core-iconset-svg/">
+<polymer-element name="core-iconset-svg" extends="core-meta" attributes="iconSize" assetpath="../components/core-iconset-svg/">
 
   <script>
 
@@ -6157,7 +6157,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="core-icon-button" attributes="src icon active" assetpath="../../../static/components/core-icon-button/">
+<polymer-element name="core-icon-button" attributes="src icon active" assetpath="../components/core-icon-button/">
 
   <template>
 
@@ -6454,7 +6454,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="paper-focusable" attributes="active focused disabled isToggle" tabindex="0" on-down="{{_downAction}}" on-up="{{_upAction}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-contextmenu="{{contextMenuAction}}" assetpath="../../../static/components/paper-focusable/">
+<polymer-element name="paper-focusable" attributes="active focused disabled isToggle" tabindex="0" on-down="{{_downAction}}" on-up="{{_upAction}}" on-focus="{{focusAction}}" on-blur="{{blurAction}}" on-contextmenu="{{contextMenuAction}}" assetpath="../components/paper-focusable/">
 
   <script>
     Polymer('paper-focusable', {
@@ -6589,7 +6589,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="paper-button" extends="paper-focusable" attributes="label raisedButton iconSrc icon" role="button" assetpath="../../../static/components/paper-button/">
+<polymer-element name="paper-button" extends="paper-focusable" attributes="label raisedButton iconSrc icon" role="button" assetpath="../components/paper-button/">
 
   <template>
 
@@ -6858,7 +6858,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </polymer-element>
 
 
-<polymer-element name="paper-icon-button" extends="paper-button" attributes="fill" assetpath="../../../static/components/paper-icon-button/">
+<polymer-element name="paper-icon-button" extends="paper-button" attributes="fill" assetpath="../components/paper-icon-button/">
 
   <template>
 
@@ -6918,7 +6918,7 @@ license that can be found in the LICENSE file.
 
 
 
-<polymer-element name="indiv-post" attributes="score postid mark username timestamp link" assetpath="../../../static/ourcomponents/indiv-post/">
+<polymer-element name="indiv-post" attributes="score postid mark username timestamp link" assetpath="../ourcomponents/indiv-post/">
 	<template>
 		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom="">
 		<style>
@@ -6933,6 +6933,10 @@ license that can be found in the LICENSE file.
 				perspective: 100px;
 				-webkit-transform-origin:50% 0%;
 				transform-origin:50% 0%;
+				transition:background .13s ease;
+			}
+			:host(:hover){
+				background:#fcfcfc;
 			}
 			.padding{
 				padding: 25px 36px 25px 36px;
@@ -6980,7 +6984,7 @@ license that can be found in the LICENSE file.
 			.social paper-icon-button:not([active]):hover{
 				fill:#bcbcbc;
 			}
-			.social p.info{
+			.social div.info{
 				display:inline-block;
 				vertical-align:middle;
 				float:right;
@@ -7028,17 +7032,35 @@ license that can be found in the LICENSE file.
 				display: inline-block;
 				top:1px;
 			}
+			a.author, span#ago, div.profpic{
+				float:right;
+			}
+			div.profpic{
+				position:relative;
+				z-index:10;
+				height: 32px;
+				width: 32px;
+				display: inline-block;
+				background-size: cover;
+				background-position: 50% 50%;
+				border-radius: 40px;
+				vertical-align: middle;
+				margin-top: 2px;
+				margin-left: 11px;
+				transition:all .13s ease;
+			}
+			div.profpic:hover{
+				opacity:.82;
+			}
 		</style>
 		<div class="padding">
-			<a href="{{link?link:'/comments/'+postid}}"><paper-ripple></paper-ripple></a>
+			<a href="{{link?link:&apos;/comments/&apos;+postid}}"><paper-ripple></paper-ripple></a>
 			<div class="content">
 				<content select="h1"></content>
 				<content select=".bodytext"></content>
 			</div>
 			<div class="social">
 				<span class="number">{{score}}</span>
-				<!-- <paper-icon-button active?="{{mark == 1}}" id="up" isToggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button> -->
-				<!-- <paper-icon-button active?="{{mark == -1}}" id="down" isToggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button> -->
 				<paper-icon-button id="up" istoggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button>
 				<paper-icon-button id="down" istoggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
 				<a href="/comments/{{postid}}"><paper-button class="viewcomments" label="View Comments"></paper-button></a>
@@ -7046,10 +7068,11 @@ license that can be found in the LICENSE file.
 					<paper-button class="deletepost" label="Delete Post (double-click)" on-dblclick="{{deletePost}}"></paper-button>
 				</template>
 				<span class="copypost">go/twsq?{{postid}}</span>
-				<p class="info">
+				<div class="info">
+					<a href="/user/{{username}}"><div class="profpic" style="background-image:url(&apos;https://teams-service.googleplex.com/photos/{{username}}?sz=72&amp;type=plus&amp;type=security&amp;type=silhouette&apos;);"></div></a>
 					<a class="author" href="/user/{{username}}">Submitted by <span>{{username}}</span></a><br>
 					<span id="ago" timestamp="{{timestamp}}"></span>
-				</p>
+				</div>
 			</div>
 		</div>
 		<core-xhr id="xhr"></core-xhr>
@@ -7071,8 +7094,6 @@ license that can be found in the LICENSE file.
 				}else if(this.mark == -1){
 					this.$.down.active = true;
 				}
-
-				console.log(this.score);
 			},
 			recheckTime: function(){
 				this.$.ago.innerHTML = timeago(moment.utc(parseInt(this.$.ago.getAttribute('timestamp'))*1000));
@@ -7175,7 +7196,7 @@ element.
 @homepage github.io
 -->
 
-<polymer-element name="core-ajax" attributes="url handleAs auto params response method headers body contentType withCredentials" assetpath="../../../static/components/core-ajax/">
+<polymer-element name="core-ajax" attributes="url handleAs auto params response method headers body contentType withCredentials" assetpath="../components/core-ajax/">
 <script>
 
   Polymer('core-ajax', {
@@ -7462,7 +7483,7 @@ element.
 </script>
 </polymer-element>
 
-<polymer-element name="posts-service" attributes="listtype posts" assetpath="../../../static/ourcomponents/posts-service/">
+<polymer-element name="posts-service" attributes="listtype posts" assetpath="../ourcomponents/posts-service/">
 	<template>
 		<style>
 			:host {
@@ -7501,7 +7522,7 @@ element.
 	</script>
 </polymer-element>
 
-<polymer-element name="posts-list" attributes="listtype userpage" assetpath="../../../static/ourcomponents/posts-list/">
+<polymer-element name="posts-list" attributes="listtype userpage" assetpath="../ourcomponents/posts-list/">
 	<template>
 		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom="">
 		<style>
@@ -7520,7 +7541,6 @@ element.
 				background:#7986cb;
 				font-weight:400;
 				box-sizing:border-box;
-				box-shadow: 0px 2px 0px #ffffff;
 				border-bottom: 1px solid rgba(50,50,50,.1);
 				border-radius:2px 2px 0px 0px;
 				overflow:hidden;
@@ -7637,9 +7657,8 @@ element.
 				font-size: 19px;
 				font-weight: 300;
 				letter-spacing: .3px;
-				max-height:0px;
+				height:0;
 				opacity:0;
-				transition:all .42s cubic-bezier(0,0,.2,1);
 			}
 			.emptymessage p{
 				font-size:23px;
@@ -7665,26 +7684,42 @@ element.
 				margin-top:10px;
 				letter-spacing: .6px;
 			}
-			:host(.emptylist) .emptymessage{
-				max-height:370px;
-				visibility:visible;
-				opacity:1;
-				overflow:hidden;
-			}
-			:host(.emptylist) .emptymessage .inner{
-				-webkit-transform:translate(0px, 0px);
-				transform:translate(0px, 0px);
-			}
 			.emptymessage .inner{
-				transition:all .23s cubic-bezier(0,0,.2,1);
-				-webkit-transform:translate(0px, -55px);
-				transform:translate(0px, -55px);
 				padding:42px 40px 48px;
 			}
 			.cardtitle h1{
 				text-shadow: 0px 0px 1px rgba(0,0,0,.3);
 				letter-spacing: .9px;
 				font-size:24px;
+			}
+			.cardtitle h1 .profpic{
+				position: relative;
+				z-index: 10;
+				height: 42px;
+				width: 42px;
+				display: inline-block;
+				background-size: cover;
+				background-position: 50% 50%;
+				border-radius: 40px;
+				vertical-align: middle;
+				margin-top: -5px;
+				margin-right: 13px;
+				opacity:1;
+				box-shadow: 0px 0px 2px rgba(0,0,0,.5);
+				transition:all .13s ease;
+			}
+			.cardtitle h1 .profpic:hover{
+				opacity:.82;
+			}
+			:host(.special) #cardtitle .main:before{
+				content: "Initial Contributor";
+				position: absolute;
+				text-transform: uppercase;
+				font-weight: 300;
+				letter-spacing: .7px;
+				top: 47px;
+				font-size: 10px;
+				left: 92px;
 			}
 		</style>
 		<posts-service id="service" on-posts-loaded="{{postsLoaded}}" posts="{{posts}}" listtype="{{listtype}}"></posts-service>
@@ -7710,10 +7745,10 @@ element.
 				</div>
 			</div>
 			<div class="main">
-				<h1>{{ cardtitle }}</h1>
+				<h1><a href="https://teams.googleplex.com/#person:u={{userpage}}" target="_blank" class="profpic" hidden?="{{!userpage}}" style="background-image:url(&apos;https://teams-service.googleplex.com/photos/{{userpage}}?sz=72&amp;type=plus&amp;type=security&amp;type=silhouette&apos;);"></a>{{ cardtitle }}</h1>
 			</div>
 		</div>
-		<div class="emptymessage">
+		<div id="emptymessage" class="emptymessage">
 			<div class="inner">
 				<p>No posts here yet</p>
 				<hr>
@@ -7735,6 +7770,7 @@ element.
 	<script>
 		Polymer('posts-list', {
 			userpage: false,
+			emptymessageheight: 0,
 			ready: function(){
 				if(this.listtype == 'hottest'){
 					this.cardtitle = 'Hottest Posts';
@@ -7756,6 +7792,14 @@ element.
 
 				this.addEventListener('postDeleted', this.postDeleted);
 			},
+			domReady: function(){
+				var $emptymessage = this.$.emptymessage;
+				$emptymessage.style.height = 'auto';
+
+				this.emptymessageheight = $emptymessage.offsetHeight;
+
+				$emptymessage.style.height = '';
+			},
 			colorTap: function(event, detail, sender){
 				var color = sender.getAttribute('color');
 
@@ -7775,7 +7819,8 @@ element.
 			postsLoaded: function(){
 
 				if(!this.posts.length){
-					addClass(this, 'emptylist');
+					this.emptylistShow(true);
+					// addClass(this, 'emptylist');
 				}
 			},
 			createNewPost: function(id, title, link){
@@ -7796,15 +7841,46 @@ element.
 				});
 			},
 			postAdded: function(){
-				removeClass(this, 'emptylist');
+				this.emptylistShow(false);
+				// removeClass(this, 'emptylist');
+			},
+			emptylistShow: function(show){
+				if(show){
+					var player = document.timeline.play(new Animation(this.$.emptymessage, [
+							{height: '0px', opacity: 0, transform: "translate(0px, -38px)"},
+							{height: this.emptymessageheight+'px', opacity: 1, transform: "translate(0px, 0px)"},
+					    ],
+					    {
+					      fill: "forwards",
+					      duration: 500,
+					      iterations: 1,
+					      easing: 'cubic-bezier(.4,0,.2,1)'
+					    }));
+				}else{
+					if(this.$.emptymessage.offsetHeight == 0){
+						return;
+					}
+					var player = document.timeline.play(new Animation(this.$.emptymessage, [
+							{height: this.emptymessageheight+'px', opacity: 1, transform: "translate(0px, 0px)"},
+							{height: '0px', opacity: 0, transform: "translate(0px, -38px)"},
+					    ],
+					    {
+					      fill: 'forwards',
+					      duration: 500,
+					      iterations: 1,
+					      easing: 'cubic-bezier(.4,0,.2,1)'
+					    }));
+				}
 			},
 			postDeleted: function(){
 				var newlength = Sizzle('indiv-post', this.$.postsdiv).length - 1;
 
 				if(newlength){
-					removeClass(this, 'emptylist');
+					this.emptylistShow(false);
+					// removeClass(this, 'emptylist');
 				}else{
-					addClass(this, 'emptylist');
+					this.emptylistShow(true);
+					// addClass(this, 'emptylist');
 				}
 			},
 			newPostAnimation: function(id){
@@ -7854,7 +7930,7 @@ Example:
 
 
 
-<polymer-element name="paper-fab" extends="paper-icon-button" assetpath="../../../static/components/paper-fab/">
+<polymer-element name="paper-fab" extends="paper-icon-button" assetpath="../components/paper-fab/">
 
   <template>
 
@@ -7967,7 +8043,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="big-header" assetpath="../../../static/ourcomponents/big-header/">
+<polymer-element name="big-header" assetpath="../ourcomponents/big-header/">
 	<template>
 		<style>
 			:host{
@@ -8039,6 +8115,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				transform:rotate(630deg);
 				opacity:1;
 			}
+			#logo .beta{
+				position: absolute;
+				top: -5px;
+				font-size: 10px;
+				right: -14px;
+			}
 			.letterb{
 				color:#1369ea;
 			}
@@ -8060,19 +8142,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			}
 		</style>
 		<div class="leftside">
-<!-- 			<div id="logo" class="colored">
-				<span class="letterb">U</span>
-				<span class="letterr">p</span>
-				<span class="lettery">b</span>
-				<span class="letterb">e</span>
-				<span class="letterg">a</span>
-				<span class="letterr">t</span>
-			</div> -->
 			<a href="/" id="logo">
 				<core-icon class="home" icon="google" size="14"></core-icon>
 				<core-icon class="square" icon="image:crop-square" size="40"></core-icon>
 				<core-icon class="logoicon" icon="device:data-usage" size="38"></core-icon>
 				Town Square
+				<span class="beta">BETA</span>
 			</a>
 			<paper-fab icon="add"></paper-fab>
 
@@ -8137,7 +8212,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </core-iconset-svg>
 
 
-<polymer-element name="hanging-menu" attributes="inuser" assetpath="../../../static/ourcomponents/hanging-menu/">
+<polymer-element name="hanging-menu" attributes="inuser" assetpath="../ourcomponents/hanging-menu/">
 	<template>
 		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom="">
 		<style>
@@ -8276,7 +8351,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="indiv-comment" attributes="commentid mark text score username childs timestamp deleted" assetpath="../../../static/ourcomponents/indiv-comment/">
+<polymer-element name="indiv-comment" attributes="commentid mark text score username childs timestamp deleted" assetpath="../ourcomponents/indiv-comment/">
 	<template>
 		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom="">
 		<style>
@@ -8302,6 +8377,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				color:#707070;
 				display:inline-block;
 				vertical-align:middle;
+			}
+			.toprow .op{
+				display:none;
+			}
+			.toprow .op, .toprow .specialuser{
+				font-size: 11px;
+				margin-left: 14px;
+				color: #585858;
+				position: relative;
+				top: 0px;
+				display: inline-block;
+				vertical-align:middle;
+			}
+			.toprow .specialuser{
+				color:#bdbdbd;
+				font-size:9px;
+				text-transform: uppercase;
+				letter-spacing: .3px;
+				margin-left:11px;
 			}
 			.toprow #ago{
 				margin-left:14px;
@@ -8417,6 +8511,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			:host(.deleted) .toprow paper-icon-button{
 				display:none;
 			}
+			div.profpic{
+				position:relative;
+				z-index:10;
+				height: 17px;
+				width: 17px;
+				display: inline-block;
+				background-size: cover;
+				background-position: 50% 50%;
+				border-radius: 40px;
+				vertical-align: middle;
+				margin-top:-2px;
+				margin-left: 6px;
+				opacity:.67;
+			}
 		</style>
 		<core-xhr id="xhr"></core-xhr>
 		<div class="inner">
@@ -8433,7 +8541,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				<div class="toprow">
 					<paper-icon-button id="up" istoggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button>
 					<paper-icon-button id="down" istoggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
-					<a class="author" href="/user/{{username}}">{{ username }}</a>
+					<span class="op" hidden?="{{ username == window.postusername }}">OP</span>
+					<a class="author" href="/user/{{username}}">{{ username }}<div class="profpic" style="background-image:url(&apos;https://teams-service.googleplex.com/photos/{{username}}?sz=72&amp;type=plus&amp;type=security&amp;type=silhouette&apos;);"></div></a>
+					<span class="specialuser" hidden?="{{ isspecial }}">Initial Contributor</span>
 					<span id="ago" timestamp="{{timestamp}}"></span>
 				</div>
 				<div class="actualcomment">
@@ -8472,8 +8582,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			text: 'ok',
 			score: 38,
 			username: 'abc',
+			isspecial: false,
 			created: function(){
 				this.inuser = window.inuser;
+
+				this.isspecial = window.specialusers.indexOf(this.username) !== -1;
 			},
 			ready: function(){
 				this.childs = [];
@@ -8653,7 +8766,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </polymer-element>
 
 
-<polymer-element name="single-service" attributes="postid comments" assetpath="../../../static/ourcomponents/single-service/">
+<polymer-element name="single-service" attributes="postid comments" assetpath="../ourcomponents/single-service/">
 	<template>
 		<style>
 			:host {
@@ -8680,7 +8793,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="comments-area" attributes="postid" assetpath="../../../static/ourcomponents/comments-area/">
+<polymer-element name="comments-area" attributes="postid" assetpath="../ourcomponents/comments-area/">
 	<template>
 		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom="">
 		<style>
@@ -8818,7 +8931,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
 
-<polymer-element name="indiv-notif" attributes="" assetpath="../../../static/ourcomponents/indiv-notif/">
+<polymer-element name="indiv-notif" attributes="" assetpath="../ourcomponents/indiv-notif/">
 	<template>
 		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom="">
 		<style>
@@ -8847,7 +8960,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </polymer-element>
 
 
-<polymer-element name="notifs-service" attributes="notifgroups notifkeys" assetpath="../../../static/ourcomponents/notifs-service/">
+<polymer-element name="notifs-service" attributes="notifgroups notifkeys" assetpath="../ourcomponents/notifs-service/">
 	<template>
 		<style>
 			:host {
@@ -8879,7 +8992,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</script>
 </polymer-element>
 
-<polymer-element name="notifs-list" attributes="listtype userpage" assetpath="../../../static/ourcomponents/notifs-list/">
+<polymer-element name="notifs-list" attributes="listtype userpage" assetpath="../ourcomponents/notifs-list/">
 	<template>
 		<link rel="stylesheet" href="/static/assets/style.css" shim-shadowdom="">
 		<style>
@@ -8943,7 +9056,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					<h3>{{notifkey}} Notifications</h3>
 					<div class="notifs">
 						<template repeat="{{notif in notifgroups[notifkey]}}">
-							<template if="{{notif.type == 'mention in comment'}}">
+							<template if="{{notif.type == &apos;mention in comment&apos;}}">
 								<indiv-notif>
 									<div class="top">
 										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> mentioned you in a comment
@@ -8953,7 +9066,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 									</div>
 								</indiv-notif>
 							</template>
-							<template if="{{notif.type == 'reply'}}">
+							<template if="{{notif.type == &apos;reply&apos;}}">
 								<indiv-notif>
 									<div class="top">
 										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> replied to your comment
@@ -8963,7 +9076,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 									</div>
 								</indiv-notif>
 							</template>
-							<template if="{{notif.type == 'post like'}}">
+							<template if="{{notif.type == &apos;post like&apos;}}">
 								<indiv-notif>
 									<div class="top">
 										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> liked your post
@@ -8973,7 +9086,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 									</div>
 								</indiv-notif>
 							</template>
-							<template if="{{notif.type == 'comment like'}}">
+							<template if="{{notif.type == &apos;comment like&apos;}}">
 								<indiv-notif>
 									<div class="top">
 										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> liked your comment
@@ -8988,7 +9101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					<paper-shadow z="1"></paper-shadow>
 				</div>
 			</template>
-			<template if="{{notifkey == 'No'}}">
+			<template if="{{notifkey == &apos;No&apos;}}">
 				<div class="island none">
 					<h3>No Notifications Yet</h3>
 					<paper-shadow z="1"></paper-shadow>

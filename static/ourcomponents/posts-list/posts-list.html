@@ -140,9 +140,8 @@
 				font-size: 19px;
 				font-weight: 300;
 				letter-spacing: .3px;
-				max-height:0px;
+				height:0;
 				opacity:0;
-				transition:all .42s cubic-bezier(0,0,.2,1);
 			}
 			.emptymessage p{
 				font-size:23px;
@@ -168,26 +167,42 @@
 				margin-top:10px;
 				letter-spacing: .6px;
 			}
-			:host(.emptylist) .emptymessage{
-				max-height:370px;
-				visibility:visible;
-				opacity:1;
-				overflow:hidden;
-			}
-			:host(.emptylist) .emptymessage .inner{
-				-webkit-transform:translate(0px, 0px);
-				transform:translate(0px, 0px);
-			}
 			.emptymessage .inner{
-				transition:all .23s cubic-bezier(0,0,.2,1);
-				-webkit-transform:translate(0px, -55px);
-				transform:translate(0px, -55px);
 				padding:42px 40px 48px;
 			}
 			.cardtitle h1{
 				text-shadow: 0px 0px 1px rgba(0,0,0,.3);
 				letter-spacing: .9px;
 				font-size:24px;
+			}
+			.cardtitle h1 .profpic{
+				position: relative;
+				z-index: 10;
+				height: 42px;
+				width: 42px;
+				display: inline-block;
+				background-size: cover;
+				background-position: 50% 50%;
+				border-radius: 40px;
+				vertical-align: middle;
+				margin-top: -5px;
+				margin-right: 13px;
+				opacity:1;
+				box-shadow: 0px 0px 2px rgba(0,0,0,.5);
+				transition:all .13s ease;
+			}
+			.cardtitle h1 .profpic:hover{
+				opacity:.82;
+			}
+			:host(.special) #cardtitle .main:before{
+				content: "Initial Contributor";
+				position: absolute;
+				text-transform: uppercase;
+				font-weight: 300;
+				letter-spacing: .7px;
+				top: 47px;
+				font-size: 10px;
+				left: 92px;
 			}
 		</style>
 		<posts-service id="service" on-posts-loaded="{{postsLoaded}}" posts="{{posts}}" listtype="{{listtype}}"></posts-service>
@@ -213,10 +228,10 @@
 				</div>
 			</div>
 			<div class="main">
-				<h1>{{ cardtitle }}</h1>
+				<h1><a href="https://teams.googleplex.com/#person:u={{userpage}}" target="_blank" class="profpic" hidden?={{!userpage}} style="background-image:url('https://teams-service.googleplex.com/photos/{{userpage}}?sz=72&type=plus&type=security&type=silhouette');"></a>{{ cardtitle }}</h1>
 			</div>
 		</div>
-		<div class="emptymessage">
+		<div id="emptymessage" class="emptymessage">
 			<div class="inner">
 				<p>No posts here yet</p>
 				<hr>
@@ -238,6 +253,7 @@
 	<script>
 		Polymer('posts-list', {
 			userpage: false,
+			emptymessageheight: 0,
 			ready: function(){
 				if(this.listtype == 'hottest'){
 					this.cardtitle = 'Hottest Posts';
@@ -259,6 +275,14 @@
 
 				this.addEventListener('postDeleted', this.postDeleted);
 			},
+			domReady: function(){
+				var $emptymessage = this.$.emptymessage;
+				$emptymessage.style.height = 'auto';
+
+				this.emptymessageheight = $emptymessage.offsetHeight;
+
+				$emptymessage.style.height = '';
+			},
 			colorTap: function(event, detail, sender){
 				var color = sender.getAttribute('color');
 
@@ -278,7 +302,8 @@
 			postsLoaded: function(){
 
 				if(!this.posts.length){
-					addClass(this, 'emptylist');
+					this.emptylistShow(true);
+					// addClass(this, 'emptylist');
 				}
 			},
 			createNewPost: function(id, title, link){
@@ -299,15 +324,46 @@
 				});
 			},
 			postAdded: function(){
-				removeClass(this, 'emptylist');
+				this.emptylistShow(false);
+				// removeClass(this, 'emptylist');
+			},
+			emptylistShow: function(show){
+				if(show){
+					var player = document.timeline.play(new Animation(this.$.emptymessage, [
+							{height: '0px', opacity: 0, transform: "translate(0px, -38px)"},
+							{height: this.emptymessageheight+'px', opacity: 1, transform: "translate(0px, 0px)"},
+					    ],
+					    {
+					      fill: "forwards",
+					      duration: 500,
+					      iterations: 1,
+					      easing: 'cubic-bezier(.4,0,.2,1)'
+					    }));
+				}else{
+					if(this.$.emptymessage.offsetHeight == 0){
+						return;
+					}
+					var player = document.timeline.play(new Animation(this.$.emptymessage, [
+							{height: this.emptymessageheight+'px', opacity: 1, transform: "translate(0px, 0px)"},
+							{height: '0px', opacity: 0, transform: "translate(0px, -38px)"},
+					    ],
+					    {
+					      fill: 'forwards',
+					      duration: 500,
+					      iterations: 1,
+					      easing: 'cubic-bezier(.4,0,.2,1)'
+					    }));
+				}
 			},
 			postDeleted: function(){
 				var newlength = Sizzle('indiv-post', this.$.postsdiv).length - 1;
 
 				if(newlength){
-					removeClass(this, 'emptylist');
+					this.emptylistShow(false);
+					// removeClass(this, 'emptylist');
 				}else{
-					addClass(this, 'emptylist');
+					this.emptylistShow(true);
+					// addClass(this, 'emptylist');
 				}
 			},
 			newPostAnimation: function(id){
