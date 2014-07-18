@@ -8,7 +8,12 @@ import math
 import re
 from django.utils import timezone
 
-from main.temp import user
+from main.googler import user
+
+SPECIAL_USERS = [
+    'tennien',
+    'soturntup',
+]
 
 def pick(d, keys):
     result = {}

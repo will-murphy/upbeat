@@ -1,0 +1,4 @@
+
+Notifications appear here.
+
+You'll recieve notifications when someone replies to your post, upvotes something you wrote, or mentions you in a comment.

@@ -2,13 +2,13 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from main.models import Post, Comment, Activity, Vote, CommentVote, Googler, \
-    get_object_or
+    get_object_or, SPECIAL_USERS
 import json
 import re
 
 # from google.appengine.api import users
 # user = users.get_current_users()
-from main.temp import user
+from main.googler import user
 
 def respond(str, data = {}):
     return HttpResponse(json.dumps(dict(
@@ -16,6 +16,7 @@ def respond(str, data = {}):
         {'message': str}.items())))
 
 def root(request):
+    # from google.appengine.api import users
     return render(request, 'main/index.html', {
         'title': 'Hottest',
         'listtype': 'hottest',
@@ -36,7 +37,8 @@ def user_page(request, username):
         'inuser': user.nickname(),
         'color': Googler.color_of(username),
         'username': username,
-        'Username': username.capitalize()
+        'Username': username.capitalize(),
+        'specialuser': username in SPECIAL_USERS
         })
 
 def notifications_page(request):
