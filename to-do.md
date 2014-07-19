@@ -1,3 +1,8 @@
+- Double count votes
+- Link regex/support apple.com
+- Hit enter in link field
+
+
 - No notifications page
 - Click text post -> comments page
 - Link regexp
