@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponsePermanentRedirect
 from main.models import Post, Comment, Activity, Vote, CommentVote, Googler, \
-    get_object_or, SPECIAL_USERS
+    get_object_or
 import json
 import re
 
@@ -35,10 +35,10 @@ def user_page(request, username):
         'title': username.capitalize() + "'s Profile",
         'listtype': 'user|' + username,
         'inuser': nickname(),
-        'color': Googler.color_of(username),
+        'color': Googler.named(username).color,
         'username': username,
         'Username': username.capitalize(),
-        'is_special': username in SPECIAL_USERS
+        'is_special': Googler.current().is_special()
         })
 
 def notifications_page(request):
@@ -127,13 +127,13 @@ def post_comments_page(request, post_id):
         return render(request, 'main/post-deleted.html', {
             'post': post.as_json_dict(),
             'inuser': nickname(),
-            'color': Googler.color_of(post.username)
+            'color': Googler.named(post.username).color
             })
     
     return render(request, 'main/comments.html', {
         'post': post.as_json_dict(),
         'inuser': nickname(),
-        'color': Googler.color_of(post.username)
+        'color': Googler.named(post.username).color
         })
 
 def post_by(request, username):
@@ -266,7 +266,7 @@ def user_page_json(request, username):
     response = {
         'userinfo': {
             'posts': posts.count(),
-            'color': Googler.color_of(username),
+            'color': Googler.named(username).color,
         },
         'posts': [post.as_summary_json_dict() for post in posts.all()]
     }
