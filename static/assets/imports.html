@@ -88,15 +88,15 @@ body.lightblue posts-list::shadow .cardtitle{
 	/*300*/
 	background:#4fc3f7 !important;
 }
-body.blue paper-dialog paper-tabs{
+body.lightblue paper-dialog paper-tabs{
 	/*300*/
 	background:#4fc3f7;
 }
-body.blue paper-tabs::shadow #selectionBar, body.blue paper-dialog paper-progress::shadow #activeProgress {
+body.lightblue paper-tabs::shadow #selectionBar, body.lightblue paper-dialog paper-progress::shadow #activeProgress {
 	/*400*/
 	background:#29b6f6 !important;
 }
-body.blue .middle paper-input::shadow .focusedColor{
+body.lightblue .middle paper-input::shadow .focusedColor{
 	/*400*/
 	background:#29b6f6;
 	color:#4fc3f7;
@@ -7038,7 +7038,7 @@ license that can be found in the LICENSE file.
 				transition:all .13s ease;
 			}
 			.viewcomments:hover, .deletepost:hover{
-				background: rgba(230,230,230,.7);
+				background: rgba(218,218,218,.7);
 			}
 			.viewcomments::shadow paper-ripple, .deletepost::shadow paper-ripple{
 				color: #989898 !important;
@@ -7681,6 +7681,7 @@ element.
 				font-size: 19px;
 				font-weight: 300;
 				letter-spacing: .3px;
+				overflow:hidden;
 				height:0;
 				opacity:0;
 			}
@@ -8411,7 +8412,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				vertical-align:middle;
 			}
 			.toprow .op{
-				display:none;
+				display:none !important;
 			}
 			.toprow .op, .toprow .specialuser{
 				font-size: 11px;
@@ -8428,6 +8429,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				text-transform: uppercase;
 				letter-spacing: .3px;
 				margin-left:11px;
+				margin-top: 2px;
 			}
 			.toprow #ago{
 				margin-left:14px;
@@ -8475,7 +8477,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				vertical-align:middle;
 			}
 			.bottomrow paper-button{
-				font-size:14px;
+				font-size:12px;
 				color:#929292;
 				text-transform:none;
 				cursor:pointer;
@@ -8599,7 +8601,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				<div class="replysection textsection">
 					<textarea id="replytextarea"></textarea>
 					<div class="butts">
-						<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelReply}}"></paper-button>
+						<paper-button id="cancelreply" class="viewcomments" label="Cancel" on-tap="{{cancelReply}}"></paper-button>
 						<paper-button id="savereply" class="viewcomments" label="Save" on-tap="{{saveReply}}"></paper-button>
 					</div>
 				</div>
@@ -8640,6 +8642,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 						this.$.down.active = true;
 					}
 				}
+				this.$.savereply.addEventListener('keypress', function(e){
+					if(e.keyCode == 13){
+						this.$.savereply.fire('tap');
+					}
+				}.bind(this));
+				this.$.cancelreply.addEventListener('keypress', function(e){
+					if(e.keyCode == 13){
+						this.$.cancelreply.fire('tap');
+					}
+				}.bind(this));
 
 			},
 			recalculate: function(){
@@ -8893,7 +8905,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		<div class="replysection">
 			<textarea id="savetextarea"></textarea>
 			<div class="butts">
-				<paper-button id="savecomment" class="viewcomments" label="Save Comment" on-tap="{{saveComment}}"></paper-button>
+				<paper-button id="savecomment" class="savecomment" label="Save Comment" on-tap="{{saveComment}}"></paper-button>
 			</div>
 		</div>
 		<div id="commenttree" class="commenttree" postid="{{postid}}">
@@ -8907,6 +8919,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	</template>
 	<script>
 		Polymer('comments-area', {
+			domReady: function(){
+				this.$.savecomment.addEventListener('keypress', function(e){
+					if(e.keyCode == 13){
+						this.$.savecomment.fire('tap');
+					}
+				}.bind(this));
+			},
 			saveComment: function(){
 				var text = this.$.savetextarea.value;
 				if(!text){

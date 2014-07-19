@@ -278,6 +278,18 @@ dialogshare.addEventListener('tap', function(){
     });
 });
 
+dialogcancel.addEventListener('keypress', function(e){
+    if(e.keyCode == 13){
+        dialogcancel.fire('tap');
+    }
+});
+
+dialogshare.addEventListener('keypress', function(e){
+    if(e.keyCode == 13){
+        dialogshare.fire('tap');
+    }
+});
+
 function insertNewPost(id, title, link){
     if(postslist && (postslist.listtype == 'hottest' || postslist.listtype == 'latest' ||
         (postslist.userpage && postslist.userpage == window.inuser))){

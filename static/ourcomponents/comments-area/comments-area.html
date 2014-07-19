@@ -69,7 +69,7 @@
 		<div class="replysection">
 			<textarea id="savetextarea"></textarea>
 			<div class="butts">
-				<paper-button id="savecomment" class="viewcomments" label="Save Comment" on-tap="{{saveComment}}"></paper-button>
+				<paper-button id="savecomment" class="savecomment" label="Save Comment" on-tap="{{saveComment}}"></paper-button>
 			</div>
 		</div>
 		<div id="commenttree" class="commenttree" postid="{{postid}}">
@@ -83,6 +83,13 @@
 	</template>
 	<script>
 		Polymer('comments-area', {
+			domReady: function(){
+				this.$.savecomment.addEventListener('keypress', function(e){
+					if(e.keyCode == 13){
+						this.$.savecomment.fire('tap');
+					}
+				}.bind(this));
+			},
 			saveComment: function(){
 				var text = this.$.savetextarea.value;
 				if(!text){

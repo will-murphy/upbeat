@@ -30,7 +30,7 @@
 				vertical-align:middle;
 			}
 			.toprow .op{
-				display:none;
+				display:none !important;
 			}
 			.toprow .op, .toprow .specialuser{
 				font-size: 11px;
@@ -47,6 +47,7 @@
 				text-transform: uppercase;
 				letter-spacing: .3px;
 				margin-left:11px;
+				margin-top: 2px;
 			}
 			.toprow #ago{
 				margin-left:14px;
@@ -94,7 +95,7 @@
 				vertical-align:middle;
 			}
 			.bottomrow paper-button{
-				font-size:14px;
+				font-size:12px;
 				color:#929292;
 				text-transform:none;
 				cursor:pointer;
@@ -218,7 +219,7 @@
 				<div class="replysection textsection">
 					<textarea id="replytextarea"></textarea>
 					<div class="butts">
-						<paper-button class="viewcomments" label="Cancel" on-tap="{{cancelReply}}"></paper-button>
+						<paper-button id="cancelreply" class="viewcomments" label="Cancel" on-tap="{{cancelReply}}"></paper-button>
 						<paper-button id="savereply" class="viewcomments" label="Save" on-tap="{{saveReply}}"></paper-button>
 					</div>
 				</div>
@@ -259,6 +260,16 @@
 						this.$.down.active = true;
 					}
 				}
+				this.$.savereply.addEventListener('keypress', function(e){
+					if(e.keyCode == 13){
+						this.$.savereply.fire('tap');
+					}
+				}.bind(this));
+				this.$.cancelreply.addEventListener('keypress', function(e){
+					if(e.keyCode == 13){
+						this.$.cancelreply.fire('tap');
+					}
+				}.bind(this));
 
 			},
 			recalculate: function(){
