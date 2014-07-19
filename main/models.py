@@ -442,8 +442,8 @@ class Googler(Model):
     def __unicode__(self):
         return self.username
     
-    def get_vote(self, username):
-        if Googler.named(username).is_special():
+    def get_vote(self):
+        if self.is_special():
             return Googler.SPECIAL_VOTE
         else:
             return 1
