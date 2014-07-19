@@ -15,6 +15,8 @@ SPECIAL_USERS = [
     'soturntup',
 ]
 
+SPECIAL_USER_VOTE = 2
+
 def pick(d, keys):
     result = {}
     
@@ -135,10 +137,16 @@ class Post(Model, JSONable, Deletable):
         vote.gen_activity()
 
     def upvote(self):
-        self.__vote__(1)
+        if nickname() in SPECIAL_USERS:
+            self.__vote__(SPECIAL_USER_VOTE)
+        else:
+            self.__vote__(1)
     
     def downvote(self):
-        self.__vote__(-1)
+        if nickname() in SPECIAL_USERS:
+            self.__vote__(SPECIAL_USER_VOTE)
+        else:
+            self.__vote__(-1)
     
     def unvote(self):
         self.__vote__(0)
@@ -271,10 +279,16 @@ class Comment(Model, JSONable, Deletable):
         vote.gen_activity()
 
     def upvote(self):
-        self.__vote__(1)
+        if nickname() in SPECIAL_USERS:
+            self.__vote__(SPECIAL_USER_VOTE)
+        else:
+            self.__vote__(1)
     
     def downvote(self):
-        self.__vote__(-1)
+        if nickname() in SPECIAL_USERS:
+            self.__vote__(SPECIAL_USER_VOTE)
+        else:
+            self.__vote__(-1)
     
     def unvote(self):
         self.__vote__(0)

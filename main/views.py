@@ -18,14 +18,16 @@ def root(request):
     return render(request, 'main/index.html', {
         'title': 'Hottest',
         'listtype': 'hottest',
-        'inuser': nickname()
+        'inuser': nickname(),
+        'is_special': False
         })
 
 def latest(request):
     return render(request, 'main/index.html', {
         'title': 'Latest',
         'listtype': 'latest',
-        'inuser': nickname()
+        'inuser': nickname(),
+        'is_special': False
         })
 
 def user_page(request, username):
@@ -36,7 +38,7 @@ def user_page(request, username):
         'color': Googler.color_of(username),
         'username': username,
         'Username': username.capitalize(),
-        'specialuser': username in SPECIAL_USERS
+        'is_special': username in SPECIAL_USERS
         })
 
 def notifications_page(request):
