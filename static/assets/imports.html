@@ -7108,14 +7108,14 @@ license that can be found in the LICENSE file.
 			},
 			thumbsUp: function(event, detail, sender) {
 				if(!sender.active){
-					this.score--;
+					this.score = parseInt(this.score) - 1 - imspecial();
 					this.$.xhr.request({
 						url: '/api/post/'+this.postid+'/unvote',
 					});
 				}else{
 					var downButt = this.$.down;
 					var downbuttActive = downButt.active;
-					this.score = parseInt(this.score) + 1 + (downbuttActive ? 1 : 0);
+					this.score = parseInt(this.score) + 1 + imspecial() + (downbuttActive ? 1 + imspecial() : 0);
 
 					downButt.active = false;
 					this.$.xhr.request({
@@ -7125,7 +7125,7 @@ license that can be found in the LICENSE file.
 			},
 			thumbsDown: function(event, detail, sender){
 				if(!sender.active){
-					this.score++;
+					this.score = parseInt(this.score) + 1 + imspecial();
 					this.$.xhr.request({
 						url: '/api/post/'+this.postid+'/unvote',
 					});
@@ -7133,7 +7133,7 @@ license that can be found in the LICENSE file.
 					var upButt = this.$.up;
 
 					var upButtActive = upButt.active;
-					this.score = parseInt(this.score) - 1 - (upButtActive ? 1 : 0);
+					this.score = parseInt(this.score) - 1 - imspecial() - (upButtActive ? 1 + imspecial() : 0);
 
 					upButt.active = false;
 					this.$.xhr.request({
@@ -8599,7 +8599,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				this.inuser = window.inuser;
 			},
 			ready: function(){
-				this.isspecial = window.specialusers.indexOf(this.username) !== -1;
+				this.isspecial = isspecial(this.username);
 				
 				this.childs = [];
 				if(!this.deleted){
@@ -8687,14 +8687,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			},
 			thumbsUp: function(event, detail, sender){
 				if(!sender.active){
-					this.score--;
+					this.score = parseInt(this.score) - 1 - imspecial();
 					this.$.xhr.request({
 						url: '/api/comment/'+this.commentid+'/unvote',
 					});
 				}else{
 					var downButt = this.$.down;
 					var downbuttActive = downButt.active;
-					this.score = parseInt(this.score) + 1 + (downbuttActive ? 1 : 0);
+					this.score = parseInt(this.score) + 1 + imspecial() + (downbuttActive ? 1 + imspecial() : 0);
 
 					downButt.active = false;
 					this.$.xhr.request({
@@ -8704,7 +8704,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			},
 			thumbsDown: function(event, detail, sender){
 				if(!sender.active){
-					this.score++;
+					this.score = parseInt(this.score) + 1 + imspecial();
 					this.$.xhr.request({
 						url: '/api/comment/'+this.commentid+'/unvote',
 					});
@@ -8712,7 +8712,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					var upButt = this.$.up;
 
 					var upButtActive = upButt.active;
-					this.score = parseInt(this.score) - 1 - (upButtActive ? 1 : 0);
+					this.score = parseInt(this.score) - 1 - imspecial() - (upButtActive ? 1 + imspecial() : 0);
 
 					upButt.active = false;
 					this.$.xhr.request({

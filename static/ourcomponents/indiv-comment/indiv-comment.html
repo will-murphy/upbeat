@@ -238,7 +238,7 @@
 				this.inuser = window.inuser;
 			},
 			ready: function(){
-				this.isspecial = window.specialusers.indexOf(this.username) !== -1;
+				this.isspecial = isspecial(this.username);
 				
 				this.childs = [];
 				if(!this.deleted){
@@ -269,6 +269,7 @@
 			},
 			reply: function(){
 				addClass(this, 'replying');
+				this.$.replytextarea.focus();
 			},
 			cancelReply: function(){
 				this.$.replytextarea.value = '';
@@ -326,14 +327,14 @@
 			},
 			thumbsUp: function(event, detail, sender){
 				if(!sender.active){
-					this.score--;
+					this.score = parseInt(this.score) - 1 - imspecial();
 					this.$.xhr.request({
 						url: '/api/comment/'+this.commentid+'/unvote',
 					});
 				}else{
 					var downButt = this.$.down;
 					var downbuttActive = downButt.active;
-					this.score = parseInt(this.score) + 1 + (downbuttActive ? 1 : 0);
+					this.score = parseInt(this.score) + 1 + imspecial() + (downbuttActive ? 1 + imspecial() : 0);
 
 					downButt.active = false;
 					this.$.xhr.request({
@@ -343,7 +344,7 @@
 			},
 			thumbsDown: function(event, detail, sender){
 				if(!sender.active){
-					this.score++;
+					this.score = parseInt(this.score) + 1 + imspecial();
 					this.$.xhr.request({
 						url: '/api/comment/'+this.commentid+'/unvote',
 					});
@@ -351,7 +352,7 @@
 					var upButt = this.$.up;
 
 					var upButtActive = upButt.active;
-					this.score = parseInt(this.score) - 1 - (upButtActive ? 1 : 0);
+					this.score = parseInt(this.score) - 1 - imspecial() - (upButtActive ? 1 + imspecial() : 0);
 
 					upButt.active = false;
 					this.$.xhr.request({
