@@ -112,9 +112,11 @@ def post_page_json(request, pk):
     
     for comment in post.comment_set.all(): comment.refresh_score()
     
-    result['comments'] = map(
-        lambda comment: comment.as_tree_of_json_dicts(),
-        post.comment_set.order_by('-score').all())
+    result['comments'] = filter(
+        lambda comment: len(comment.children) or not comment.deleted,
+        map(
+            lambda comment: comment.as_tree_of_json_dicts(),
+            post.comment_set.order_by('-score').all()))
     
     return HttpResponse(json.dumps(result))
 
