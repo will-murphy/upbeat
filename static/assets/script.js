@@ -3,7 +3,14 @@
 | ADMIN CONFIGS
 |--------------------------------------------------------------------------
 */
-window.specialusers = ['orleanspobee', 'tennien', 'iamatest'];
+window.specialusers = ['orleanspobee', 'tennien', 'iamatest', 'local-user'];
+function isspecial(user){
+    return window.specialusers.indexOf(user) !== -1;
+}
+function imspecial(){
+    return isspecial(window.inuser);
+}
+
 
 /*
 |--------------------------------------------------------------------------
