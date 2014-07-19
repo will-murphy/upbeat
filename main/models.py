@@ -226,7 +226,7 @@ class Comment(Model, JSONable, Deletable):
     def as_tree_of_json_dicts(self):
         tree = self.__as_tree_of_json_dicts_helper__({})
         
-        # Comment.pop_deleted_children(tree['children'])
+        Comment.pop_deleted_children(tree['children'])
         
         return tree
     
