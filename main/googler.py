@@ -7,6 +7,9 @@ try:
 
     def nickname():
         return users.get_current_user().nickname()
+    
+    get_current_user()
+    nickname()
 except AssertionError:
     class Temp():
         def nickname():
