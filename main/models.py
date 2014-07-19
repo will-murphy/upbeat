@@ -107,7 +107,7 @@ class Post(Model, JSONable, Deletable):
     
     def as_full_json_dict(self):
         d = self.as_json_dict()
-        d['color'] = Googler.color_of(nickname())
+        d['color'] = Googler.current().color
         return d
     
     def as_summary_json_dict(self):
@@ -130,10 +130,10 @@ class Post(Model, JSONable, Deletable):
         vote.gen_activity()
 
     def upvote(self):
-        self.__vote__(Googler.current().vote)
+        self.__vote__(Googler.current().get_vote())
     
     def downvote(self):
-        self.__vote__(- Googler.current().vote)
+        self.__vote__(- Googler.current().get_vote())
     
     def unvote(self):
         self.__vote__(0)
@@ -266,10 +266,10 @@ class Comment(Model, JSONable, Deletable):
         vote.gen_activity()
 
     def upvote(self):
-        self.__vote__(Googler.current().vote)
+        self.__vote__(Googler.current().get_vote())
     
     def downvote(self):
-        self.__vote__(- Googler.current().vote)
+        self.__vote__(- Googler.current().get_vote())
     
     def unvote(self):
         self.__vote__(0)
@@ -439,27 +439,25 @@ class Googler(Model):
     ]
     SPECIAL_VOTE = 2
     
-    def vote(username):
+    def __unicode__(self):
+        return self.username
+    
+    def get_vote(self, username):
         if Googler.named(username).is_special():
             return Googler.SPECIAL_VOTE
         else:
             return 1
     
+    def is_special(self):
+        return self.username in Googler.SPECIAL_USERNAMES
+    
     @staticmethod
     def named(username):
-        return Googler.objects.get_or_create(username = username)
+        return Googler.objects.get_or_create(username = username)[0]
     
     @staticmethod
     def current():
         return Googler.named(nickname())
-    
-    @staticmethod
-    def color_of(username):
-        return get_object_attr_or(Googler, 'color', '', username = username)
-    
-    @staticmethod
-    def is_special(username):
-        return username in Googler.SPECIAL_USERNAMES
     
     @staticmethod
     def current_is_special(username):
