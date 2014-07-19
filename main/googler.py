@@ -1,13 +1,8 @@
 
-try:
-    from google.appengine.api import users
-    user = users.get_current_user()
-except AssertionError:
-    print("Warning: I see no google.appengine.api, so I'll assume we're in " +
-          "development and I'll create a fake user.")
+from google.appengine.api import users
 
-    class Temp:
-        def nickname(self):
-            return 'iamatest'
+def get_current_user():
+    return users.get_current_user()
 
-    user = Temp()
+def nickname():
+    return users.get_current_user().nickname()
