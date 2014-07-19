@@ -111,11 +111,15 @@
 				Town Square
 				<span class="beta">BETA</span>
 			</a>
-			<paper-fab icon="add"></paper-fab>
+			<paper-fab on-tap="{{addtap}}" icon="add"></paper-fab>
 
 		</div>
 	</template>
 	<script>
-		Polymer({});
+		Polymer({
+			addtap: function(){
+				this.fire('addtap');
+			}
+		});
 	</script>
 </polymer-element>

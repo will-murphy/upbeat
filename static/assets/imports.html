@@ -8149,12 +8149,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				Town Square
 				<span class="beta">BETA</span>
 			</a>
-			<paper-fab icon="add"></paper-fab>
+			<paper-fab on-tap="{{addtap}}" icon="add"></paper-fab>
 
 		</div>
 	</template>
 	<script>
-		Polymer('big-header',{});
+		Polymer('big-header',{
+			addtap: function(){
+				this.fire('addtap');
+				console.log('asdf');
+			}
+		});
 	</script>
 </polymer-element></div>
 	<div hidden>

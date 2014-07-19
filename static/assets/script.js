@@ -181,7 +181,7 @@ var dialogxhr = document.querySelector('#dialogxhr');
 var inputAll = document.querySelectorAll('paper-dialog .middle paper-input');
 
 //show dialog
-header.addEventListener('tap', function(){
+header.addEventListener('addtap', function(){
     dialog.toggle();
 
     //fix for polymer bug
