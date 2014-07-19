@@ -11,7 +11,7 @@
 <body class="{% if listtype == 'hottest' or listtype == 'latest' %}blue{% else %}{{ color|default:'grey' }}{% endif %}" unresolved touch-action="auto">
 	<big-header></big-header>
 	<div class="mainarea">
-		<posts-list class="" listtype="{{ listtype }}"></posts-list>
+		<posts-list class="{% if is_special %}special{% endif %}" listtype="{{ listtype }}"></posts-list>
 	</div>
 	<hanging-menu></hanging-menu>
 	<paper-dialog backdrop="true" id="newdialog" transition="paper-dialog-transition-bottom">

@@ -194,7 +194,7 @@
 					<paper-icon-button id="down" isToggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
 					<span class="op" hidden?="{{ username == window.postusername }}">OP</span>
 					<a class="author" href="/user/{{username}}">{{ username }}<div class="profpic" style="background-image:url('https://teams-service.googleplex.com/photos/{{username}}?sz=72&type=plus&type=security&type=silhouette');"></div></a>
-					<span class="specialuser" hidden?="{{ isspecial }}">Initial Contributor</span>
+					<span class="specialuser" hidden?="{{ !isspecial }}">Initial Contributor</span>
 					<span id="ago" timestamp="{{timestamp}}"></span>
 				</div>
 				<div class="actualcomment">
@@ -236,10 +236,10 @@
 			isspecial: false,
 			created: function(){
 				this.inuser = window.inuser;
-
-				this.isspecial = window.specialusers.indexOf(this.username) !== -1;
 			},
 			ready: function(){
+				this.isspecial = window.specialusers.indexOf(this.username) !== -1;
+				
 				this.childs = [];
 				if(!this.deleted){
 					this.recalculate();

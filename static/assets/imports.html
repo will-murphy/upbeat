@@ -7018,6 +7018,14 @@ license that can be found in the LICENSE file.
 				opacity:.8;
 				font-size:13px;
 				margin-left:22px;
+				background: rgba(230,230,230,.37);
+				transition:all .13s ease;
+			}
+			.viewcomments:hover, .deletepost:hover{
+				background: rgba(230,230,230,.7);
+			}
+			.viewcomments::shadow paper-ripple, .deletepost::shadow paper-ripple{
+				color: #989898 !important;
 			}
 			span.copypost{
 				position:relative;
@@ -8547,7 +8555,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 					<paper-icon-button id="down" istoggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
 					<span class="op" hidden?="{{ username == window.postusername }}">OP</span>
 					<a class="author" href="/user/{{username}}">{{ username }}<div class="profpic" style="background-image:url(&apos;https://teams-service.googleplex.com/photos/{{username}}?sz=72&amp;type=plus&amp;type=security&amp;type=silhouette&apos;);"></div></a>
-					<span class="specialuser" hidden?="{{ isspecial }}">Initial Contributor</span>
+					<span class="specialuser" hidden?="{{ !isspecial }}">Initial Contributor</span>
 					<span id="ago" timestamp="{{timestamp}}"></span>
 				</div>
 				<div class="actualcomment">
@@ -8589,10 +8597,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			isspecial: false,
 			created: function(){
 				this.inuser = window.inuser;
-
-				this.isspecial = window.specialusers.indexOf(this.username) !== -1;
 			},
 			ready: function(){
+				this.isspecial = window.specialusers.indexOf(this.username) !== -1;
+				
 				this.childs = [];
 				if(!this.deleted){
 					this.recalculate();

@@ -3,7 +3,7 @@
 | ADMIN CONFIGS
 |--------------------------------------------------------------------------
 */
-window.specialusers = ['orleanspobee', 'tennien'];
+window.specialusers = ['orleanspobee', 'tennien', 'iamatest'];
 
 /*
 |--------------------------------------------------------------------------
