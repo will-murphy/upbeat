@@ -7097,9 +7097,9 @@ license that can be found in the LICENSE file.
 				}, 20000);
 				self.recheckTime();
 
-				if(this.mark == 1){
+				if(this.mark > 0){
 					this.$.up.active = true;
-				}else if(this.mark == -1){
+				}else if(this.mark < 0){
 					this.$.down.active = true;
 				}
 			},
@@ -7836,8 +7836,8 @@ element.
 					id: id,
 					title: title,
 					link: link,
-					score: 1,
-					mark: 1,
+					score: 1 + imspecial(),
+					mark: 1 + imspecial(),
 					username: window.inuser,
 					timestamp: (+new Date)/1000
 				}
@@ -8614,9 +8614,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				self.recheckTime();
 
 				if(!this.deleted){
-					if(this.mark == 1){
+					if(this.mark > 0){
 						this.$.up.active = true;
-					}else if(this.mark == -1){
+					}else if(this.mark < 0){
 						this.$.down.active = true;
 					}
 				}
@@ -8632,7 +8632,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				addClass(this, 'replying');
 				this.async(function(){
 					this.$.replytextarea.focus();
-				}, 270);
+				}, 370);
 			},
 			cancelReply: function(){
 				this.$.replytextarea.value = '';
@@ -8678,8 +8678,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				var newcomment = document.createElement('indiv-comment');
 				newcomment.setAttribute('commentid', id);
 				newcomment.setAttribute('text', text);
-				newcomment.setAttribute('score', 1);
-				newcomment.setAttribute('mark', 1);
+				newcomment.setAttribute('score', 1 + imspecial());
+				newcomment.setAttribute('mark', 1 + imspecial());
 				newcomment.setAttribute('username', window.inuser);
 				newcomment.setAttribute('timestamp', (+new Date)/1000);
 
@@ -8926,8 +8926,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				var indivcomment = document.createElement('indiv-comment');
 				indivcomment.setAttribute('commentid', id);
 				indivcomment.setAttribute('text', text);
-				indivcomment.setAttribute('score', 1);
-				indivcomment.setAttribute('mark', 1);
+				indivcomment.setAttribute('score', 1 + imspecial());
+				indivcomment.setAttribute('mark', 1 + imspecial());
 				indivcomment.setAttribute('username', window.inuser);
 				indivcomment.setAttribute('timestamp', (+new Date)/1000);
 				this.$.commenttree.insertBefore(indivcomment,this.$.commenttree.firstChild);

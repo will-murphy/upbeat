@@ -122,8 +122,8 @@
 				var indivcomment = document.createElement('indiv-comment');
 				indivcomment.setAttribute('commentid', id);
 				indivcomment.setAttribute('text', text);
-				indivcomment.setAttribute('score', 1);
-				indivcomment.setAttribute('mark', 1);
+				indivcomment.setAttribute('score', 1 + imspecial());
+				indivcomment.setAttribute('mark', 1 + imspecial());
 				indivcomment.setAttribute('username', window.inuser);
 				indivcomment.setAttribute('timestamp', (+new Date)/1000);
 				this.$.commenttree.insertBefore(indivcomment,this.$.commenttree.firstChild);

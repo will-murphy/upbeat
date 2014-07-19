@@ -185,9 +185,9 @@
 				}, 20000);
 				self.recheckTime();
 
-				if(this.mark == 1){
+				if(this.mark > 0){
 					this.$.up.active = true;
-				}else if(this.mark == -1){
+				}else if(this.mark < 0){
 					this.$.down.active = true;
 				}
 			},

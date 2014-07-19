@@ -1,6 +1,6 @@
 x Double count votes for IC's
 x Link regex/support apple.com
-- Auto focus when hit reply
+x Auto focus when hit reply
 - Hit enter goes to next field
 - Hit enter in link field
 - Correct link for apple.com
