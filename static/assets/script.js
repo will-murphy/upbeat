@@ -154,6 +154,9 @@ function linkFilter(url){
         url = url.substring(3);
         url = 'http://goto.google.com/'+url;
     }
+    if(url.indexOf('http') !== 0){
+        url = 'http://'+url;
+    }
     return url;
 }
 function prepend(child, parent){
@@ -205,6 +208,24 @@ tabs.addEventListener('core-select', function(){
     addClass(middle, 'on'+tabs.selected);
     inputAll[0].fire('keyup');
 })
+
+inputAll[0].addEventListener('keydown', function(e){
+    if(e.keyCode == 13){
+        inputAll[1].focus();
+    }
+});
+
+inputAll[1].addEventListener('keydown', function(e){
+    if(e.keyCode == 13){
+        dialogshare.click();
+    }
+});
+
+inputAll[2].addEventListener('keydown', function(e){
+    if(e.keyCode == 13){
+        inputAll[3].focus();
+    }
+});
 
 //cancel
 dialogcancel.addEventListener('tap', function(){
