@@ -192,9 +192,10 @@ class Post(Model, JSONable, Deletable):
     
     @staticmethod
     def is_valid_link(str):
+        http_url_pattern = r'^(?:(?:http|https)://)?(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)(?::\d+)?(?:/?|[/?]\S+)$'
         go_link_pattern = re.compile('^go/[^ ]*$')
         is_go_link = None != go_link_pattern.search(str)
-        is_http_url = None != URLValidator().regex.search(str)
+        is_http_url = None != http_url_pattern.search(str)
         return is_http_url or is_go_link
 
 class Comment(Model, JSONable, Deletable):
