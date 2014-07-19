@@ -4,6 +4,7 @@ x Link regex/support apple.com
 - Hit enter goes to next field
 - Hit enter in link field
 - Correct link for apple.com
+- Notifications orphan
 
 Part Deux
 - The profile colors seem off: light green is too saturated, red is too close to the "new post" button, who would use brown?

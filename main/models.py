@@ -439,26 +439,25 @@ class Googler(Model):
     ]
     SPECIAL_VOTE = 2
     
-    def get_vote(username):
+    def __unicode__(self):
+        return self.username
+    
+    def get_vote(self, username):
         if Googler.named(username).is_special():
             return Googler.SPECIAL_VOTE
         else:
             return 1
     
-    def is_special():
-        Googler.is_special(self.username)
+    def is_special(self):
+        return self.username in Googler.SPECIAL_USERNAMES
     
     @staticmethod
     def named(username):
-        return Googler.objects.get_or_create(username = username)
+        return Googler.objects.get_or_create(username = username)[0]
     
     @staticmethod
     def current():
         return Googler.named(nickname())
-    
-    @staticmethod
-    def is_special(username):
-        return username in Googler.SPECIAL_USERNAMES
     
     @staticmethod
     def current_is_special(username):
