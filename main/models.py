@@ -427,7 +427,7 @@ class CommentVote(Model, Deletable):
             CommentUpvoteActivity.objects.get_or_create(
                 sender = self.username,
                 receiver = self.comment.username,
-                post = self.comment)
+                comment = self.comment)
 
 class Googler(Model):
     username = CharField(max_length = 255)
