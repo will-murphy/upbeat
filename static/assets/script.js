@@ -11,6 +11,7 @@ function imspecial(){
     return isspecial(window.inuser);
 }
 
+window.titlepreserved = document.title;
 
 /*
 |--------------------------------------------------------------------------
@@ -209,23 +210,23 @@ tabs.addEventListener('core-select', function(){
     inputAll[0].fire('keyup');
 })
 
-inputAll[0].addEventListener('keydown', function(e){
-    if(e.keyCode == 13){
-        inputAll[1].focus();
-    }
-});
+// inputAll[0].addEventListener('keydown', function(e){
+//     if(e.keyCode == 13){
+//         inputAll[1].focus();
+//     }
+// });
 
-inputAll[1].addEventListener('keydown', function(e){
-    if(e.keyCode == 13){
-        dialogshare.click();
-    }
-});
+// inputAll[1].addEventListener('keydown', function(e){
+//     if(e.keyCode == 13){
+//         dialogshare.click();
+//     }
+// });
 
-inputAll[2].addEventListener('keydown', function(e){
-    if(e.keyCode == 13){
-        inputAll[3].focus();
-    }
-});
+// inputAll[2].addEventListener('keydown', function(e){
+//     if(e.keyCode == 13){
+//         inputAll[3].focus();
+//     }
+// });
 
 //cancel
 dialogcancel.addEventListener('tap', function(){

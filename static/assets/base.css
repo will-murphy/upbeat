@@ -71,10 +71,26 @@ body.blue .middle paper-input::shadow .focusedColor{
 |--------------------------------------------------------------------------
 */
 body.lightblue big-header{
+	/*400*/
 	background:#29b6f6 !important;
 }
 body.lightblue posts-list::shadow .cardtitle{
+	/*300*/
 	background:#4fc3f7 !important;
+}
+body.blue paper-dialog paper-tabs{
+	/*300*/
+	background:#4fc3f7;
+}
+body.blue paper-tabs::shadow #selectionBar, body.blue paper-dialog paper-progress::shadow #activeProgress {
+	/*400*/
+	background:#29b6f6 !important;
+}
+body.blue .middle paper-input::shadow .focusedColor{
+	/*400*/
+	background:#29b6f6;
+	color:#4fc3f7;
+	/*300*/
 }
 /*
 |--------------------------------------------------------------------------

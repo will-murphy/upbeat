@@ -1,9 +1,9 @@
 x Double count votes for IC's
 x Link regex/support apple.com
 x Auto focus when hit reply
-- Hit enter goes to next field
-- Hit enter in link field
-- Correct link for apple.com
+[] Hit enter goes to next field
+[] Hit enter in link field
+x Correct link for apple.com
 - Notifications orphan
 
 Part Deux

@@ -116,7 +116,7 @@
 				this.inuser = window.inuser;
 			},
 			domReady: function(){
-				setInterval(this.pingStart.bind(this), 2000);
+				setInterval(this.pingStart.bind(this), 5000);
 			},
 			pingStart: function(){
 				this.$.xhr.request({
@@ -126,9 +126,13 @@
 			        	if(data == 0){
 			        		removeClass(this.$.iconspace, 'shownotifs');
 			        		this.notifcount = '';
+
+			        		document.title = window.titlepreserved;
 			        	}else{
 			        		addClass(this.$.iconspace, 'shownotifs');
 			        		this.notifcount = '('+data+')';
+
+			        		document.title = '('+data+') ' + window.titlepreserved;
 			        	}
 			        }.bind(this)
 				});
