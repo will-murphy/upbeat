@@ -10,13 +10,6 @@ from django.utils import timezone
 
 from main.googler import nickname
 
-SPECIAL_USERS = [
-    'tennien',
-    'soturntup',
-]
-
-SPECIAL_USER_VOTE = 2
-
 def pick(d, keys):
     result = {}
     
@@ -137,16 +130,10 @@ class Post(Model, JSONable, Deletable):
         vote.gen_activity()
 
     def upvote(self):
-        if nickname() in SPECIAL_USERS:
-            self.__vote__(SPECIAL_USER_VOTE)
-        else:
-            self.__vote__(1)
+        self.__vote__(Googler.current().vote)
     
     def downvote(self):
-        if nickname() in SPECIAL_USERS:
-            self.__vote__(SPECIAL_USER_VOTE)
-        else:
-            self.__vote__(-1)
+        self.__vote__(- Googler.current().vote)
     
     def unvote(self):
         self.__vote__(0)
@@ -279,16 +266,10 @@ class Comment(Model, JSONable, Deletable):
         vote.gen_activity()
 
     def upvote(self):
-        if nickname() in SPECIAL_USERS:
-            self.__vote__(SPECIAL_USER_VOTE)
-        else:
-            self.__vote__(1)
+        self.__vote__(Googler.current().vote)
     
     def downvote(self):
-        if nickname() in SPECIAL_USERS:
-            self.__vote__(SPECIAL_USER_VOTE)
-        else:
-            self.__vote__(-1)
+        self.__vote__(- Googler.current().vote)
     
     def unvote(self):
         self.__vote__(0)
@@ -452,6 +433,34 @@ class Googler(Model):
     username = CharField(max_length = 255)
     color = CharField(max_length = 255, default = '')
     
+    SPECIAL_USERNAMES = [
+        'tennien',
+        'soturntup',
+    ]
+    SPECIAL_VOTE = 2
+    
+    def vote(username):
+        if Googler.named(username).is_special():
+            return Googler.SPECIAL_VOTE
+        else:
+            return 1
+    
+    @staticmethod
+    def named(username):
+        return Googler.objects.get_or_create(username = username)
+    
+    @staticmethod
+    def current():
+        return Googler.named(nickname())
+    
     @staticmethod
     def color_of(username):
         return get_object_attr_or(Googler, 'color', '', username = username)
+    
+    @staticmethod
+    def is_special(username):
+        return username in Googler.SPECIAL_USERNAMES
+    
+    @staticmethod
+    def current_is_special(username):
+        return Googler.is_special(nickname())
