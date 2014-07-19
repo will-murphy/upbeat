@@ -8149,12 +8149,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				Town Square
 				<span class="beta">BETA</span>
 			</a>
-			<paper-fab icon="add"></paper-fab>
+			<paper-fab on-tap="{{addtap}}" icon="add"></paper-fab>
 
 		</div>
 	</template>
 	<script>
-		Polymer('big-header',{});
+		Polymer('big-header',{
+			addtap: function(){
+				this.fire('addtap');
+			}
+		});
 	</script>
 </polymer-element></div>
 	<div hidden>
@@ -9016,11 +9020,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			.island.none{
 				padding-bottom:18px;
 			}
-			.island h3{
-				color:#b3b3b3;
-				padding: 25px 36px 8px;
+			.island.none p{
+				font-weight: 300;
 				font-size: 14px;
-				letter-spacing: .3px;
+				color: #878787;
+				padding: 0px 36px;
+				line-height: 18px;
+				margin-top: 7px;
+				padding-bottom: 10px;
+			}
+			.island h3{
+				color: #7a7a7a;
+				padding: 25px 36px 8px;
+				font-size: 19px;
+				letter-spacing: .5px;
 			}
 			.cardtitle h1{
 				text-shadow: 0px 0px 1px rgba(0,0,0,.3);
@@ -9103,7 +9116,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			</template>
 			<template if="{{notifkey == &apos;No&apos;}}">
 				<div class="island none">
-					<h3>No Notifications Yet</h3>
+					<h3>Notifications appear here.</h3>
+					<p>You'll recieve a notification when someone replies to your post, upvotes something you wrote, or mentions you in a comment.</p>
 					<paper-shadow z="1"></paper-shadow>
 				</div>
 			</template>
