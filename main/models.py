@@ -8,7 +8,7 @@ import math
 import re
 from django.utils import timezone
 
-from main.googler import user
+from main.googler import nickname
 
 SPECIAL_USERS = [
     'tennien',
@@ -106,13 +106,13 @@ class Post(Model, JSONable, Deletable):
             'mark',
             0, 
             post = self, 
-            username = user.nickname())
+            username = nickname())
         d['timestamp'] = ms_since_epoch(self.date_pub)
         return d
     
     def as_full_json_dict(self):
         d = self.as_json_dict()
-        d['color'] = Googler.color_of(user.nickname())
+        d['color'] = Googler.color_of(nickname())
         return d
     
     def as_summary_json_dict(self):
@@ -121,14 +121,14 @@ class Post(Model, JSONable, Deletable):
         return d
     
     def __vote__(self, mark):
-        votes = Vote.objects.filter(username = user.nickname(), post = self)
+        votes = Vote.objects.filter(username = nickname(), post = self)
         if 0 < votes.count():
             vote = votes[0]
             vote.mark = mark
             vote.save()
         else:
             vote = Vote.objects.create(
-                username = user.nickname(),
+                username = nickname(),
                 post = self,
                 mark = mark)
         
@@ -223,7 +223,7 @@ class Comment(Model, JSONable, Deletable):
             'mark',
             0,
             comment = self,
-            username = user.nickname())
+            username = nickname())
         d['timestamp'] = ms_since_epoch(self.date_pub)
         return d
     
@@ -256,14 +256,14 @@ class Comment(Model, JSONable, Deletable):
     
     def __vote__(self, mark):
         votes = CommentVote.objects.\
-            filter(username = user.nickname(), comment = self)
+            filter(username = nickname(), comment = self)
         if 0 < votes.count():
             vote = votes[0]
             vote.mark = mark
             vote.save()
         else:
             vote = CommentVote.objects.create(
-                username = user.nickname(),
+                username = nickname(),
                 comment = self,
                 mark = mark)
         

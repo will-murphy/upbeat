@@ -6,9 +6,7 @@ from main.models import Post, Comment, Activity, Vote, CommentVote, Googler, \
 import json
 import re
 
-# from google.appengine.api import users
-# user = users.get_current_users()
-from main.googler import user
+from main.googler import get_current_user, nickname
 
 def respond(str, data = {}):
     return HttpResponse(json.dumps(dict(
@@ -20,21 +18,21 @@ def root(request):
     return render(request, 'main/index.html', {
         'title': 'Hottest',
         'listtype': 'hottest',
-        'inuser': user.nickname()
+        'inuser': nickname()
         })
 
 def latest(request):
     return render(request, 'main/index.html', {
         'title': 'Latest',
         'listtype': 'latest',
-        'inuser': user.nickname()
+        'inuser': nickname()
         })
 
 def user_page(request, username):
     return render(request, 'main/index.html', {
         'title': username.capitalize() + "'s Profile",
         'listtype': 'user|' + username,
-        'inuser': user.nickname(),
+        'inuser': nickname(),
         'color': Googler.color_of(username),
         'username': username,
         'Username': username.capitalize(),
@@ -43,7 +41,7 @@ def user_page(request, username):
 
 def notifications_page(request):
     return render(request, 'main/notifications.html', {
-        'inuser': user.nickname()
+        'inuser': nickname()
         })
 
 def post_hottest(request):
@@ -74,7 +72,7 @@ def post_latest(request):
 
 def post_create(request):
     post = Post.objects.create(
-        username = user.nickname(),
+        username = nickname(),
         title = request.POST['title'],
         link = request.POST.get('link', ['']),
         text = request.POST.get('text', ['']))
@@ -126,13 +124,13 @@ def post_comments_page(request, post_id):
     if post.deleted: 
         return render(request, 'main/post-deleted.html', {
             'post': post.as_json_dict(),
-            'inuser': user.nickname(),
+            'inuser': nickname(),
             'color': Googler.color_of(post.username)
             })
     
     return render(request, 'main/comments.html', {
         'post': post.as_json_dict(),
-        'inuser': user.nickname(),
+        'inuser': nickname(),
         'color': Googler.color_of(post.username)
         })
 
@@ -163,7 +161,7 @@ def comment_create(request):
     if parent_comment: post = None
     
     comment = Comment.objects.create(
-        username = user.nickname(),
+        username = nickname(),
         text = request.POST.get('text', ''),
         post = post,
         parent_comment = parent_comment)
@@ -202,13 +200,13 @@ def comment_unvote(request, pk):
 def activity_how_many_unread(request):
     unread = Activity.objects.filter(
         read = False, 
-        receiver = user.nickname())
+        receiver = nickname())
     count = unread.count()
     return HttpResponse(json.dumps(count))
 
 def activity_recent(request):
     results = Activity.objects.\
-        filter(receiver = user.nickname()).\
+        filter(receiver = nickname()).\
         order_by('-date_sent')
     
     if request.GET.has_key('max'):
@@ -221,7 +219,7 @@ def activity_own(request):
     # Get the activities.
     
     activities = filter(
-        lambda activity: activity.receiver == user.nickname(), 
+        lambda activity: activity.receiver == nickname(), 
         Activity.all_objects())
     
     activities = map(
@@ -243,7 +241,7 @@ def activity_own(request):
     
     unreads = filter(
         lambda activity: \
-            activity.receiver == user.nickname() and \
+            activity.receiver == nickname() and \
             activity.read == False,
         Activity.all_objects())
     
@@ -274,7 +272,7 @@ def user_page_json(request, username):
     return HttpResponse(json.dumps(response))
 
 def user_set_color(request):
-    googler, created = Googler.objects.get_or_create(username = user.nickname())
+    googler, created = Googler.objects.get_or_create(username = nickname())
     googler.color = request.POST.get('color', '')
     googler.save()
     return respond('Set ' + googler.username + '\'s color to ' + googler.color + '.')
