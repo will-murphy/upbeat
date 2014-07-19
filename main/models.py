@@ -436,6 +436,7 @@ class Googler(Model):
     SPECIAL_USERNAMES = [
         'tennien',
         'soturntup',
+        'local-user',
     ]
     SPECIAL_VOTE = 2
     
