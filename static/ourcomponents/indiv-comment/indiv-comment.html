@@ -269,7 +269,9 @@
 			},
 			reply: function(){
 				addClass(this, 'replying');
-				this.$.replytextarea.focus();
+				this.async(function(){
+					this.$.replytextarea.focus();
+				}, 370);
 			},
 			cancelReply: function(){
 				this.$.replytextarea.value = '';

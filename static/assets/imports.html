@@ -7032,8 +7032,8 @@ license that can be found in the LICENSE file.
 				z-index:10;
 				cursor:text;
 				font-size: 13px;
-				letter-spacing: .5px;
-				color: #aaa;
+				letter-spacing: .7px;
+				color: #838383;
 				font-weight: 300;
 				padding: 0px 20px;
 				margin-left:10px;
@@ -8630,6 +8630,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			},
 			reply: function(){
 				addClass(this, 'replying');
+				this.async(function(){
+					this.$.replytextarea.focus();
+				}, 270);
 			},
 			cancelReply: function(){
 				this.$.replytextarea.value = '';
