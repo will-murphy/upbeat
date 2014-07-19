@@ -222,7 +222,7 @@ class Comment(Model, JSONable, Deletable):
             username = nickname())
         d['timestamp'] = ms_since_epoch(self.date_pub)
         return d
-     
+    
     def as_tree_of_json_dicts(self):
         tree = self.__as_tree_of_json_dicts_helper__({})
         
