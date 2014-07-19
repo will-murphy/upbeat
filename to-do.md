@@ -10,8 +10,6 @@ Part Deux
 - The profile colors seem off: light green is too saturated, red is too close to the "new post" button, who would use brown?
 - Initial Contributors
 
-
-
 - No notifications page
 - Click text post -> comments page
 - Link regexp
