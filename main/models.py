@@ -314,10 +314,13 @@ class Comment(Model, JSONable, Deletable):
     
     @staticmethod
     def pop_deleted_children(children):
+        print('top')
+        print(children)
         for child in children:
-            print(children)
-            map(Comment.pop_deleted_children, child['childs'])
+            Comment.pop_deleted_children(child['childs'])
+            print(child)
             if child['deleted'] and 0 == len(child['childs']):
+                print('removed.')
                 children.remove(child)
 
 class Activity(Model, JSONable):

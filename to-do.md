@@ -10,10 +10,6 @@ Part Deux
 - The profile colors seem off: light green is too saturated, red is too close to the "new post" button, who would use brown?
 - Initial Contributors
 
-- No notifications page
-- Click text post -> comments page
-- Link regexp
-- Link goes to outside/the-link
 - It fails when you put html in the title
 - Make "View Comments" and "Delete Post" buttons more obvious--background color or hover
 
