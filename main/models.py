@@ -315,6 +315,7 @@ class Comment(Model, JSONable, Deletable):
     @staticmethod
     def pop_deleted_children(children):
         for child in children:
+            print(children)
             map(Comment.pop_deleted_children, child['childs'])
             if child['deleted'] and 0 == len(child['childs']):
                 children.remove(child)

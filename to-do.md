@@ -4,7 +4,7 @@ x Auto focus when hit reply
 [] Hit enter goes to next field
 [] Hit enter in link field
 x Correct link for apple.com
-- Notifications orphan
+x Notifications orphan
 
 Part Deux
 - The profile colors seem off: light green is too saturated, red is too close to the "new post" button, who would use brown?
