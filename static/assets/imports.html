@@ -7831,6 +7831,7 @@ element.
 
 				document.body.className = color;
 
+				document.querySelector('link[rel=icon]').setAttribute('href', '/static/assets/fav'+color+'.png');
 				this.$.xhr.request({
 					url: '/api/user/set-color',
 					body: objectToFormdata({
