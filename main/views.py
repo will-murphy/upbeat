@@ -208,23 +208,14 @@ def activity_how_many_unread(request):
     count = unread.count()
     return HttpResponse(json.dumps(count))
 
-def activity_recent(request):
-    results = Activity.objects.\
-        filter(receiver = nickname()).\
-        order_by('-date_sent')
-    
-    if request.GET.has_key('max'):
-        results = results[:int(request.GET['max'])]
-    
-    return HttpResponse(Activity.all_as_json(list(results)))
-
 def activity_own(request):
     
     # Get the activities.
     
     activities = filter(
         lambda activity: activity.receiver == nickname(), 
-        Activity.all_objects())
+        Activity.all_objects().sort(key =
+            lambda activity: activity.date_sent)
     
     activities = map(
         lambda activity: activity.as_json_dict(),

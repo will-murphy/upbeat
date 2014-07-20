@@ -344,7 +344,7 @@ class Activity(Model, JSONable):
             ReplyActivity,
         ]
         
-        activities = []        
+        activities = []
         for subclass in subclasses:
             activities += subclass.objects.all()
         
