@@ -397,8 +397,18 @@ class ReplyActivity(Activity, Deletable):
     deleted = BooleanField(default = False)
     
     def as_json_dict(self):
+        if (self.comment.post and self.comment.comment) or \
+           not (self.comment.post or self.comment.comment):
+            raise BaseException(
+                'ReplyActivity ' + str(self.id) + 'has both post and comment')
+        
+        if self.comment.post:
+            kind = 'reply to post'
+        elif self.comment.comment:
+            kind = 'reply to comment'
+        
         return {
-            'type': 'reply',
+            'type': kind,
             'sender': self.sender,
             'comment_id': self.comment.id,
             'post_id': self.comment.get_post().id,
