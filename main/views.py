@@ -214,8 +214,8 @@ def activity_own(request):
     
     activities = filter(
         lambda activity: activity.receiver == nickname(), 
-        Activity.all_objects().sort(key =
-            lambda activity: activity.date_sent)
+        Activity.all_objects().sort(
+            key = lambda activity: activity.date_sent)
     
     activities = map(
         lambda activity: activity.as_json_dict(),
