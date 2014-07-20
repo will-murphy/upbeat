@@ -50,6 +50,9 @@ class JSONable():
     def as_json(self):
         return json.dumps(self.as_json_dict())
     
+    def __unicode__(self):
+        return self.as_json()[1:-1]
+    
     @staticmethod
     def all_as_json(objs):
         return '[' + ', '.join(map((lambda obj: obj.as_json()), objs)) + ']'
@@ -394,8 +397,18 @@ class ReplyActivity(Activity, Deletable):
     deleted = BooleanField(default = False)
     
     def as_json_dict(self):
+        if (self.comment.post and self.comment.comment) or \
+           not (self.comment.post or self.comment.comment):
+            raise BaseException(
+                'ReplyActivity ' + str(self.id) + 'has both post and comment')
+        
+        if self.comment.post:
+            kind = 'reply to post'
+        elif self.comment.comment:
+            kind = 'reply to comment'
+        
         return {
-            'type': 'reply',
+            'type': kind,
             'sender': self.sender,
             'comment_id': self.comment.id,
             'post_id': self.comment.get_post().id,
@@ -414,7 +427,7 @@ class Vote(Model, Deletable):
     deleted = BooleanField(default = False)
     
     def gen_activity(self):
-        if self.mark == 1 and self.username != self.post.username:
+        if 1 <= self.mark and self.username != self.post.username:
             PostUpvoteActivity.objects.get_or_create(
                 sender = self.username,
                 receiver = self.post.username,
@@ -427,7 +440,7 @@ class CommentVote(Model, Deletable):
     deleted = BooleanField(default = False)
     
     def gen_activity(self):
-        if self.mark == 1 and self.username != self.comment.username:
+        if 1 <= self.mark and self.username != self.comment.username:
             CommentUpvoteActivity.objects.get_or_create(
                 sender = self.username,
                 receiver = self.comment.username,
