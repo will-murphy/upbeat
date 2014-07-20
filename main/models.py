@@ -438,8 +438,9 @@ class Googler(Model):
     color = CharField(max_length = 255, default = '')
     
     SPECIAL_USERNAMES = [
-        'tennien',
-        'soturntup'
+        'soturntup',
+        'orleanspobee',
+        'garysheng',
     ]
     SPECIAL_VOTE = 2
     
