@@ -417,7 +417,7 @@ class Vote(Model, Deletable):
     deleted = BooleanField(default = False)
     
     def gen_activity(self):
-        if self.mark == 1 and self.username != self.post.username:
+        if 1 <= self.mark and self.username != self.post.username:
             PostUpvoteActivity.objects.get_or_create(
                 sender = self.username,
                 receiver = self.post.username,
@@ -430,7 +430,7 @@ class CommentVote(Model, Deletable):
     deleted = BooleanField(default = False)
     
     def gen_activity(self):
-        if self.mark == 1 and self.username != self.comment.username:
+        if 1 <= self.mark and self.username != self.comment.username:
             CommentUpvoteActivity.objects.get_or_create(
                 sender = self.username,
                 receiver = self.comment.username,
