@@ -3,7 +3,7 @@
 | ADMIN CONFIGS
 |--------------------------------------------------------------------------
 */
-window.specialusers = ['orleanspobee', 'tennien', 'iamatest', 'local-user'];
+window.specialusers = ['soturntup', 'orleanspobee', 'garysheng'];
 function isspecial(user){
     return window.specialusers.indexOf(user) !== -1;
 }
