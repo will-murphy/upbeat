@@ -22,3 +22,10 @@ If we have time
 - When the user hits "Enter" in the title field, it should go to the link/text field
 - When the user hits "Enter" in the link field, it should submit.
 - The profile colors seem off: light green is too saturated, red is too close to the "new post" button, who would use brown?
+
+
+If you're reading this, you probably don't have much to do
+right now, so enjoy some memegen:
+https://memegen.googleplex.com/6465383519223808
+https://memegen.googleplex.com/5828689174462464
+https://memegen.googleplex.com/5935413545926656
