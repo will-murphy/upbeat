@@ -117,6 +117,7 @@
 			},
 			domReady: function(){
 				setInterval(this.pingStart.bind(this), 5000);
+				this.pingStart();
 			},
 			pingStart: function(){
 				this.$.xhr.request({
