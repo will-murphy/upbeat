@@ -8356,7 +8356,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				this.inuser = window.inuser;
 			},
 			domReady: function(){
-				setInterval(this.pingStart.bind(this), 5000);
+				setInterval(this.pingStart.bind(this), 2500);
 				this.pingStart();
 			},
 			pingStart: function(){
@@ -9141,14 +9141,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 							<template if="{{notif.type == &apos;reply to post&apos;}}">
 								<indiv-notif>
 									<div class="top">
-										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> replied to your comment
+										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> replied to your post
 									</div>
 									<div class="meat">
 										<a href="/comments/{{notif.post_id}}">"{{notif.text}}"</a>
 									</div>
 								</indiv-notif>
 							</template>
-							<template if="{{notif.type == &apos;reply&apos;}}">
+							<template if="{{notif.type == &apos;reply to comment&apos;}}">
 								<indiv-notif>
 									<div class="top">
 										<a href="/user/{{notif.sender}}">{{notif.sender}}</a> replied to your comment
