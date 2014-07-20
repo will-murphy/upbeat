@@ -240,8 +240,6 @@
 			},
 			ready: function(){
 				this.isspecial = isspecial(this.username);
-				console.log(this.isspecial);
-				console.log(this.username);
 				
 				this.childs = [];
 				if(!this.deleted){
@@ -249,6 +247,8 @@
 				}
 			},
 			domReady: function(){
+				this.isspecial = isspecial(this.username);
+
 				var self = this;
 				setInterval(function(){
 					self.recheckTime();
