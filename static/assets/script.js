@@ -141,7 +141,8 @@ function htmlEscape(str) {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;')
             .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+            .replace(/>/g, '&gt;')
+            .replace(' ', '&nbsp;');
 }
 function stuffEncode(text){
     var result = linkify(text);
