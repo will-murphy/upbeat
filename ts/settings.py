@@ -141,7 +141,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'main',
     'google',
-    'django_extensions',
+    # 'django_extensions',
     # 'appengine_django',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',

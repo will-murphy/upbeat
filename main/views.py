@@ -38,7 +38,7 @@ def user_page(request, username):
         'color': Googler.named(username).color,
         'username': username,
         'Username': username.capitalize(),
-        'is_special': Googler.current().is_special()
+        'is_special': Googler.named(username).is_special()
         })
 
 def notifications_page(request):
