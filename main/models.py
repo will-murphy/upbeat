@@ -50,6 +50,9 @@ class JSONable():
     def as_json(self):
         return json.dumps(self.as_json_dict())
     
+    def __unicode__(self):
+        return self.as_json()[1:-1]
+    
     @staticmethod
     def all_as_json(objs):
         return '[' + ', '.join(map((lambda obj: obj.as_json()), objs)) + ']'
