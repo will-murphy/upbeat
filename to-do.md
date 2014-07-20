@@ -16,6 +16,7 @@ Part Deux
 If we have time
 ===============
 
+- When an initial contributor comments, their name doesn't show until you refresh.
 - Before the JS fetches the data, the page below the title is blank (if time).
 - When the user has "Submit" or "Cancel" selected and hits "Enter", it should submit or cancel.
 - When the user hits "Enter" in the title field, it should go to the link/text field
