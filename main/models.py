@@ -451,9 +451,33 @@ class Googler(Model):
     color = CharField(max_length = 255, default = '')
     
     SPECIAL_USERNAMES = [
-        'soturntup',
+        'jstep',
         'orleanspobee',
         'garysheng',
+        'mattpiccolella',
+        'sghelm',
+        'ericahalp',
+        'zlawrence',
+        'sundeepk',
+        'caseyhuang',
+        'rzendacott',
+        'bitbanger',
+        'hsubrama',
+        'kevinlei',
+        'vbracht',
+        'pravallikat',
+        'charjmays',
+        'matthewo',
+        'danlee',
+        'binfu',
+        'deniskov',
+        'pomeroy',
+        'dhp',
+        'mhathorn',
+        'eustace',
+        'urs',
+        'omridor',
+        'rgevertz',
     ]
     SPECIAL_VOTE = 2
     

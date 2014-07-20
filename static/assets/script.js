@@ -3,7 +3,35 @@
 | ADMIN CONFIGS
 |--------------------------------------------------------------------------
 */
-window.specialusers = ['soturntup', 'orleanspobee', 'garysheng'];
+window.specialusers = [
+    'jstep',
+    'orleanspobee',
+    'garysheng',
+    'mattpiccolella',
+    'sghelm',
+    'ericahalp',
+    'zlawrence',
+    'sundeepk',
+    'caseyhuang',
+    'rzendacott',
+    'bitbanger',
+    'hsubrama',
+    'kevinlei',
+    'vbracht',
+    'pravallikat',
+    'charjmays',
+    'matthewo',
+    'danlee',
+    'binfu',
+    'deniskov',
+    'pomeroy',
+    'dhp',
+    'mhathorn',
+    'eustace',
+    'urs',
+    'omridor',
+    'rgevertz'
+];
 function isspecial(user){
     return window.specialusers.indexOf(user) !== -1;
 }
