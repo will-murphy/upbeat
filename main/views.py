@@ -225,7 +225,9 @@ def activity_own(request):
         lambda activity: activity.receiver == nickname(), 
         Activity.all_objects())
     
-    activities.sort(key = lambda activity: - activity.date_sent)
+    activities.sort(
+        reverse = True,
+        key = lambda activity: activity.date_sent)
     
     activities = map(
         lambda activity: activity.as_json_dict(),
