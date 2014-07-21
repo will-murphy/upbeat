@@ -478,6 +478,8 @@ class Googler(Model):
         'urs',
         'omridor',
         'rgevertz',
+        'scmcfetridge',
+        'phinkle',
     ]
     SPECIAL_VOTE = 2
     
