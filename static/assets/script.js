@@ -141,7 +141,8 @@ function linkify(string) {
         } else {
             uri = captured;
         }
-        return "<a href=\"" + uri+ "\" target=\"_blank\"" + ">" + captured + "</a>";
+        var alteredcaptured = captured.length > 30 ? captured.substring(0, 27)+'...' : captured;
+        return "<a href=\"" + uri+ "\" target=\"_blank\"" + ">" + alteredcaptured + "</a>";
     });
 
     string = string.replace(/go\/[^\s]+/gi, function(captured) {
@@ -173,8 +174,8 @@ function htmlEscape(str) {
             .replace(' ', '&nbsp;');
 }
 function stuffEncode(text){
-    var result = linkify(text);
-    result = htmlEscape(result);
+    var result = htmlEscape(text);
+    result = linkify(result);
     result = result.replace(/(?:\r\n|\r|\n)/g, '<br>');
     return result;
 }
