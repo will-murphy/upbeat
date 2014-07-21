@@ -11,12 +11,14 @@ try:
     get_current_user()
     nickname()
 except AssertionError:
+    TEST_NAME = 'tennien'
+    
     class Temp():
         def nickname():
-            return 'local-user'
+            return TEST_NAME
     
     def get_current_user():
         return Temp()
     
     def nickname():
-        return 'local-user'
+        return TEST_NAME
