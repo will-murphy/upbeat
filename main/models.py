@@ -427,7 +427,8 @@ class Vote(Model, Deletable):
     deleted = BooleanField(default = False)
     
     def __unicode__(self):
-        return self.username + ' voted ' + str(mark) + ' for ' + str(post)
+        return self.username + ' voted ' + str(self.mark) + ' for ' + \
+            str(self.post)
     
     def gen_activity(self):
         if 1 <= self.mark and self.username != self.post.username:
