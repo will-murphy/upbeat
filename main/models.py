@@ -426,6 +426,9 @@ class Vote(Model, Deletable):
     mark = SmallIntegerField(default = 0)
     deleted = BooleanField(default = False)
     
+    def __unicode__(self):
+        return self.username + ' voted ' + str(mark) + ' for ' + str(post)
+    
     def gen_activity(self):
         if 1 <= self.mark and self.username != self.post.username:
             PostUpvoteActivity.objects.get_or_create(
