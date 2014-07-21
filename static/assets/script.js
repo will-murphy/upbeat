@@ -30,6 +30,8 @@ window.specialusers = [
     'eustace',
     'urs',
     'omridor',
+    'scmcfetridge',
+    'phinkle',
     'rgevertz'
 ];
 function isspecial(user){
