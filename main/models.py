@@ -482,7 +482,7 @@ class Googler(Model):
         'phinkle',
     ]
     
-    SPECIAL_VOTE = 2
+    SPECIAL_VOTE = 3
     
     def __unicode__(self):
         return self.username
