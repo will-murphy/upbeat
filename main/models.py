@@ -86,8 +86,8 @@ class Post(Model, JSONable, Deletable):
     deleted = BooleanField(default = False)
     
     def __unicode__(self):
-        return ('(deleted)' if self.deleted else '') + \
-            'username = ' + self.username 
+        return ('(deleted) ' if self.deleted else '') + \
+            truncate(self.title, 15) + ' by ' + self.username
     
     def json_keys(self):
         return ['id', 'title', 'text', 'link', 'score', 'username', 'deleted']
