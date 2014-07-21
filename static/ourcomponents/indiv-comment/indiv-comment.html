@@ -333,8 +333,8 @@
 				var newcomment = document.createElement('indiv-comment');
 				newcomment.setAttribute('commentid', id);
 				newcomment.setAttribute('text', text);
-				newcomment.setAttribute('score', 1 + imspecial());
-				newcomment.setAttribute('mark', 1 + imspecial());
+				newcomment.setAttribute('score', 1 + imspecial()*2);
+				newcomment.setAttribute('mark', 1 + imspecial()*2);
 				newcomment.setAttribute('username', window.inuser);
 				newcomment.setAttribute('timestamp', (+new Date)/1000);
 
@@ -345,14 +345,14 @@
 			},
 			thumbsUp: function(event, detail, sender){
 				if(!sender.active){
-					this.score = parseInt(this.score) - 1 - imspecial();
+					this.score = parseInt(this.score) - 1 - imspecial()*2;
 					this.$.xhr.request({
 						url: '/api/comment/'+this.commentid+'/unvote',
 					});
 				}else{
 					var downButt = this.$.down;
 					var downbuttActive = downButt.active;
-					this.score = parseInt(this.score) + 1 + imspecial() + (downbuttActive ? 1 + imspecial() : 0);
+					this.score = parseInt(this.score) + 1 + imspecial()*2 + (downbuttActive ? 1 + imspecial()*2 : 0);
 
 					downButt.active = false;
 					this.$.xhr.request({
@@ -362,7 +362,7 @@
 			},
 			thumbsDown: function(event, detail, sender){
 				if(!sender.active){
-					this.score = parseInt(this.score) + 1 + imspecial();
+					this.score = parseInt(this.score) + 1 + imspecial()*2;
 					this.$.xhr.request({
 						url: '/api/comment/'+this.commentid+'/unvote',
 					});
@@ -370,7 +370,7 @@
 					var upButt = this.$.up;
 
 					var upButtActive = upButt.active;
-					this.score = parseInt(this.score) - 1 - imspecial() - (upButtActive ? 1 + imspecial() : 0);
+					this.score = parseInt(this.score) - 1 - imspecial()*2 - (upButtActive ? 1 + imspecial()*2 : 0);
 
 					upButt.active = false;
 					this.$.xhr.request({
