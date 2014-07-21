@@ -42,6 +42,15 @@ def user_page(request, username):
         })
 
 def notifications_page(request):
+    unreads = filter(
+        lambda activity: 
+            activity.receiver == nickname() and activity.read == False,
+        Activity.all_objects())
+    
+    for unread in unreads:
+        unread.read = True
+        unread.save()
+    
     return render(request, 'main/notifications.html', {
         'inuser': nickname()
         })
