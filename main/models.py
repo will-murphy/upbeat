@@ -481,6 +481,7 @@ class Googler(Model):
         'scmcfetridge',
         'phinkle',
     ]
+    
     SPECIAL_VOTE = 2
     
     def __unicode__(self):
