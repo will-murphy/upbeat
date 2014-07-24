@@ -18,6 +18,12 @@ def pick(d, keys):
     
     return result
 
+def truncate(thing, n):
+    if n < len(thing):
+        return thing[:n - 3] + '...'
+    else:
+        return thing
+
 def get_object_or(M, default, *args, **keywords):
     try:
         return M.objects.get(*args, **keywords)
@@ -80,8 +86,8 @@ class Post(Model, JSONable, Deletable):
     deleted = BooleanField(default = False)
     
     def __unicode__(self):
-        return ('(deleted)' if self.deleted else '') + \
-            'username = ' + self.username 
+        return ('(deleted) ' if self.deleted else '') + \
+            truncate(self.title, 15) + ' by ' + self.username
     
     def json_keys(self):
         return ['id', 'title', 'text', 'link', 'score', 'username', 'deleted']
@@ -371,11 +377,15 @@ class CommentUpvoteActivity(Activity, Deletable):
     deleted = BooleanField(default = False)
     
     def as_json_dict(self):
+        post = self.comment.get_post()
         return {
             'type': 'comment like',
             'sender': self.sender,
             'comment_id': self.comment.id,
             'read': self.read,
+            'post_id': post.id,
+            'title': post.title,
+            'text': self.comment.text,
         }
 
 class CommentMentionActivity(Activity, Deletable):
