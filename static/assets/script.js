@@ -43,6 +43,9 @@ function imspecial(){
 
 window.titlepreserved = document.title;
 
+//firefox gets special treatment because it doesn't work as well as chrome
+var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
 /*
 |--------------------------------------------------------------------------
 | TOOL STUFF

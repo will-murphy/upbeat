@@ -22,6 +22,9 @@
 			this.posts = [];
 		},
 		ready: function(){
+
+		},
+		domReady: function(){
 			if(this.listtype == 'hottest'){
 				this.url = 'post/hottest';
 			}else if(this.listtype == 'latest'){

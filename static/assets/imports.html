@@ -7078,7 +7078,7 @@ license that can be found in the LICENSE file.
 			}
 		</style>
 		<div class="padding">
-			<a href="{{link?link:&apos;/comments/&apos;+postid}}"><paper-ripple></paper-ripple></a>
+			<a href="{{showlink}}"><paper-ripple></paper-ripple></a>
 			<div class="content">
 				<content select="h1"></content>
 				<content select=".bodytext"></content>
@@ -7103,6 +7103,7 @@ license that can be found in the LICENSE file.
 	</template>
 	<script>
 		Polymer('indiv-post', {
+			showlink: '',
 			created: function(){
 				this.inuser = window.inuser;
 			},
@@ -7117,6 +7118,12 @@ license that can be found in the LICENSE file.
 					this.$.up.active = true;
 				}else if(this.mark < 0){
 					this.$.down.active = true;
+				}
+
+				if(this.link){
+					this.showlink = 'http://strip/?q='+encodeURIComponent(this.link);
+				}else{
+					this.showlink = '/comments/'+this.postid;
 				}
 			},
 			recheckTime: function(){
@@ -7183,16 +7190,6 @@ license that can be found in the LICENSE file.
 				this.fire('postDeleted');
 			}
 		});
-	</script>
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	  ga('create', 'UA-52985577-1', 'auto');
-	  ga('send', 'pageview');
-
 	</script>
 </polymer-element>
 
@@ -7535,6 +7532,9 @@ element.
 			this.posts = [];
 		},
 		ready: function(){
+
+		},
+		domReady: function(){
 			if(this.listtype == 'hottest'){
 				this.url = 'post/hottest';
 			}else if(this.listtype == 'latest'){
