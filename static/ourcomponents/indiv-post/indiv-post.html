@@ -150,7 +150,7 @@
 			}
 		</style>
 		<div class="padding">
-			<a href="{{showlink}}"><paper-ripple></paper-ripple></a>
+			<a target="_blank" href="{{showlink}}"><paper-ripple></paper-ripple></a>
 			<div class="content">
 				<content select="h1"></content>
 				<content select=".bodytext"></content>
@@ -159,7 +159,7 @@
 				<span class="number">{{score}}</span>
 				<paper-icon-button id="up" isToggle="true" on-tap="{{thumbsUp}}" icon="thumb-up"></paper-icon-button>
 				<paper-icon-button id="down" isToggle="true" on-tap="{{thumbsDown}}" icon="thumb-down"></paper-icon-button>
-				<a href="/comments/{{postid}}"><paper-button class="viewcomments" label="View Comments"></paper-button></a>
+				<a target="_blank" href="/comments/{{postid}}"><paper-button class="viewcomments" label="View Comments"></paper-button></a>
 				<template if="{{inuser == username}}">
 					<paper-button class="deletepost" label="Delete Post (double-click)" on-dblclick="{{deletePost}}"></paper-button>
 				</template>
